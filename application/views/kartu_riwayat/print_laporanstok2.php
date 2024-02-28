@@ -397,7 +397,7 @@
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                                 $row_jumlah_masalah = db2_fetch_assoc($q_jumlah_masalah);
                             ?>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah asdasdasdasdasd= <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
                             <?php
                                 $q_kategori       = db2_exec($conn1, "SELECT
                                                                             CASE

@@ -409,6 +409,7 @@
                                     </tbody>
                                 <?php endwhile; ?>
                             </table>
+
                             <br><hr>
                             <?php
                                 $q_jumlah_masalah = db2_exec($conn1, "SELECT
@@ -421,15 +422,155 @@
                                                                         $where_kategori
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                                 $row_jumlah_masalah = db2_fetch_assoc($q_jumlah_masalah);
-                            ?>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam = <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu =  </strong><br><br>
+                         
+                                $query_jumlah_follow = db2_exec($conn1, "SELECT 
+                                                                    COUNT(*) AS TOTAL_FOLLOW
+                                                                FROM
+                                                                    PMBREAKDOWNENTRY p
+                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                WHERE
+                                                                    $where_kategori
+                                                                    AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
+                                                                    AND HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0");
+                                                                // $var_dump($query_jumlah_follow);
+                                $row_jumlah_follow = db2_fetch_assoc($query_jumlah_follow);
 
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Ringan > 3 jam = ... dari ... ( ... % )<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = .... ( ... % ) </strong><br><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Berat > 5 jam = ... dari ... ( ... % )<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = ... ( ... % ) </strong><br><br><br><br>
+                               
+                        
+                                $query_jumlah_close_3_jam = db2_exec($conn1, "SELECT 
+                                                                                    COUNT(*) AS Total_CLOSE_3_JAM
+                                                                                    
+                                                                                FROM
+                                                                                    PMBREAKDOWNENTRY p
+                                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                                    LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                                WHERE
+                                                                                $where_kategori
+                                                                                AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
+                                                                                AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
+                                                                                AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 2");
+                                                                                    
+
+                                $row_jumlah_close_3_jam = db2_fetch_assoc($query_jumlah_close_3_jam);
+ 
+                         
+                                $query_jumlah_close_5_jam = db2_exec($conn1, "SELECT 
+                                                                                    COUNT(*) AS Total_CLOSE_5_JAM
+                                                                                FROM
+                                                                                    PMBREAKDOWNENTRY p
+                                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                                    LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                                WHERE
+                                                                                $where_kategori
+                                                                                AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
+                                                                                AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
+                                                                                AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 4");
+
+                                $row_jumlah_close_5_jam = db2_fetch_assoc($query_jumlah_close_5_jam);
+
+
+                                $q_jumlah_masalah_ringan = db2_exec($conn1, "SELECT
+                                                                        COUNT(*) AS JUMLAH_MASALAH
+                                                                    FROM
+                                                                        PMBREAKDOWNENTRY p
+                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                    LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                    WHERE
+                                                                        $where_kategori
+                                                                        AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
+                                                                        AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
+                                $row_jumlah_masalah_ringan = db2_fetch_assoc($q_jumlah_masalah_ringan);
+
+                                $q_jumlah_masalah_berat = db2_exec($conn1, "SELECT
+                                                                        COUNT(*) AS JUMLAH_MASALAH
+                                                                    FROM
+                                                                        PMBREAKDOWNENTRY p
+                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                    LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                    WHERE
+                                                                        $where_kategori
+                                                                        AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
+                                                                        AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
+                                $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
+                              
+
+
+                                $jumlah_masalah = $row_jumlah_masalah['JUMLAH_MASALAH'];
+                                $jumlah_masalah_ringan = $row_jumlah_masalah_ringan['JUMLAH_MASALAH'];
+                                $jumlah_masalah_berat = $row_jumlah_masalah_berat['JUMLAH_MASALAH'];
+                                
+                                
+                                $jumlah_follow = $row_jumlah_follow['TOTAL_FOLLOW'];
+                                $jumlah_close_3 = $row_jumlah_close_3_jam['TOTAL_CLOSE_3_JAM'];
+                                $jumlah_close_5 = $row_jumlah_close_5_jam['TOTAL_CLOSE_5_JAM'];
+
+                                
+                                // Hitung total sasaran follow-up
+                                $total_sasaran_follow = $jumlah_masalah - $jumlah_follow;
+                                $total_sasaran_3_jam = $jumlah_masalah_ringan - $jumlah_close_3;
+                                $total_sasaran_5_jam = $jumlah_masalah_berat - $jumlah_close_5;
+
+                               // Menghitung persentase jumlah_follow dari jumlah_masalah
+                                if ($jumlah_masalah != 0) {
+                                    $persentase_follow = min(($jumlah_follow / $jumlah_masalah) * 100, 100); 
+                                } else {
+                                    $persentase_follow = 0; 
+                                }
+
+                                $persentase_follow_sasaran = 100 - $persentase_follow;
+                                if ($persentase_follow_sasaran < 0) {
+                                    $persentase_follow_sasaran = 0;
+                                }
+
+                                $format_follow = number_format($persentase_follow, 2);
+                                $format_follow_sasaran = number_format($persentase_follow_sasaran, 2); 
+
+
+                                // Menghitung persentase jumlah_close_3_jam dari jumlah masalah
+                                if ($jumlah_masalah_ringan != 0) {
+                                    $persentase_close_3_jam = min(($jumlah_close_3 / $jumlah_masalah_ringan) * 100, 100); 
+                                } else {
+                                    $persentase_close_3_jam = 0; 
+                                }
+
+                                $persentase_close_3_sasaran = 100 - $persentase_close_3_jam;
+                                if ($persentase_close_3_sasaran < 0) {
+                                    $persentase_close_3_sasaran = 0;
+                                }
+
+                                $format_close_3= number_format($persentase_close_3_jam, 2);
+                                $format_close_3_sasaran = number_format($persentase_close_3_sasaran, 2); 
+
+
+                                 // Menghitung persentase jumlah_close_5_jam dari jumlah masalah
+                                 if ($jumlah_masalah_berat != 0) {
+                                    $persentase_close_5_jam = min(($jumlah_close_5 / $jumlah_masalah_berat) * 100, 100); 
+                                } else {
+                                    $persentase_close_5_jam = 0; 
+                                }
+
+                                $persentase_close_5_sasaran = 100 - $persentase_close_5_jam;
+                                if ($persentase_close_5_sasaran < 0) {
+                                    $persentase_close_5_sasaran = 0;
+                                }
+
+                                $format_close_5= number_format($persentase_close_5_jam, 2);
+                                $format_close_5_sasaran = number_format($persentase_close_5_sasaran, 2); 
+
+
+                            ?>
+
+
+
+                           
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Follow Up Lebih dari 1 Jam = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow?> % )<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu =  <?=   $total_sasaran_follow ?> ( <?= $format_follow_sasaran?> % )</strong><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Ringan > 3 jam = <?=  $row_jumlah_close_3_jam['TOTAL_CLOSE_3_JAM']; ?> dari <?= $row_jumlah_masalah_ringan['JUMLAH_MASALAH']; ?> ( <?= $format_close_3?> % )<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_3_jam ?> ( <?= $format_close_3_sasaran ?> % ) </strong><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Berat > 5 jam = <?=  $row_jumlah_close_5_jam['TOTAL_CLOSE_5_JAM']; ?> dari <?= $row_jumlah_masalah_berat['JUMLAH_MASALAH']; ?> ( <?= $format_close_5?> % )<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_5_jam ?> ( <?= $format_close_5_sasaran?> % ) </strong><br><br><br><br>
                         </td>
                     </tr>
                 </table>
