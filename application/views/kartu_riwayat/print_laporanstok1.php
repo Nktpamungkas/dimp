@@ -20,7 +20,6 @@
             margin-left: 10px;
             margin-top: 10px;
         }
-        }
 
         a:link {
             font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -393,22 +392,36 @@
                                             $waktu_close        = '';
                                         }
                                     ?>
-                                    <tbody>
-                                        <tr>
+                                    <tbody>                                     
+                                        <tr >
                                             <td style="border:1px solid black;"><?= $no++; ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['NOMOR_TIKET'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['SHORTDESCRIPTION'] ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_OPEN'], 0,10) ?> <?= substr($row_opentiket['TGL_OPEN'], 11,8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_FOLLOWUP'], 0,10) ?> <?= substr($row_opentiket['TGL_FOLLOWUP'], 11,8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_CLOSE'], 0,10) ?> <?= substr($row_opentiket['TGL_CLOSE'], 11,8) ?></td>
-                                            <td style="border:1px solid black;"><?= $waktu_follow_up; ?></td>
-                                            <td style="border:1px solid black;"><?= $waktu_close; ?></td>
+                                            <td <?php if($total_waktu_followup->h > 0){
+                                                    echo 'style="border:1px solid black; background-color: red;"';
+                                                } else{
+                                                    echo 'style="border:1px solid black;"';
+                                                }?>><?= $waktu_follow_up; ?></td>
+                                            <td <?php if($row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->h > 2){
+                                                    echo 'style="border:1px solid black; background-color: blue;"';
+                                                }else if($row_opentiket['JENIS_KERUSAKAN'] == 'BERAT' && $total_waktu_close->h > 4){
+                                                    echo 'style="border:1px solid black; background-color: yellow;"';
+                                                }else{
+                                                    echo ' style="border:1px solid black;"';
+                                                }?> ><?= $waktu_close; ?></td>
+                                            
                                             <td style="border:1px solid black;"><?= $row_opentiket['JENIS_KERUSAKAN'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                         </tr>
                                     </tbody>
                                 <?php endwhile; ?>
                             </table>
+
+                            
+
 
                             <br><hr>
                             <?php
