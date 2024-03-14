@@ -268,7 +268,7 @@
             border-bottom: 1pt dotted #0E1148;
         }
 
-        bodigar {
+        .bodigar {
             margin-top: 0px;
             margin-bottom: 0px;
             background-image: url("../images/bg-kiri.gif");
@@ -400,15 +400,15 @@
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_OPEN'], 0,10) ?> <?= substr($row_opentiket['TGL_OPEN'], 11,8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_FOLLOWUP'], 0,10) ?> <?= substr($row_opentiket['TGL_FOLLOWUP'], 11,8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_CLOSE'], 0,10) ?> <?= substr($row_opentiket['TGL_CLOSE'], 11,8) ?></td>
-                                            <td <?php if($total_waktu_followup->h > 0){
-                                                    echo 'style="border:1px solid black; background-color: red;"';
+                                            <td <?php if($total_waktu_followup->h > 0 || $total_waktu_followup->d > 0 || $total_waktu_followup->h > 0 && $total_waktu_followup->h > 0){
+                                                    echo 'style="border:1px solid black; background-color: #92C7CF;"';
                                                 } else{
                                                     echo 'style="border:1px solid black;"';
                                                 }?>><?= $waktu_follow_up; ?></td>
-                                            <td <?php if($row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->h > 2){
-                                                    echo 'style="border:1px solid black; background-color: blue;"';
-                                                }else if($row_opentiket['JENIS_KERUSAKAN'] == 'BERAT' && $total_waktu_close->h > 4){
-                                                    echo 'style="border:1px solid black; background-color: yellow;"';
+                                            <td <?php if($row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->h > 2 || $row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->d > 0 || $row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->d > 0 && $row_opentiket['JENIS_KERUSAKAN'] == 'RINGAN' && $total_waktu_close->h > 2 ){
+                                                    echo 'style="border:1px solid black; background-color: #FFF455;"';
+                                                }else if($row_opentiket['JENIS_KERUSAKAN'] == 'BERAT' && $total_waktu_close->h > 4 || $row_opentiket['JENIS_KERUSAKAN'] == 'BERAT' && $total_waktu_close->d > 0 ){
+                                                    echo 'style="border:1px solid black; background-color: red;"';
                                                 }else{
                                                     echo ' style="border:1px solid black;"';
                                                 }?> ><?= $waktu_close; ?></td>
@@ -429,8 +429,8 @@
                                                                         COUNT(*) AS JUMLAH_MASALAH
                                                                     FROM
                                                                         PMBREAKDOWNENTRY p
-                                                                    LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
-                                                                    LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                    -- LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
+                                                                    -- LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                                     WHERE
                                                                         $where_kategori
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
@@ -444,7 +444,8 @@
                                                                 WHERE
                                                                     $where_kategori
                                                                     AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
-                                                                    AND HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0");
+                                                                    AND (EXTRACT(DAY FROM p3.STARTDATE - p.CREATIONDATETIME) > 0 OR HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0
+                                                                    OR EXTRACT(DAY FROM p3.STARTDATE - p.CREATIONDATETIME) > 0 AND HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0)");
                                                                 // $var_dump($query_jumlah_follow);
                                 $row_jumlah_follow = db2_fetch_assoc($query_jumlah_follow);
 
@@ -461,7 +462,11 @@
                                                                                 $where_kategori
                                                                                 AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
                                                                                 AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
-                                                                                AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 2");
+                                                                                AND ((EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
+	                                                                            OR HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 2
+	                                                                            	OR (EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
+	                                                                            	AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 2)");
+                                                                                // -- AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 2");
                                                                                     
 
                                 $row_jumlah_close_3_jam = db2_fetch_assoc($query_jumlah_close_3_jam);
@@ -477,7 +482,10 @@
                                                                                 $where_kategori
                                                                                 AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
                                                                                 AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
-                                                                                AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 4");
+                                                                                AND ((EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
+	                                                                            OR HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 4
+	                                                                            	OR (EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
+	                                                                            	AND HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 4)");
 
                                 $row_jumlah_close_5_jam = db2_fetch_assoc($query_jumlah_close_5_jam);
 
