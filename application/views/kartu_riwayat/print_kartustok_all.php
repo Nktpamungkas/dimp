@@ -106,10 +106,12 @@
                                                                     AND b.DECOSUBCODE05 = p.SUBCODE05 
                                                                     AND b.DECOSUBCODE06 = p.SUBCODE06 
                                                 WHERE
-                                                    s.ITEMTYPECODE ='SPR'
-                                                    AND s.DECOSUBCODE01 = 'DIT' 
+                                                    s.ITEMTYPECODE ='SPR' -- Sparepart
+                                                    AND s.DECOSUBCODE01 = 'DIT' -- Divisi
                                                     AND (s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT' OR s.TEMPLATECODE = '201' OR s.TEMPLATECODE = '098')
-                                                    AND (s.TRANSACTIONDATE) BETWEEN '$date1' AND '$date2'
+                                                    -- AND (s.TRANSACTIONDATE) BETWEEN '$date1' AND '$date2' -- Ambil dari data transaksi
+                                                    -- AND (s.TRANSACTIONDATE) BETWEEN '2024-01-10' AND '$date2' -- Ambil dari data transaksi              
+                                                    AND (s.TRANSACTIONDATE  BETWEEN '$date1' AND '$date2' OR s.TRANSACTIONDATE NOT BETWEEN '$date1' AND '$date2')
                                                 GROUP BY
                                                     s.DECOSUBCODE01,
                                                     s.DECOSUBCODE02,
@@ -124,7 +126,10 @@
         <?php $no = 1; while ($row_barang = db2_fetch_assoc($query_barang)) : ?>
         <tr>
             <td style="text-align: center;"><?= $no++; ?></td>
-            <td style="text-align: left; font-size: 10px;"><?= $row_barang['KODE_BARANG']; ?></td>
+            <!-- <td style="text-align: left; font-size: 10px;"><?= $row_barang['KODE_BARANG']; ?></td> -->
+            <td style="text-align: left; font-size: 10px; <?php echo (($row_barang['TRANSACTIONDATE'] >= $date1 && $row_barang['TRANSACTIONDATE'] <= $date2) ? 'background-color: yellow;' : ''); ?>">
+    <?= $row_barang['KODE_BARANG']; ?>
+</td>
             <td style="text-align: left;"><?= $row_barang['NAMA_BARANG']; ?></td>
 
             <td style="text-align: center;">
@@ -133,22 +138,77 @@
                         $where_date = "AND (s.TRANSACTIONDATE) = '$date1'";
                     }else{
                         $where_date = "AND (s.TRANSACTIONDATE) BETWEEN '2024-01-10' AND '$date1'";
+                        // $where_date = "AND (s.TRANSACTIONDATE) BETWEEN '$date1' AND '$date2'";
                     }
-                    $q_stok_awal    = db2_exec($conn1, "SELECT 
-                                                            floor(SUM(s.USERPRIMARYQUANTITY)) AS STOK_AWAL
-                                                        FROM 
-                                                            STOCKTRANSACTION s
-                                                        WHERE
-                                                            s.ITEMTYPECODE ='SPR'
-                                                            AND s.DECOSUBCODE01 = 'DIT' 
-                                                            AND TRIM(s.DECOSUBCODE01) || '-' ||
-                                                                TRIM(s.DECOSUBCODE02) || '-' ||
-                                                                TRIM(s.DECOSUBCODE03) || '-' ||
-                                                                TRIM(s.DECOSUBCODE04) || '-' ||
-                                                                TRIM(s.DECOSUBCODE05) || '-' ||
-                                                                TRIM(s.DECOSUBCODE06)  = '$row_barang[KODE_BARANG]'
-                                                            AND (s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT')
-                                                            $where_date");
+                    // $q_stok_awal    = db2_exec($conn1, "SELECT 
+                    //                                         floor(SUM(s.USERPRIMARYQUANTITY)) AS STOK_AWAL
+                    //                                     FROM 
+                    //                                         STOCKTRANSACTION s
+                    //                                     WHERE
+                    //                                         s.ITEMTYPECODE ='SPR'
+                    //                                         AND s.DECOSUBCODE01 = 'DIT' 
+                    //                                         AND TRIM(s.DECOSUBCODE01) || '-' ||
+                    //                                             TRIM(s.DECOSUBCODE02) || '-' ||
+                    //                                             TRIM(s.DECOSUBCODE03) || '-' ||
+                    //                                             TRIM(s.DECOSUBCODE04) || '-' ||
+                    //                                             TRIM(s.DECOSUBCODE05) || '-' ||
+                    //                                             TRIM(s.DECOSUBCODE06)  = '$row_barang[KODE_BARANG]'
+                    //                                         AND (s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT')
+                    //                                         $where_date");
+
+                    $q_stok_awal    = db2_exec($conn1, "SELECT
+                    SUM(QTY_AWAL) AS STOK_AWAL
+                FROM
+                    (
+                    SELECT
+                        CASE
+                            WHEN s.TEMPLATECODE = '101'
+                            OR s.TEMPLATECODE = 'OPN'
+                            OR s.TEMPLATECODE = 'QCT' THEN 
+                                                                            CASE
+                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                                ELSE floor(SUM(s.USERPRIMARYQUANTITY))
+                            END
+                            WHEN s.TEMPLATECODE = '201'
+                            OR s.TEMPLATECODE = '098' THEN -
+                                                                            CASE
+                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                                ELSE floor(SUM(s.USERPRIMARYQUANTITY))
+                            END
+                        END AS QTY_AWAL
+                    FROM
+                        STOCKTRANSACTION s
+                    LEFT JOIN PRODUCT p ON
+                        p.ITEMTYPECODE = s.ITEMTYPECODE
+                        AND p.SUBCODE01 = s.DECOSUBCODE01
+                        AND p.SUBCODE02 = s.DECOSUBCODE02
+                        AND p.SUBCODE03 = s.DECOSUBCODE03
+                        AND p.SUBCODE04 = s.DECOSUBCODE04
+                        AND p.SUBCODE05 = s.DECOSUBCODE05
+                        AND p.SUBCODE06 = s.DECOSUBCODE06
+                    WHERE
+                        s.ITEMTYPECODE = 'SPR'
+                        AND s.DECOSUBCODE01 = 'DIT'
+                        AND TRIM(s.DECOSUBCODE01) || '-' ||
+                                                                        TRIM(s.DECOSUBCODE02) || '-' ||
+                                                                        TRIM(s.DECOSUBCODE03) || '-' ||
+                                                                        TRIM(s.DECOSUBCODE04) || '-' ||
+                                                                        TRIM(s.DECOSUBCODE05) || '-' ||
+                                                                        TRIM(s.DECOSUBCODE06) = '$row_barang[KODE_BARANG]'
+                        AND (s.TEMPLATECODE = '101'
+                            OR s.TEMPLATECODE = 'OPN'
+                            OR s.TEMPLATECODE = 'QCT'
+                            OR s.TEMPLATECODE = '201'
+                            OR s.TEMPLATECODE = '098')
+                       $where_date
+                    GROUP BY
+                        s.TEMPLATECODE,
+                        s.BASEPRIMARYUOMCODE)");
+
+
+
+
+
                     $row_stok_awal  = db2_fetch_assoc($q_stok_awal);
                     if($row_stok_awal['STOK_AWAL']){
                         $stok_awal = $row_stok_awal['STOK_AWAL'];
