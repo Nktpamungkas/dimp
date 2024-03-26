@@ -130,7 +130,10 @@
         FROM 
             RankedData
         WHERE 
-            RowNum = 1;
+            RowNum = 1
+        ORDER BY 
+        KATEGORI ASC,
+        NAMA_BARANG ASC;
         ");
 
         ?>
