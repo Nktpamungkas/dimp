@@ -68,6 +68,7 @@
             <td width="180">KODE BARANG</td>
             <td width="400">JENIS BARANG</td>
             <td width="75">KATEGORI</td>
+            <td width="75">STOK Min</td>
             <td width="75">STOK AWAL</td>
             <td width="75">UNIT</td>
             <td width="75">MASUK</td>
@@ -77,57 +78,61 @@
             <td width="100">CATATAN</td>
         </tr>
         <?php
-           $query_barang = db2_exec($conn1, "SELECT
-                                    DISTINCT
-                                    TRIM(s.DECOSUBCODE01) || '-' ||
-                                    TRIM(s.DECOSUBCODE02) || '-' ||
-                                    TRIM(s.DECOSUBCODE03) || '-' ||
-                                    TRIM(s.DECOSUBCODE04) || '-' ||
-                                    TRIM(s.DECOSUBCODE05) || '-' ||
-                                    TRIM(s.DECOSUBCODE06) AS KODE_BARANG,
-                                    MIN(p.LONGDESCRIPTION) AS NAMA_BARANG, -- Menggunakan MIN() atau MAX() untuk menghindari duplikat
-                                    CASE
-                                        WHEN LOWER(MIN(p.LONGDESCRIPTION)) LIKE '%server%' THEN 'Server' -- Menggunakan LOWER(MIN()) atau LOWER(MAX())
-                                        WHEN LOWER(MIN(p.LONGDESCRIPTION)) LIKE '%rusak%' THEN 'Rusak'
-                                        ELSE 'Sparepart'
-                                    END AS KATEGORI,
-                                    CASE
-                                        WHEN s.USERPRIMARYUOMCODE = 'Rol' THEN s.BASEPRIMARYUOMCODE 
-                                        ELSE s.USERPRIMARYUOMCODE
-                                    END AS UNIT
-                                FROM
-                                    STOCKTRANSACTION s
-                                LEFT JOIN PRODUCT p ON p.ITEMTYPECODE = s.ITEMTYPECODE 
-                                                    AND p.SUBCODE01 = s.DECOSUBCODE01 
-                                                    AND p.SUBCODE02 = s.DECOSUBCODE02 
-                                                    AND p.SUBCODE03 = s.DECOSUBCODE03 
-                                                    AND p.SUBCODE04 = s.DECOSUBCODE04 
-                                                    AND p.SUBCODE05 = s.DECOSUBCODE05 
-                                                    AND p.SUBCODE06 = s.DECOSUBCODE06
-                                RIGHT JOIN BALANCE b ON b.ITEMTYPECODE = p.ITEMTYPECODE
-                                                    AND b.DECOSUBCODE01 = p.SUBCODE01 
-                                                    AND b.DECOSUBCODE02 = p.SUBCODE02 
-                                                    AND b.DECOSUBCODE03 = p.SUBCODE03 
-                                                    AND b.DECOSUBCODE04 = p.SUBCODE04 
-                                                    AND b.DECOSUBCODE05 = p.SUBCODE05 
-                                                    AND b.DECOSUBCODE06 = p.SUBCODE06 
-                                WHERE
-                                    s.ITEMTYPECODE ='SPR' -- Sparepart
-                                    AND s.DECOSUBCODE01 = 'DIT' -- Divisi
-                                    AND (s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT' OR s.TEMPLATECODE = '201' OR s.TEMPLATECODE = '098')
-                                    -- AND (s.TRANSACTIONDATE) BETWEEN '$date1' AND '$date2' -- Ambil dari data transaksi
-                                    -- AND (s.TRANSACTIONDATE) BETWEEN '2024-01-10' AND '$date2' -- Ambil dari data transaksi              
-                                    AND (s.TRANSACTIONDATE  BETWEEN '$date1' AND '$date2' OR s.TRANSACTIONDATE NOT BETWEEN '$date1' AND '$date2' )
-                                GROUP BY
-                                    s.DECOSUBCODE01,
-                                    s.DECOSUBCODE02,
-                                    s.DECOSUBCODE03,
-                                    s.DECOSUBCODE04,
-                                    s.DECOSUBCODE05,
-                                    s.DECOSUBCODE06,
-                                    s.USERPRIMARYUOMCODE,
-                                    s.BASEPRIMARYUOMCODE
-                            ");
+         $query_barang = db2_exec($conn1, "WITH RankedData AS (
+            SELECT
+                TRIM(s.DECOSUBCODE01) || '-' || TRIM(s.DECOSUBCODE02) || '-' ||
+                TRIM(s.DECOSUBCODE03) || '-' || TRIM(s.DECOSUBCODE04) || '-' ||
+                TRIM(s.DECOSUBCODE05) || '-' || TRIM(s.DECOSUBCODE06) AS KODE_BARANG,
+                p.LONGDESCRIPTION AS NAMA_BARANG,
+                CASE
+                    WHEN LOWER(p.LONGDESCRIPTION) LIKE '%server%' THEN 'Server'
+                    WHEN LOWER(p.LONGDESCRIPTION) LIKE '%rusak%' THEN 'Rusak'
+                    ELSE 'Sparepart'
+                END AS KATEGORI,
+                CASE
+                    WHEN s.USERPRIMARYUOMCODE = 'Rol' THEN s.BASEPRIMARYUOMCODE
+                    WHEN s.USERPRIMARYUOMCODE = 'm' THEN s.BASEPRIMARYUOMCODE
+                    WHEN s.USERPRIMARYUOMCODE = 'ft' THEN s.BASEPRIMARYUOMCODE
+                    ELSE s.USERPRIMARYUOMCODE
+                END AS UNIT,
+                ROW_NUMBER() OVER (PARTITION BY TRIM(s.DECOSUBCODE01) || '-' || TRIM(s.DECOSUBCODE02) || '-' ||
+                    TRIM(s.DECOSUBCODE03) || '-' || TRIM(s.DECOSUBCODE04) || '-' ||
+                    TRIM(s.DECOSUBCODE05) || '-' || TRIM(s.DECOSUBCODE06) ORDER BY s.TRANSACTIONDATE) AS RowNum
+            FROM
+                STOCKTRANSACTION s
+            LEFT JOIN PRODUCT p ON
+                p.ITEMTYPECODE = s.ITEMTYPECODE
+                AND p.SUBCODE01 = s.DECOSUBCODE01
+                AND p.SUBCODE02 = s.DECOSUBCODE02
+                AND p.SUBCODE03 = s.DECOSUBCODE03
+                AND p.SUBCODE04 = s.DECOSUBCODE04
+                AND p.SUBCODE05 = s.DECOSUBCODE05
+                AND p.SUBCODE06 = s.DECOSUBCODE06
+            RIGHT JOIN BALANCE b ON
+                b.ITEMTYPECODE = p.ITEMTYPECODE
+                AND b.DECOSUBCODE01 = p.SUBCODE01
+                AND b.DECOSUBCODE02 = p.SUBCODE02
+                AND b.DECOSUBCODE03 = p.SUBCODE03
+                AND b.DECOSUBCODE04 = p.SUBCODE04
+                AND b.DECOSUBCODE05 = p.SUBCODE05
+                AND b.DECOSUBCODE06 = p.SUBCODE06
+            WHERE
+                s.ITEMTYPECODE = 'SPR'
+                AND s.DECOSUBCODE01 = 'DIT'
+                AND (s.TEMPLATECODE IN ('101', 'OPN', 'QCT', '201', '098'))
+                AND (s.TRANSACTIONDATE  BETWEEN '$date1' AND '$date2' OR s.TRANSACTIONDATE NOT BETWEEN '$date1' AND '$date2' )
+        )
+        SELECT 
+            KODE_BARANG,
+            NAMA_BARANG,
+            KATEGORI,
+            UNIT
+        FROM 
+            RankedData
+        WHERE 
+            RowNum = 1;
+        ");
+
         ?>
         <?php $no = 1; while ($row_barang = db2_fetch_assoc($query_barang)) : ?>
         <tr>
@@ -138,6 +143,29 @@
 </td>
             <td style="text-align: left;"><?= $row_barang['NAMA_BARANG']; ?></td>
             <td style="text-align: center;"><?= $row_barang['KATEGORI']; ?></td>
+
+            <td style="text-align: center;">
+                <?php
+                    if($row_barang['NAMA_BARANG'] == 'Kabel LAN Cat. 5e Indoor' && $row_barang['KATEGORI'] == 'Sparepart' && $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-CABLE5E---INDOOR-FT' ){
+                        $stock_min = 200;
+                    }else if($row_barang['KATEGORI'] == 'Sparepart' && $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-RJ45---PLASTIC'){
+                        $stock_min = 10;
+                    }else if($row_barang['KATEGORI'] == 'Sparepart' && $row_barang['KODE_BARANG'] == 'DIT-PERIF-LOC-BATTERY---UPS' || $row_barang['KODE_BARANG'] == 'DIT-PERIF-LOC-KEYBOARD---USB'
+                    || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-LAPTOP-LENOVO-THINK-E14' || $row_barang['KODE_BARANG'] == 'DIT-MONITOR-LOC-19INCH-LG--' || $row_barang['KODE_BARANG'] == 'DIT-PERIF-LOC-MOUSE----'
+                    || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-PSU-DAZUMBA-PC' || $row_barang['KODE_BARANG'] == 'DIT-PRINT-LOC-LABEL-NORSEL-BP700' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-CONVERT-TP-LINK--'
+                    || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SFP-UBIQUITI-UACC-SM-1G' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SWITCH-UNIFI-SW48' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SWITCH-UNIFI-SW8POE'
+                    || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-DDR3----'
+                    ){
+                        $stock_min = 2;
+                    }else{
+                        $stock_min = '';
+                    }
+                    
+                    // && $row_barang['KODE_BARANG'] == ''
+
+                    echo $stock_min;
+                ?>
+            </td><!-- STOK Min -->
 
             <td style="text-align: center;">
                 <?php
@@ -231,10 +259,12 @@
                 ?>
             </td><!-- STOK AWAL -->
 
+
             <td style="text-align: center;"><?= $row_barang['UNIT']; ?></td>
 
             <td style="text-align: center;">
                 <?php
+
                     $q_stok_masuk    = db2_exec($conn1, "SELECT 
                                                                 CASE
                                                                     WHEN s.USERPRIMARYUOMCODE = 'Rol' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
@@ -252,7 +282,7 @@
                                                                     TRIM(s.DECOSUBCODE05) || '-' ||
                                                                     TRIM(s.DECOSUBCODE06)  = '$row_barang[KODE_BARANG]'
                                                                 AND (s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT')
-                                                                AND (s.TRANSACTIONDATE) > '$date1' AND (s.TRANSACTIONDATE) <= '$date2'
+                                                                AND (s.TRANSACTIONDATE) >= '$date1' AND (s.TRANSACTIONDATE) <= '$date2'
                                                             GROUP BY
                                                                 s.USERPRIMARYUOMCODE
                                                                 ");
