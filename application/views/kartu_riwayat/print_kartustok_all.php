@@ -157,7 +157,7 @@
                     || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-LAPTOP-LENOVO-THINK-E14' || $row_barang['KODE_BARANG'] == 'DIT-MONITOR-LOC-19INCH-LG--' || $row_barang['KODE_BARANG'] == 'DIT-PERIF-LOC-MOUSE----'
                     || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-PSU-DAZUMBA-PC' || $row_barang['KODE_BARANG'] == 'DIT-PRINT-LOC-LABEL-NORSEL-BP700' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-CONVERT-TP-LINK--'
                     || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SFP-UBIQUITI-UACC-SM-1G' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SWITCH-UNIFI-SW48' || $row_barang['KODE_BARANG'] == 'DIT-NETWK-LOC-SWITCH-UNIFI-SW8POE'
-                    || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-DDR3----'
+                    || $row_barang['KODE_BARANG'] == 'DIT-CORE-LOC-DDR3----' || $row_barang['KODE_BARANG'] == 'DIT-CPU-LOC-I5-ASUS--'
                     ){
                         $stock_min = 2;
                     }else{
@@ -271,7 +271,7 @@
                     $q_stok_masuk    = db2_exec($conn1, "SELECT 
                                                                 CASE
                                                                     WHEN s.USERPRIMARYUOMCODE = 'Rol' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
-                                                                    ELSE floor(SUM(s.USERPRIMARYQUANTITY))
+                                                                    ELSE floor(SUM(s.BASEPRIMARYQUANTITY))
                                                                 END	AS MASUK
                                                             FROM 
                                                                 STOCKTRANSACTION s
