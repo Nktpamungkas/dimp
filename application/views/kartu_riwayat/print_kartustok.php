@@ -17,7 +17,7 @@
                 s.TRANSACTIONTIME AS WAKTU,
                 p.LONGDESCRIPTION AS NAMA_BARANG,
                 CASE
-                    WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                    WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' OR TRIM(s.BASEPRIMARYUOMCODE) = 'un' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
                     ELSE floor(SUM(s.USERPRIMARYQUANTITY))
                 END AS QTY,
                 CASE

@@ -202,53 +202,53 @@
                     //                                         $where_date");
 
                     $q_stok_awal    = db2_exec($conn1, "SELECT
-                    SUM(QTY_AWAL) AS STOK_AWAL
-                FROM
-                    (
-                    SELECT
-                        CASE
-                            WHEN s.TEMPLATECODE = '101'
-                            OR s.TEMPLATECODE = 'OPN'
-                            OR s.TEMPLATECODE = 'QCT' THEN 
-                                                                            CASE
-                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
-                                ELSE floor(SUM(s.USERPRIMARYQUANTITY))
-                            END
-                            WHEN s.TEMPLATECODE = '201'
-                            OR s.TEMPLATECODE = '098' THEN -
-                                                                            CASE
-                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
-                                ELSE floor(SUM(s.USERPRIMARYQUANTITY))
-                            END
-                        END AS QTY_AWAL
-                    FROM
-                        STOCKTRANSACTION s
-                    LEFT JOIN PRODUCT p ON
-                        p.ITEMTYPECODE = s.ITEMTYPECODE
-                        AND p.SUBCODE01 = s.DECOSUBCODE01
-                        AND p.SUBCODE02 = s.DECOSUBCODE02
-                        AND p.SUBCODE03 = s.DECOSUBCODE03
-                        AND p.SUBCODE04 = s.DECOSUBCODE04
-                        AND p.SUBCODE05 = s.DECOSUBCODE05
-                        AND p.SUBCODE06 = s.DECOSUBCODE06
-                    WHERE
-                        s.ITEMTYPECODE = 'SPR'
-                        AND s.DECOSUBCODE01 = 'DIT'
-                        AND TRIM(s.DECOSUBCODE01) || '-' ||
-                                                                        TRIM(s.DECOSUBCODE02) || '-' ||
-                                                                        TRIM(s.DECOSUBCODE03) || '-' ||
-                                                                        TRIM(s.DECOSUBCODE04) || '-' ||
-                                                                        TRIM(s.DECOSUBCODE05) || '-' ||
-                                                                        TRIM(s.DECOSUBCODE06) = '$row_barang[KODE_BARANG]'
-                        AND (s.TEMPLATECODE = '101'
-                            OR s.TEMPLATECODE = 'OPN'
-                            OR s.TEMPLATECODE = 'QCT'
-                            OR s.TEMPLATECODE = '201'
-                            OR s.TEMPLATECODE = '098')
-                       $where_date
-                    GROUP BY
-                        s.TEMPLATECODE,
-                        s.BASEPRIMARYUOMCODE)");
+                                                            SUM(QTY_AWAL) AS STOK_AWAL
+                                                        FROM
+                                                            (
+                                                            SELECT
+                                                                CASE
+                                                                    WHEN s.TEMPLATECODE = '101'
+                                                                    OR s.TEMPLATECODE = 'OPN'
+                                                                    OR s.TEMPLATECODE = 'QCT' THEN 
+                                                                                                                    CASE
+                                                                        WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                                                                        ELSE floor(SUM(s.USERPRIMARYQUANTITY))
+                                                                    END
+                                                                    WHEN s.TEMPLATECODE = '201'
+                                                                    OR s.TEMPLATECODE = '098' THEN -
+                                                                                                                    CASE
+                                                                        WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                                                                        ELSE floor(SUM(s.USERPRIMARYQUANTITY))
+                                                                    END
+                                                                END AS QTY_AWAL
+                                                            FROM
+                                                                STOCKTRANSACTION s
+                                                            LEFT JOIN PRODUCT p ON
+                                                                p.ITEMTYPECODE = s.ITEMTYPECODE
+                                                                AND p.SUBCODE01 = s.DECOSUBCODE01
+                                                                AND p.SUBCODE02 = s.DECOSUBCODE02
+                                                                AND p.SUBCODE03 = s.DECOSUBCODE03
+                                                                AND p.SUBCODE04 = s.DECOSUBCODE04
+                                                                AND p.SUBCODE05 = s.DECOSUBCODE05
+                                                                AND p.SUBCODE06 = s.DECOSUBCODE06
+                                                            WHERE
+                                                                s.ITEMTYPECODE = 'SPR'
+                                                                AND s.DECOSUBCODE01 = 'DIT'
+                                                                AND TRIM(s.DECOSUBCODE01) || '-' ||
+                                                                                                                TRIM(s.DECOSUBCODE02) || '-' ||
+                                                                                                                TRIM(s.DECOSUBCODE03) || '-' ||
+                                                                                                                TRIM(s.DECOSUBCODE04) || '-' ||
+                                                                                                                TRIM(s.DECOSUBCODE05) || '-' ||
+                                                                                                                TRIM(s.DECOSUBCODE06) = '$row_barang[KODE_BARANG]'
+                                                                AND (s.TEMPLATECODE = '101'
+                                                                    OR s.TEMPLATECODE = 'OPN'
+                                                                    OR s.TEMPLATECODE = 'QCT'
+                                                                    OR s.TEMPLATECODE = '201'
+                                                                    OR s.TEMPLATECODE = '098')
+                                                            $where_date
+                                                            GROUP BY
+                                                                s.TEMPLATECODE,
+                                                                s.BASEPRIMARYUOMCODE)");
 
 
                     $row_stok_awal  = db2_fetch_assoc($q_stok_awal);
