@@ -40,7 +40,7 @@
                                                 PMBOM p
                                             LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE 
                                             WHERE
-                                                (p.CREATIONUSER = 'deden.kurnia' OR p.CREATIONUSER = 'mamik.agung' OR p.CREATIONUSER = 'heriben.harna' OR p.CREATIONUSER = 'sultan.hidayat')");
+                                                (p.CREATIONUSER = 'deden.kurnia' OR p.CREATIONUSER = 'mamik.agung' OR p.CREATIONUSER = 'heriben.harna' OR p.CREATIONUSER = 'sultan.hidayat' OR p.CREATIONUSER = 'lilis.handayani')");
             $no = 1;
             while ($row_mesinDIT = db2_fetch_assoc($q_mesinDIT)) {
         ?>
