@@ -175,7 +175,7 @@
                                                     CASE
                                                         WHEN s.TEMPLATECODE = '101' OR s.TEMPLATECODE = 'OPN' OR s.TEMPLATECODE = 'QCT' THEN 
                                                             CASE
-                                                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
+                                                                WHEN TRIM(s.BASEPRIMARYUOMCODE) = 'm' OR TRIM(s.BASEPRIMARYUOMCODE) = 'un' THEN floor(SUM(s.BASEPRIMARYQUANTITY))
                                                                 ELSE floor(SUM(s.USERPRIMARYQUANTITY))
                                                             END
                                                         WHEN s.TEMPLATECODE = '201' OR s.TEMPLATECODE = '098' THEN -
