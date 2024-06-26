@@ -50,7 +50,7 @@
                         <select class="form-control" name="type">
                             <option value="Semua">Semua</option>
                             <?php
-                                $q_kategori       = db2_exec($conn1, "SELECT * FROM PMBREAKDOWNTYPE p WHERE SHORTDESCRIPTION = 'IT SUPPORT'");
+                                $q_kategori       = db2_exec($conn1, "SELECT * FROM PMBREAKDOWNTYPE p WHERE SHORTDESCRIPTION = 'IT SUPPORT' OR SHORTDESCRIPTION = 'ERP'");
                             ?>
                             <?php while ($row_kategori = db2_fetch_assoc($q_kategori)) : ?>
                                 <option value="<?= $row_kategori['CODE']; ?>">(<?= $row_kategori['CODE']; ?>) <?= $row_kategori['LONGDESCRIPTION']; ?></option>

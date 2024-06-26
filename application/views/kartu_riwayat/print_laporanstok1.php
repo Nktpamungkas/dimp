@@ -283,7 +283,7 @@
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <?php
             if($type == 'Semua'){
-                $where_kategori = "(p.BREAKDOWNTYPE = 'HD' OR p.BREAKDOWNTYPE = 'NW' OR p.BREAKDOWNTYPE = 'EM')";
+                $where_kategori = "(p.BREAKDOWNTYPE = 'HD' OR p.BREAKDOWNTYPE = 'NW' OR p.BREAKDOWNTYPE = 'EM' OR p.BREAKDOWNTYPE = 'ERP')";
             }else{
                 $where_kategori = "p.BREAKDOWNTYPE = '$type'";
             }

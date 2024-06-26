@@ -350,6 +350,7 @@
                                                                             WHEN p.BREAKDOWNTYPE = 'HD' THEN 'HARDWARE & SOFTWARE'
                                                                             WHEN p.BREAKDOWNTYPE = 'NW' THEN 'NETWORK'
                                                                             WHEN p.BREAKDOWNTYPE = 'EM' THEN 'EMAIL'
+                                                                            WHEN p.BREAKDOWNTYPE = 'ERP' THEN 'ERP'
                                                                             ELSE ''
                                                                         END	AS KATEGORI,
                                                                         p2.FIRSTUSERGRPCODE AS HARDWARE
