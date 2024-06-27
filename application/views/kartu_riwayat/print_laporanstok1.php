@@ -306,7 +306,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                             LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE 
                                             WHERE
                                                 $where_kategori
-                                                AND  d.SHORTDESCRIPTION != 'ALL'
+                                                AND  p.BREAKDOWNTYPE != 'ERP'
                                                 AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
                                             ORDER BY
                                                 p.CREATIONDATETIME ASC");
@@ -441,7 +441,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     -- LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                                     WHERE
                                                                         $where_kategori
-                                                                        AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                        AND  p.BREAKDOWNTYPE != 'ERP'
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                 $row_jumlah_masalah = db2_fetch_assoc($q_jumlah_masalah);
 
@@ -453,7 +453,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE 
                                                                 WHERE
                                                                     $where_kategori
-                                                                    AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                    AND  p.BREAKDOWNTYPE != 'ERP'
                                                                     AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
                                                                     AND (EXTRACT(DAY FROM p3.STARTDATE - p.CREATIONDATETIME) > 0 OR HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0
                                                                     OR EXTRACT(DAY FROM p3.STARTDATE - p.CREATIONDATETIME) > 0 AND HOUR(TIMESTAMP(p3.STARTDATE) - TIMESTAMP(p.CREATIONDATETIME)) > 0)");
@@ -472,7 +472,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
                                                                                 WHERE
                                                                                 $where_kategori
-                                                                                AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                                AND  p.BREAKDOWNTYPE != 'ERP'
                                                                                 AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
                                                                                 AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
                                                                                 AND ((EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
@@ -494,7 +494,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                                 LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
                                                                                 WHERE
                                                                                 $where_kategori
-                                                                                AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                                AND  p.BREAKDOWNTYPE != 'ERP'
                                                                                 AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
                                                                                 AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
                                                                                 AND ((EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
@@ -514,7 +514,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
                                                                     WHERE
                                                                         $where_kategori
-                                                                        AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                        AND  p.BREAKDOWNTYPE != 'ERP'
                                                                         AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                 $row_jumlah_masalah_ringan = db2_fetch_assoc($q_jumlah_masalah_ringan);
@@ -528,7 +528,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
                                                                     WHERE
                                                                         $where_kategori
-                                                                        AND  d.SHORTDESCRIPTION != 'ALL'
+                                                                        AND  p.BREAKDOWNTYPE != 'ERP'
                                                                         AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
