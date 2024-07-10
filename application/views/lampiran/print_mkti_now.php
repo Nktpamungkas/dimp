@@ -157,10 +157,12 @@ $conn1 = db2_connect($conn_string, '', '');
                                 p.GENERICDATA3 AS OS,
                                 p.LONGDESCRIPTION AS USER,
                                 d.CODE AS CODE_DEPT,
-                                d.SHORTDESCRIPTION AS DEPT 
+                                d.SHORTDESCRIPTION AS DEPT,
+                                a.VALUESTRING AS IPADDRESS
                             FROM
                                 PMBOM p
-                            LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE 
+                            LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+                            LEFT JOIN ADSTORAGE a ON a.UNIQUEID = p.ABSUNIQUEID AND a.FIELDNAME = 'IPADDRESS'
                             WHERE 
                                 (p.FIRSTUSERGRPCODE = 'CPU' OR
                                 p.FIRSTUSERGRPCODE = 'DESKTOP' OR
@@ -219,9 +221,7 @@ $conn1 = db2_connect($conn_string, '', '');
                     <td align="center"><?= $r_monitoring['OS']; ?></td>
                     <td align="center"></td>
                     <td align="center"><?= $r_monitoring['USER']; ?></td>
-                    <td align="center">
-                        <input type="text" class="input_ip">
-                    </td>
+                    <td align="center"><?= $r_monitoring['IPADDRESS']; ?></td>
                     <td align="center">&nbsp;</td>
                 </tr>
             <?php endwhile; ?>
