@@ -1,13 +1,13 @@
 <?php
-    $hostname="10.0.0.21";
-    // $database = "NOWTEST"; // SERVER NOW 20
-    $database = "NOWPRD"; // SERVER NOW 22
-    $user = "db2admin";
-    $passworddb2 = "Sunkam@24809";
-    $port="25000";
-    $conn_string = "DRIVER={IBM ODBC DB2 DRIVER}; HOSTNAME=$hostname; PORT=$port; PROTOCOL=TCPIP; UID=$user; PWD=$passworddb2; DATABASE=$database;";
-    // $conn1 = db2_pconnect($conn_string,'', '');
-    $conn1 = db2_connect($conn_string,'', '');
+$hostname = "10.0.0.21";
+// $database = "NOWTEST"; // SERVER NOW 20
+$database = "NOWPRD"; // SERVER NOW 22
+$user = "db2admin";
+$passworddb2 = "Sunkam@24809";
+$port = "25000";
+$conn_string = "DRIVER={IBM ODBC DB2 DRIVER}; HOSTNAME=$hostname; PORT=$port; PROTOCOL=TCPIP; UID=$user; PWD=$passworddb2; DATABASE=$database;";
+// $conn1 = db2_pconnect($conn_string,'', '');
+$conn1 = db2_connect($conn_string, '', '');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,12 +26,21 @@
         font-family: Arial, Helvetica, sans-serif !important;
     }
 
+
+
     @media print {
         @page {
             /* size: A4; */
             margin: 20px 20px 20px 20px;
             size: landscape !important;
             font-size: 8pt !important;
+        }
+
+        input {
+            text-align: center;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
         }
 
         html,
@@ -141,7 +150,7 @@
         </tr>
     </table>
     <?php
-        $query_mon = "SELECT 
+    $query_mon = "SELECT 
                                 p.CODE AS NO_PC_LAPTOP,
                                 p.GENERICDATA1 AS RAM,
                                 p.GENERICDATA2 AS HD,
@@ -162,8 +171,8 @@
                                 p.FIRSTUSERGRPCODE = 'BARCODE')
                                 AND TRIM(d.CODE) = '$dept'
                                 AND p.STATUS = '1'";
-        $q_monitoring = db2_exec($conn1, $query_mon);
-        $q_monitoring2 = db2_exec($conn1, $query_mon);
+    $q_monitoring = db2_exec($conn1, $query_mon);
+    $q_monitoring2 = db2_exec($conn1, $query_mon);
     ?>
     <?php $data_monitoring = db2_fetch_assoc($q_monitoring); ?>
     <p style="font-family: Arial, Helvetica, sans-serif;">
@@ -194,7 +203,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php $no = 1; while ($r_monitoring = db2_fetch_assoc($q_monitoring2)) : ?>
+            <?php $no = 1;
+            while ($r_monitoring = db2_fetch_assoc($q_monitoring2)) : ?>
                 <tr>
                     <td align="center"><?= $no++;  ?></td>
                     <td align="center"><?= $r_monitoring['NO_PC_LAPTOP']; ?></td>
@@ -209,7 +219,9 @@
                     <td align="center"><?= $r_monitoring['OS']; ?></td>
                     <td align="center"></td>
                     <td align="center"><?= $r_monitoring['USER']; ?></td>
-                    <td align="center"></td>
+                    <td align="center">
+                        <input type="text" class="input_ip">
+                    </td>
                     <td align="center">&nbsp;</td>
                 </tr>
             <?php endwhile; ?>
