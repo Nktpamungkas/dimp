@@ -1141,7 +1141,7 @@
             <?php $no = 1; while ($row_breakdown = db2_fetch_assoc($q_breakdown)) { ?>
                 <tr class="row7">
                     <td class="column0 style25 null"><?= $no++; ?></td>
-                    <td class="column1 style26 null"><?= date("d-M-Y H:i:s", strtotime($row_breakdown['TANGGAL'])); ?></td>
+                    <td class="column1 style26 null"><?= date("d-M-Y", strtotime($row_breakdown['TANGGAL'])); ?></td>
                     <td class="column2 style27 null style28" colspan="5"><?= $row_breakdown['KEGIATAN']; ?> <?= ' - '.$row_breakdown['SPAREPARTS']; ?></td>
                 </tr>
             <?php } ?>
