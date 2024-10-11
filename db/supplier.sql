@@ -51,7 +51,7 @@ INSERT INTO `supplier` VALUES ('22', 'PULCRA CHEMICALS', 'Office Building Pesona
 INSERT INTO `supplier` VALUES ('23', 'DYMATIC CHEMICALS INDONESIA', 'Jl.Pitaniaga no.18, Ruko kota baru parahyangan. Bandung', '0226803330 ;', 'Mr.Eric');
 INSERT INTO `supplier` VALUES ('24', 'CLARICHEM INDONESIA', 'Komplek Pergudangan Bizhub,Blok GC no.3, Gunung Sindur, Bogor ', '02129666657', 'Mr.Hari Afriadi');
 INSERT INTO `supplier` VALUES ('25', 'ATLANTIC LESTARI', 'JL.K.H.M.Mansyur no. 246 B, Jakarta Barat 11210', '0216593331', 'Mr.Herman/Siswanto');
-INSERT INTO `supplier` VALUES ('26', 'ASUTEXX / ESTEEM CHEM', '9A,LORONG 1,JALAN ZABEDAH,83000 BATU PAHAT,JOHOR', '+60 74341836', 'MR.GARY');
+INSERT INTO `supplier` VALUES ('26', 'ASUTEXX / ESTEEM CHEM', '9A,LORONG 1,JALAN ZABEDAH,83000 BATU PAHAT,JOHOR', '\'+60 74341836', 'MR.GARY');
 INSERT INTO `supplier` VALUES ('27', 'LUCAS SPS', 'Jl.Karang anyar no.26 RT 1 RW 4, Karang anyar,Astana Anyar, Bandung 40241', '0224234426', 'Mrs. Shinta');
 INSERT INTO `supplier` VALUES ('28', 'CHARLIE SPS', 'JL. Lingkar Luar Barat No. 8 ACengkareng Jakarta Barat', '02154376633', 'Mr.Alfred');
 INSERT INTO `supplier` VALUES ('29', 'APOLLO AGUNG CHEMICALS', 'Jl. Paradise Timur Raya Blok GII No. 1&2Sunter; Agung Jakarta Utara -14350', '0216404690', 'Mr.Yakob ');
