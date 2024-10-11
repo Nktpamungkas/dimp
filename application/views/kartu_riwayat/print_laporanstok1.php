@@ -424,9 +424,9 @@ $conn1 = db2_connect($conn_string, '', '');
                                                 } ?>><?= $waktu_close; ?></td>
 
                                             <td style="border:1px solid black;"><?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
-												Berat
+												BERAT
 											<?php else: ?>
-												Ringan
+												RINGAN
 											<?php endif; ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                         </tr>
