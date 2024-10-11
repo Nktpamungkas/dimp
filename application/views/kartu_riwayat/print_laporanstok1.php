@@ -288,28 +288,35 @@ $conn1 = db2_connect($conn_string, '', '');
             $where_kategori = "p.BREAKDOWNTYPE = '$type'";
         }
         $q_opentiket = db2_exec($conn1, "SELECT
-                                                p.CODE AS NOMOR_TIKET,
-                                                d.SHORTDESCRIPTION,
-                                                p.CREATIONDATETIME AS TGL_OPEN,
-                                                p3.STARTDATE AS TGL_FOLLOWUP,
-                                                p3.ENDDATE AS TGL_CLOSE,
-                                                CASE
-                                                    WHEN a1.VALUESTRING = 1 THEN 'BERAT'
-                                                    WHEN a1.VALUESTRING = 2 THEN 'RINGAN'
-                                                    ELSE ''
-                                                END AS JENIS_KERUSAKAN,
-                                                p3.REMARKS AS KETERANGAN
-                                            FROM
-                                                PMBREAKDOWNENTRY p
-                                            LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
-                                            LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
-                                            LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE 
-                                            WHERE
-                                                $where_kategori
-                                                AND  p.BREAKDOWNTYPE != 'ERP'
-                                                AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
-                                            ORDER BY
-                                                p.CREATIONDATETIME ASC");
+											p.CODE AS NOMOR_TIKET,
+											d.SHORTDESCRIPTION,
+											p.CREATIONDATETIME AS TGL_OPEN,
+											p3.STARTDATE AS TGL_FOLLOWUP,
+											p3.ENDDATE AS TGL_CLOSE,
+											LEFT (I.ACTIVITYCODE,9) AS ACTIVITYCODE,
+											CASE
+												WHEN a1.VALUESTRING = 1 THEN 'BERAT'
+												WHEN a1.VALUESTRING = 2 THEN 'RINGAN'
+												ELSE ''
+											END AS JENIS_KERUSAKAN,
+											p3.REMARKS AS KETERANGAN
+										FROM
+											PMBREAKDOWNENTRY p
+										LEFT JOIN PMWORKORDER p3 ON
+											p3.PMBREAKDOWNENTRYCODE = p.CODE
+										LEFT JOIN ADSTORAGE a1 ON
+											a1.UNIQUEID = p3.ABSUNIQUEID
+											AND a1.FIELDNAME = 'JenisKerusakan'
+										LEFT JOIN DEPARTMENT d ON
+											d.CODE = p.DEPARTMENTCODE
+										LEFT JOIN PMWORKORDERDETAIL I ON
+											I.PMWORKORDERCODE = p3.CODE
+										WHERE
+											$where_kategori
+										AND  p.BREAKDOWNTYPE != 'ERP'
+										AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
+										ORDER BY
+											p.CREATIONDATETIME ASC");
         ?>
         <tr>
             <td>
@@ -416,7 +423,11 @@ $conn1 = db2_connect($conn_string, '', '');
                                                     echo ' style="border:1px solid black;"';
                                                 } ?>><?= $waktu_close; ?></td>
 
-                                            <td style="border:1px solid black;"><?= $row_opentiket['JENIS_KERUSAKAN'] ?></td>
+                                            <td style="border:1px solid black;"><?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
+												Berat
+											<?php else: ?>
+												Ringan
+											<?php endif; ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                         </tr>
                                     </tbody>
