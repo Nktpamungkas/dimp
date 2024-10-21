@@ -287,13 +287,13 @@ $conn1 = db2_connect($conn_string, '', '');
         } else {
             $where_kategori = "p.BREAKDOWNTYPE = '$type'";
         }
-        $q_opentiket = db2_exec($conn1, "SELECT
+        $q_opentiket = db2_exec($conn1, "SELECT 
 											p.CODE AS NOMOR_TIKET,
 											d.SHORTDESCRIPTION,
 											p.CREATIONDATETIME AS TGL_OPEN,
 											p3.STARTDATE AS TGL_FOLLOWUP,
 											p3.ENDDATE AS TGL_CLOSE,
-											LEFT (I.ACTIVITYCODE,9) AS ACTIVITYCODE,
+											LISTAGG(TRIM(LEFT(I.ACTIVITYCODE,9)), ', ') AS ACTIVITYCODE,
 											CASE
 												WHEN a1.VALUESTRING = 1 THEN 'BERAT'
 												WHEN a1.VALUESTRING = 2 THEN 'RINGAN'
@@ -302,19 +302,23 @@ $conn1 = db2_connect($conn_string, '', '');
 											p3.REMARKS AS KETERANGAN
 										FROM
 											PMBREAKDOWNENTRY p
-										LEFT JOIN PMWORKORDER p3 ON
-											p3.PMBREAKDOWNENTRYCODE = p.CODE
-										LEFT JOIN ADSTORAGE a1 ON
-											a1.UNIQUEID = p3.ABSUNIQUEID
-											AND a1.FIELDNAME = 'JenisKerusakan'
-										LEFT JOIN DEPARTMENT d ON
-											d.CODE = p.DEPARTMENTCODE
-										LEFT JOIN PMWORKORDERDETAIL I ON
-											I.PMWORKORDERCODE = p3.CODE
+										LEFT JOIN PMWORKORDER p3 ON	p3.PMBREAKDOWNENTRYCODE = p.CODE
+										LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID	AND a1.FIELDNAME = 'JenisKerusakan'
+										LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+										LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
 										WHERE
-											$where_kategori
-										AND  p.BREAKDOWNTYPE != 'ERP'
-										AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
+												$where_kategori 
+											AND p.BREAKDOWNTYPE != 'ERP' 
+											AND SUBSTR ( p.CREATIONDATETIME, 1, 10 ) BETWEEN '$date1' 
+											AND '$date2'
+										GROUP BY 
+											p.CODE,
+											d.SHORTDESCRIPTION,
+											p.CREATIONDATETIME,
+											p3.STARTDATE,
+											p3.ENDDATE,
+											a1.VALUESTRING,
+											p3.REMARKS
 										ORDER BY
 											p.CREATIONDATETIME ASC");
         ?>
