@@ -423,11 +423,17 @@ $conn1 = db2_connect($conn_string, '', '');
                                                     echo ' style="border:1px solid black;"';
                                                 } ?>><?= $waktu_close; ?></td>
 
-                                            <td style="border:1px solid black;"><?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
-												BERAT
-											<?php else: ?>
-												RINGAN
-											<?php endif; ?></td>
+                                            <td style="border:1px solid black;">
+    												<?php if (strtotime($row_opentiket['TGL_OPEN']) < strtotime('2024-10-01')): ?>
+													<?= $row_opentiket['JENIS_KERUSAKAN'] ?>
+												<?php else: ?>
+													<?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
+														BERAT
+													<?php else: ?>
+														RINGAN
+													<?php endif; ?>
+												<?php endif; ?>
+											</td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                         </tr>
                                     </tbody>
