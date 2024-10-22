@@ -432,9 +432,9 @@ $conn1 = db2_connect($conn_string, '', '');
 													<?= $row_opentiket['JENIS_KERUSAKAN'] ?>
 												<?php else: ?>
 													<?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
-														BERAT
+														BERAT 
 													<?php else: ?>
-														RINGAN
+														RINGAN 
 													<?php endif; ?>
 												<?php endif; ?>
 											</td>
@@ -547,11 +547,14 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
                                                                     LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+																	LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
                                                                     WHERE
                                                                         $where_kategori
                                                                         AND  p.BREAKDOWNTYPE != 'ERP'
-                                                                        AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
-                                                                        AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
+                                                                        --AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
+                                                                        AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
+																		AND TRIM(LEFT(I.ACTIVITYCODE, 9)) = 'DITKMAYOR'
+																	");
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
 
 
