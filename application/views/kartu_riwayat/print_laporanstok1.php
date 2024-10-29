@@ -288,6 +288,7 @@ $conn1 = db2_connect($conn_string, '', '');
             $where_kategori = "p.BREAKDOWNTYPE = '$type'";
         }
         $q_opentiket = db2_exec($conn1, "SELECT 
+											p3.CREATIONUSER AS PEMBUAT,
 											p.CODE AS NOMOR_TIKET,
 											d.SHORTDESCRIPTION,
 											p.CREATIONDATETIME AS TGL_OPEN,
@@ -318,7 +319,8 @@ $conn1 = db2_connect($conn_string, '', '');
 											p3.STARTDATE,
 											p3.ENDDATE,
 											a1.VALUESTRING,
-											p3.REMARKS
+											p3.REMARKS,
+											p3.CREATIONUSER 
 										ORDER BY
 											p.CREATIONDATETIME ASC");
         ?>
@@ -381,6 +383,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                         <th width="15%" style="border:1px solid black;">Waktu Close</th>
                                         <th width="5%" style="border:1px solid black;">Jenis</th>
                                         <th width="18%" style="border:1px solid black;">Keterangan</th>
+                                        <th width="18%" style="border:1px solid black;">Creator</th>
                                     </tr>
                                 </thead>
                                 <?php $no = 1;
@@ -439,6 +442,7 @@ $conn1 = db2_connect($conn_string, '', '');
 												<?php endif; ?>
 											</td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
+											<td style="border:1px solid black;"><?= $row_opentiket['PEMBUAT'] ?></td>
                                         </tr>
                                     </tbody>
                                 <?php endwhile; ?>
