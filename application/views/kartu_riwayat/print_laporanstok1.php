@@ -450,7 +450,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                 } ?>><?= $waktu_close; ?></td>
 
                                             <td style="border:1px solid black;">
-    												<?php if (strtotime($row_opentiket['TGL_OPEN']) < strtotime('2024-10-01')): ?>
+                                                <?php if (strtotime($row_opentiket['TGL_OPEN']) < strtotime('2024-10-01')) : ?>
 													<?= $row_opentiket['JENIS_KERUSAKAN'] ?>
 												<?php else: ?>
 													<?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
@@ -529,6 +529,11 @@ $conn1 = db2_connect($conn_string, '', '');
 
                 $row_jumlah_close_3_jam = db2_fetch_assoc($query_jumlah_close_3_jam);
 
+                if (strtotime($date1) < strtotime('2024-10-01')){
+                    $StringMayor    = "AND a1.VALUESTRING = '1'";
+                }else{
+                    $StringMayor    = "AND TRIM(LEFT(I.ACTIVITYCODE,9)) = 'DITKMAYOR'";
+                }
 
                 $query_jumlah_close_5_jam = db2_exec($conn1, "SELECT 
                                                                                     COUNT(*) AS Total_CLOSE_5_JAM
@@ -536,11 +541,12 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                                     PMBREAKDOWNENTRY p
                                                                                     LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
                                                                                     LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
-                                                                                LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+                                                                                    LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+                                                                                    LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
                                                                                 WHERE
                                                                                 $where_kategori
                                                                                 AND  p.BREAKDOWNTYPE != 'ERP'
-                                                                                AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
+                                                                                $StringMayor
                                                                                 AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
                                                                                 AND ((EXTRACT(DAY FROM p3.ENDDATE - p3.STARTDATE)) > 0
 	                                                                            OR HOUR(TIMESTAMP(p3.ENDDATE) - TIMESTAMP(p3.STARTDATE)) > 4
@@ -571,10 +577,11 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
                                                                     LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                                     LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
+                                                                    LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
                                                                     WHERE
                                                                         $where_kategori
                                                                         AND  p.BREAKDOWNTYPE != 'ERP'
-                                                                        AND a1.VALUESTRING = '1' /* JENIS_KERUSAKAN = 'Berat' */
+                                                                        $StringMayor 
                                                                         AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
 
