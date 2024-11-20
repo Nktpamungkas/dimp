@@ -300,13 +300,27 @@ $conn1 = db2_connect($conn_string, '', '');
 												WHEN a1.VALUESTRING = 2 THEN 'RINGAN'
 												ELSE ''
 											END AS JENIS_KERUSAKAN,
-											p3.REMARKS AS KETERANGAN
+											p3.REMARKS AS KETERANGAN,
+                                            SUBSTRING(
+                                                ad.OPTIONS, 
+                                                POSITION(';' || a2.VALUESTRING || '=' IN ad.OPTIONS) + LENGTH(a2.VALUESTRING) + 2,
+                                                POSITION(';' IN SUBSTRING(ad.OPTIONS, POSITION(';' || a2.VALUESTRING || '=' IN ad.OPTIONS) + LENGTH(a2.VALUESTRING) + 2)) - 1
+                                            ) AS ALASAN_KETERLAMBATAN,
+                                            SUBSTRING(
+                                                ad2.OPTIONS, 
+                                                POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2,
+                                                POSITION(';' IN SUBSTRING(ad2.OPTIONS, POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2)) - 1
+                                            ) AS PRIORITAS_TIKET
 										FROM
 											PMBREAKDOWNENTRY p
 										LEFT JOIN PMWORKORDER p3 ON	p3.PMBREAKDOWNENTRYCODE = p.CODE
 										LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID	AND a1.FIELDNAME = 'JenisKerusakan'
 										LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
 										LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
+                                        LEFT JOIN ADSTORAGE a2 ON a2.UNIQUEID = p3.ABSUNIQUEID AND a2.FIELDNAME = 'PenyebabKeterlambatan'
+                                        LEFT JOIN ADADDITIONALDATA ad ON ad.NAME = a2.FIELDNAME
+                                        LEFT JOIN ADSTORAGE a3 ON a3.UNIQUEID = p.ABSUNIQUEID AND a3.FIELDNAME = 'PrioritasTicket'
+                                        LEFT JOIN ADADDITIONALDATA ad2 ON ad2.NAME = a3.FIELDNAME 
 										WHERE
 												$where_kategori 
 											AND p.BREAKDOWNTYPE != 'ERP' 
@@ -320,7 +334,11 @@ $conn1 = db2_connect($conn_string, '', '');
 											p3.ENDDATE,
 											a1.VALUESTRING,
 											p3.REMARKS,
-											p3.CREATIONUSER 
+											p3.CREATIONUSER,
+                                            ad.OPTIONS,
+	                                        a2.VALUESTRING,
+                                            ad2.OPTIONS,
+	                                        a3.VALUESTRING
 										ORDER BY
 											p.CREATIONDATETIME ASC");
         ?>
@@ -384,6 +402,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                         <th width="5%" style="border:1px solid black;">Jenis</th>
                                         <th width="18%" style="border:1px solid black;">Keterangan</th>
                                         <th width="18%" style="border:1px solid black;">Creator</th>
+                                        <th width="18%" style="border:1px solid black;">Alasan Keterlambatan</th>
                                     </tr>
                                 </thead>
                                 <?php $no = 1;
@@ -412,7 +431,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                     <tbody>
                                         <tr>
                                             <td style="border:1px solid black;"><?= $no++; ?></td>
-                                            <td style="border:1px solid black;"><?= $row_opentiket['NOMOR_TIKET'] ?></td>
+                                            <td style="border:1px solid black; <?php if($row_opentiket['PRIORITAS_TIKET'] == 'Urgent'){ echo 'background-color: #f25a5a;'; } ?>"><?= $row_opentiket['NOMOR_TIKET'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['SHORTDESCRIPTION'] ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_OPEN'], 0, 10) ?> <?= substr($row_opentiket['TGL_OPEN'], 11, 8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_FOLLOWUP'], 0, 10) ?> <?= substr($row_opentiket['TGL_FOLLOWUP'], 11, 8) ?></td>
@@ -443,6 +462,7 @@ $conn1 = db2_connect($conn_string, '', '');
 											</td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
 											<td style="border:1px solid black;"><?= $row_opentiket['PEMBUAT'] ?></td>
+											<td style="border:1px solid black;"><?= $row_opentiket['ALASAN_KETERLAMBATAN'] ?></td>
                                         </tr>
                                     </tbody>
                                 <?php endwhile; ?>
