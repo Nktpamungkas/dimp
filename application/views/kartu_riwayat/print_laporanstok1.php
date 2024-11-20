@@ -530,8 +530,10 @@ $conn1 = db2_connect($conn_string, '', '');
 
                 if (strtotime($date1) < strtotime('2024-10-01')){
                     $StringMayor    = "AND a1.VALUESTRING = '1'";
+                    $StringJoin     = "";
                 }else{
                     $StringMayor    = "AND TRIM(LEFT(I.ACTIVITYCODE,9)) = 'DITKMAYOR'";
+                    $StringJoin     = "LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE";
                 }
 
                 $query_jumlah_close_5_jam = db2_exec($conn1, "SELECT 
@@ -541,7 +543,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                 LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
                                                                 LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                                 LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
-                                                                LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
+                                                                $StringJoin
                                                             WHERE
                                                                 $where_kategori
                                                                 AND  p.BREAKDOWNTYPE != 'ERP'
@@ -576,7 +578,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                             LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
                                                             LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
                                                             LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
-                                                            LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE
+                                                            $StringJoin
                                                             WHERE
                                                                 $where_kategori
                                                                 AND  p.BREAKDOWNTYPE != 'ERP'
