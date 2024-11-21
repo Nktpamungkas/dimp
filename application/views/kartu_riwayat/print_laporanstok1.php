@@ -326,6 +326,8 @@ $conn1 = db2_connect($conn_string, '', '');
 											AND p.BREAKDOWNTYPE != 'ERP' 
 											AND SUBSTR ( p.CREATIONDATETIME, 1, 10 ) BETWEEN '$date1' 
 											AND '$date2'
+                                            -- AND LEFT(p.CODE,4) = 'BDIT'
+                                            -- AND a1.VALUESTRING = 2
 										GROUP BY 
 											p.CODE,
 											d.SHORTDESCRIPTION,
@@ -456,7 +458,7 @@ $conn1 = db2_connect($conn_string, '', '');
 													<?php if ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
 														BERAT 
 													<?php else: ?>
-														RINGAN 
+														RINGAN
 													<?php endif; ?>
 												<?php endif; ?>
 											</td>
@@ -487,7 +489,9 @@ $conn1 = db2_connect($conn_string, '', '');
                                                         WHERE
                                                             $where_kategori
                                                             AND  p.BREAKDOWNTYPE != 'ERP'
-                                                            AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
+                                                            AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'
+                                                            -- AND LEFT(p.CODE,4) = 'BDIT'
+                                                            ");
                 $row_jumlah_masalah = db2_fetch_assoc($q_jumlah_masalah);
                 $jumlah_masalah = $row_jumlah_masalah['JUMLAH_MASALAH'];
 
@@ -558,17 +562,86 @@ $conn1 = db2_connect($conn_string, '', '');
                 $jumlah_close_5 = $row_jumlah_close_5_jam['TOTAL_CLOSE_5_JAM'];
 
                 $q_jumlah_masalah_ringan = db2_exec($conn1, "SELECT
-                                                                COUNT(*) AS JUMLAH_MASALAH
-                                                            FROM
-                                                                PMBREAKDOWNENTRY p
-                                                            LEFT JOIN PMWORKORDER p3 ON p3.PMBREAKDOWNENTRYCODE = p.CODE 
-                                                            LEFT JOIN ADSTORAGE a1 ON a1.UNIQUEID = p3.ABSUNIQUEID AND a1.FIELDNAME = 'JenisKerusakan'
-                                                            LEFT JOIN DEPARTMENT d ON d.CODE = p.DEPARTMENTCODE
-                                                            WHERE
-                                                                $where_kategori
-                                                                AND  p.BREAKDOWNTYPE != 'ERP'
-                                                                AND a1.VALUESTRING = '2' /* JENIS_KERUSAKAN = 'Ringan' */
-                                                                AND SUBSTR(p.CREATIONDATETIME, 1, 10) BETWEEN '$date1' AND '$date2'");
+                                                                    COUNT (*) AS JUMLAH_MASALAH
+                                                                FROM
+                                                                    (
+                                                                    SELECT
+                                                                        p3.CREATIONUSER AS PEMBUAT,
+                                                                        p.CODE AS NOMOR_TIKET,
+                                                                        d.SHORTDESCRIPTION,
+                                                                        p.CREATIONDATETIME AS TGL_OPEN,
+                                                                        p3.STARTDATE AS TGL_FOLLOWUP,
+                                                                        p3.ENDDATE AS TGL_CLOSE,
+                                                                        LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),
+                                                                        ', ') AS ACTIVITYCODE,
+                                                                        CASE
+                                                                            WHEN p.CREATIONDATETIME < '2024-10-01'
+                                                                            AND a1.VALUESTRING = 1 THEN 'BERAT'
+                                                                            WHEN p.CREATIONDATETIME < '2024-10-01'
+                                                                            AND a1.VALUESTRING = 2 THEN 'RINGAN'
+                                                                            WHEN p.CREATIONDATETIME >= '2024-10-01'
+                                                                            AND TRIM(LEFT(I.ACTIVITYCODE, 9))= 'DITKMAYOR' THEN 'BERAT'
+                                                                            --	WHEN p.CREATIONDATETIME >= '2024-10-01' a1.VALUESTRING = 2 THEN 'RINGAN'
+                                                                            ELSE 'RINGAN'
+                                                                        END AS JENIS_KERUSAKAN,
+                                                                        p3.REMARKS AS KETERANGAN,
+                                                                        SUBSTRING(
+                                                                ad.OPTIONS, 
+                                                                POSITION(';' || a2.VALUESTRING || '=' IN ad.OPTIONS) + LENGTH(a2.VALUESTRING) + 2,
+                                                                POSITION(';' IN SUBSTRING(ad.OPTIONS, POSITION(';' || a2.VALUESTRING || '=' IN ad.OPTIONS) + LENGTH(a2.VALUESTRING) + 2)) - 1
+                                                                ) AS ALASAN_KETERLAMBATAN,
+                                                                        SUBSTRING(
+                                                                ad2.OPTIONS, 
+                                                                POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2,
+                                                                POSITION(';' IN SUBSTRING(ad2.OPTIONS, POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2)) - 1
+                                                                ) AS PRIORITAS_TIKET
+                                                                    FROM
+                                                                        PMBREAKDOWNENTRY p
+                                                                    LEFT JOIN PMWORKORDER p3 ON
+                                                                        p3.PMBREAKDOWNENTRYCODE = p.CODE
+                                                                    LEFT JOIN ADSTORAGE a1 ON
+                                                                        a1.UNIQUEID = p3.ABSUNIQUEID
+                                                                        AND a1.FIELDNAME = 'JenisKerusakan'
+                                                                    LEFT JOIN DEPARTMENT d ON
+                                                                        d.CODE = p.DEPARTMENTCODE
+                                                                    LEFT JOIN PMWORKORDERDETAIL I ON
+                                                                        I.PMWORKORDERCODE = p3.CODE
+                                                                    LEFT JOIN ADSTORAGE a2 ON
+                                                                        a2.UNIQUEID = p3.ABSUNIQUEID
+                                                                        AND a2.FIELDNAME = 'PenyebabKeterlambatan'
+                                                                    LEFT JOIN ADADDITIONALDATA ad ON
+                                                                        ad.NAME = a2.FIELDNAME
+                                                                    LEFT JOIN ADSTORAGE a3 ON
+                                                                        a3.UNIQUEID = p.ABSUNIQUEID
+                                                                        AND a3.FIELDNAME = 'PrioritasTicket'
+                                                                    LEFT JOIN ADADDITIONALDATA ad2 ON
+                                                                        ad2.NAME = a3.FIELDNAME
+                                                                    WHERE
+                                                                     $where_kategori
+                                                                        AND p.BREAKDOWNTYPE != 'ERP'
+                                                                        AND SUBSTR ( p.CREATIONDATETIME,
+                                                                        1,
+                                                                        10 ) BETWEEN '$date1' AND '$date2'
+                                                                        -- AND LEFT(p.CODE, 4) = 'BDIT'
+                                                                        --AND a1.VALUESTRING = 2
+                                                                    GROUP BY
+                                                                        p.CODE,
+                                                                        d.SHORTDESCRIPTION,
+                                                                        p.CREATIONDATETIME,
+                                                                        p3.STARTDATE,
+                                                                        p3.ENDDATE,
+                                                                        a1.VALUESTRING,
+                                                                        I.ACTIVITYCODE,
+                                                                        p3.REMARKS,
+                                                                        p3.CREATIONUSER,
+                                                                        ad.OPTIONS,
+                                                                        a2.VALUESTRING,
+                                                                        ad2.OPTIONS,
+                                                                        a3.VALUESTRING
+                                                                    ORDER BY
+                                                                        p.CREATIONDATETIME ASC ) d
+                                                                WHERE
+                                                                    d.JENIS_KERUSAKAN = 'RINGAN'");
                 $row_jumlah_masalah_ringan = db2_fetch_assoc($q_jumlah_masalah_ringan);
 
                 $q_jumlah_masalah_berat = db2_exec($conn1, "SELECT
