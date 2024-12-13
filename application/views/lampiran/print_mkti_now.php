@@ -243,26 +243,26 @@ $conn1 = db2_connect($conn_string, '', '');
             <td style="font-weight: bold; width: 20mm;">*)Keterangan :</td>
         </tr>
         <tr>
-            <td style="font-weight: bold; width: 50mm;">Jenis Prasarana</td>
+            <!-- <td style="font-weight: bold; width: 50mm;">Jenis Prasarana</td> -->
             <td style="font-weight: bold; width: 100mm">Ketentuan Pengisian Check Point</td>
         </tr>
         <tr>
-            <td> D&nbsp;: Desktop / CPU</td>
+            <!-- <td> D&nbsp;: Desktop / CPU</td> -->
             <td>&check;&nbsp;: Prasarana Sesuai Kategory</td>
         </tr>
         <tr>
-            <td>L : Laptop</td>
+            <!-- <td>L : Laptop</td> -->
             <td>&times; : Prasarana Tidak Sesuai Kategory</td>
         </tr>
-        <tr>
+        <!-- <tr>
             <td>P : Printer</td>
         </tr>
         <tr>
-            <td>S : Scanner </td>
+            <td>S  : Scanner </td>
         </tr>
         <tr>
             <td>B : Printer Barcode</td>
-        </tr>
+        </tr> -->
         
         <tr>
             <td style="font-weight: bold; width: 20mm;">&nbsp;</td>
