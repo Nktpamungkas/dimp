@@ -34,6 +34,7 @@ $conn1 = db2_connect($conn_string, '', '');
             margin: 20px 20px 20px 20px;
             size: landscape !important;
             font-size: 8pt !important;
+            font-family: Arial, Helvetica, sans-serif !important;
         }
 
         input {
@@ -45,6 +46,7 @@ $conn1 = db2_connect($conn_string, '', '');
 
         html,
         body {
+            font-family: Arial, Helvetica, sans-serif;
             width: 330mm;
             height: 210mm;
             background: #FFF;
@@ -55,10 +57,12 @@ $conn1 = db2_connect($conn_string, '', '');
             border-collapse: collapse;
             width: 100%;
             font-size: 8pt !important;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .table-ttd tr,
         .table-ttd tr td {
+            font-family: Arial, Helvetica, sans-serif;
             border: 0.5px solid black;
             padding: 4px;
             padding: 4px;
@@ -111,6 +115,7 @@ $conn1 = db2_connect($conn_string, '', '');
         border: 0.5px solid black;
         padding: 4px 4px 4px 4px;
         font-size: 11pt !important;
+        font-family: Arial, Helvetica, sans-serif;
     }
 
     .table-ttd>thead>tr>th {
@@ -143,8 +148,8 @@ $conn1 = db2_connect($conn_string, '', '');
             <td align="left" valign="middle" style="width: 80mm;">
                 <ul style="list-style-type: none;">
                     <li>No. Form : FW-14-DIT-05</li>
-                    <li>NO. Revisi : 03</li>
-                    <li>Tgl. Terbit : 10 Maret 2021 </li>
+                    <li>NO. Revisi : 04</li>
+                    <li>Tgl. Terbit : 13 Desember 2024 </li>
                 </ul>
             </td>
         </tr>
@@ -152,6 +157,7 @@ $conn1 = db2_connect($conn_string, '', '');
     <?php
     $query_mon = "SELECT 
                                 p.CODE AS NO_PC_LAPTOP,
+                                p.FIRSTUSERGRPCODE AS JENIS_PRASARANA,
                                 p.GENERICDATA1 AS RAM,
                                 p.GENERICDATA2 AS HD,
                                 p.GENERICDATA3 AS OS,
@@ -185,23 +191,25 @@ $conn1 = db2_connect($conn_string, '', '');
         <thead>
             <tr>
                 <td style="font-weight: bold; text-align: center; width: 10mm;" rowspan="2">NO.</td>
-                <td style="font-weight: bold; text-align: center; width: 50mm;" rowspan="2">NO. PC / LAPTOP</td>
+                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">Kode Prasarana</td>
+                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">User</td>
+                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">Jenis Prasarana</td>
                 <td style="font-weight: bold; text-align: center;" colspan="13">CHECK POINT</td>
             </tr>
             <tr>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Join Domain</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Password</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Vpn (Laptop)</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Disable USB</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Data File</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">Screen Time</td>
-                <td style="font-weight: bold; width: 30mm; text-align: center;">RAM</td>
-                <td style="font-weight: bold; width: 30mm; text-align: center;">HD</td>
-                <td style="font-weight: bold; width: 40mm; text-align: center;">OS</td>
-                <td style="font-weight: bold; width: 20mm; text-align: center;">AV</td>
-                <td style="font-weight: bold; width: 45mm; text-align: center;">USER</td>
-                <td style="font-weight: bold; width: 50mm; text-align: center;">IP ADDRESS</td>
-                <td style="font-weight: bold; text-align: center;">NOTES</td>
+                <!-- <td style="font-weight: bold; width: 20mm; text-align: center;">Join Domain</td>
+                <td style="font-weight: bold; width: 20mm; text-align: center;">Password</td> -->
+                <td style="font-weight: bold; width: 10mm; text-align: center;">Vpn (Laptop)</td>
+                <td style="font-weight: bold; width: 17mm; text-align: center;">Disable USB</td>
+                <td style="font-weight: bold; width: 17mm; text-align: center;">Data File</td>
+                <!-- <td style="font-weight: bold; width: 20mm; text-align: center;">Screen Time</td> -->
+                <td style="font-weight: bold; width: 17mm; text-align: center;">AV</td>
+                <td style="font-weight: bold; width: 10mm; text-align: center;">RAM</td>
+                <td style="font-weight: bold; width: 10mm; text-align: center;">HD</td>
+                <td style="font-weight: bold; width: 10mm; text-align: center;">OS</td>
+                <!-- <td style="font-weight: bold; width: 45mm; text-align: center;">USER</td> -->
+                <!-- <td style="font-weight: bold; width: 50mm; text-align: center;">IP ADDRESS</td> -->
+                <td style="font-weight: bold; text-align: center; width: 90mm;">NOTES</td>
             </tr>
         </thead>
         <tbody>
@@ -210,24 +218,103 @@ $conn1 = db2_connect($conn_string, '', '');
                 <tr>
                     <td align="center"><?= $no++;  ?></td>
                     <td align="center"><?= $r_monitoring['NO_PC_LAPTOP']; ?></td>
+                    <td align="center"><?= $r_monitoring['USER']; ?></td>
+                    <td align="center"><?= substr($r_monitoring['JENIS_PRASARANA'], 0, 1); ?></td>
+                    <!-- <td align="center"></td> -->
+                    <!-- <td align="center"></td> -->
                     <td align="center"></td>
                     <td align="center"></td>
                     <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
+                    <!-- <td align="center"></td> -->
                     <td align="center"></td>
                     <td align="center"><?= $r_monitoring['RAM']; ?></td>
                     <td align="center"><?= $r_monitoring['HD']; ?></td>
                     <td align="center"><?= $r_monitoring['OS']; ?></td>
-                    <td align="center"></td>
-                    <td align="center"><?= $r_monitoring['USER']; ?></td>
-                    <td align="center"><?= $r_monitoring['IPADDRESS']; ?></td>
+                    <!-- <td align="center"><?= $r_monitoring['IPADDRESS']; ?></td> -->
                     <td align="center">&nbsp;</td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
     <br />
+
+    <table style=" border-collapse: collapse;">
+        <tr>
+            <td style="font-weight: bold; width: 20mm;">*)Keterangan :</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; width: 50mm;">Jenis Prasarana</td>
+            <td style="font-weight: bold; width: 100mm">Ketentuan Pengisian Check Point</td>
+        </tr>
+        <tr>
+            <td> D&nbsp;: Desktop / CPU</td>
+            <td>&check;&nbsp;: Prasarana Sesuai Kategory</td>
+        </tr>
+        <tr>
+            <td>L : Laptop</td>
+            <td>&times; : Prasarana Tidak Sesuai Kategory</td>
+        </tr>
+        <tr>
+            <td>P : Printer</td>
+        </tr>
+        <tr>
+            <td>S : Scanner </td>
+        </tr>
+        <tr>
+            <td>B : Printer Barcode</td>
+        </tr>
+        
+        <tr>
+            <td style="font-weight: bold; width: 20mm;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; width: 20mm;">Catatan :</td>
+        </tr>
+
+    </table>
+    <table>
+        <tr>
+            <td style=" width: 20mm;"> &nbsp;</td>
+        </tr>
+    </table>
+
+    <!-- Garis bawah panjang -->
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <!-- <td style="border-bottom: 1px solid black; height: 2px;"></td> -->
+        </tr>
+    </table>
+
+    <!-- Jarak ke bawah setelah garis pertama -->
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td>&nbsp;</td> <!-- Menambahkan elemen kosong untuk jarak -->
+        </tr>
+    </table>
+
+    <!-- Baris kedua garis bawah -->
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <!-- <td style="border-bottom: 1px solid black; height: 2px;"></td> -->
+        </tr>
+    </table>
+
+    <!-- Jarak ke bawah setelah garis kedua -->
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td>&nbsp;</td> <!-- Menambahkan elemen kosong untuk jarak -->
+        </tr>
+    </table>
+
+
+
+    <!-- Jarak ke bawah setelah garis kedua -->
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td>&nbsp;</td> <!-- Menambahkan elemen kosong untuk jarak -->
+        </tr>
+    </table>
+
     <table class="table-ttd ">
         <thead>
             <tr>
