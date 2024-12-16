@@ -143,7 +143,7 @@ $conn1 = db2_connect($conn_string, '', '');
         <tr>
             <td align="center"><img src="<?php echo base_url() ?>/assets/images/logoitti.png" alt="" style="width: 15mm;"></td>
             <td align="center">
-                <h2 style="font-weight: bold;">MONITORING KEBIJAKAN IT</h2>
+                <h2 style="font-weight: bold;">MONITORING KEBIJAKAN TI </h2>
             </td>
             <td align="left" valign="middle" style="width: 80mm;">
                 <ul style="list-style-type: none;">
@@ -219,7 +219,7 @@ $conn1 = db2_connect($conn_string, '', '');
                     <td align="center"><?= $no++;  ?></td>
                     <td align="center"><?= $r_monitoring['NO_PC_LAPTOP']; ?></td>
                     <td align="center"><?= $r_monitoring['USER']; ?></td>
-                    <td align="center"><?= substr($r_monitoring['JENIS_PRASARANA'], 0, 1); ?></td>
+                    <td align="center"><?= $r_monitoring['JENIS_PRASARANA']; ?></td>
                     <!-- <td align="center"></td> -->
                     <!-- <td align="center"></td> -->
                     <td align="center"></td>
@@ -238,40 +238,33 @@ $conn1 = db2_connect($conn_string, '', '');
     </table>
     <br />
 
-    <table style=" border-collapse: collapse;">
+    <table style="border-collapse: collapse;">
+        <colgroup>
+            <col style="width: 20px;"> <!-- Kolom 1 -->
+            <col style="width: 10px;"> <!-- Kolom 2 -->
+            <col style="width: 100mm;"> <!-- Kolom 3 -->
+        </colgroup>
         <tr>
-            <td style="font-weight: bold; width: 20mm;">*)Keterangan :</td>
+            <td colspan="3" style="font-weight: bold;">*)Keterangan :</td>
         </tr>
         <tr>
-            <!-- <td style="font-weight: bold; width: 50mm;">Jenis Prasarana</td> -->
-            <td style="font-weight: bold; width: 100mm">Ketentuan Pengisian Check Point</td>
+            <td colspan="3" style="font-weight: bold;">Ketentuan Pengisian Check Point</td>
         </tr>
         <tr>
-            <!-- <td> D&nbsp;: Desktop / CPU</td> -->
-            <td>&check;&nbsp;: Prasarana Sesuai Kategory</td>
+            <td style="text-align: center;">&check;</td>
+            <td style="text-align: center;">:</td>
+            <td>Prasarana Sesuai Kategori</td>
         </tr>
         <tr>
-            <!-- <td>L : Laptop</td> -->
-            <td>&times; : Prasarana Tidak Sesuai Kategory</td>
-        </tr>
-        <!-- <tr>
-            <td>P : Printer</td>
+            <td style="text-align: center;">&times;</td>
+            <td style="text-align: center;">:</td>
+            <td>Tidak Sesuai Kategori</td>
         </tr>
         <tr>
-            <td>S  : Scanner </td>
+            <td colspan="3" style="font-weight: bold; padding-top: 10px;">Catatan :</td>
         </tr>
-        <tr>
-            <td>B : Printer Barcode</td>
-        </tr> -->
-        
-        <tr>
-            <td style="font-weight: bold; width: 20mm;">&nbsp;</td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold; width: 20mm;">Catatan :</td>
-        </tr>
-
     </table>
+
     <table>
         <tr>
             <td style=" width: 20mm;"> &nbsp;</td>
