@@ -149,7 +149,7 @@ $conn1 = db2_connect($conn_string, '', '');
                 <ul style="list-style-type: none;">
                     <li>No. Form : FW-14-DIT-05</li>
                     <li>NO. Revisi : 04</li>
-                    <li>Tgl. Terbit : 13 Desember 2024 </li>
+                    <li>Tgl. Terbit : 16 Desember 2024 </li>
                 </ul>
             </td>
         </tr>
