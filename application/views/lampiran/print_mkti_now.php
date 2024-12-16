@@ -145,13 +145,20 @@ $conn1 = db2_connect($conn_string, '', '');
             <td align="center">
                 <h2 style="font-weight: bold;">MONITORING KEBIJAKAN TI </h2>
             </td>
-            <td align="left" valign="middle" style="width: 80mm;">
-                <ul style="list-style-type: none;">
-                    <li>No. Form : FW-14-DIT-05</li>
-                    <li>NO. Revisi : 04</li>
-                    <li>Tgl. Terbit : 16 Desember 2024 </li>
+            <td align="left" valign="middle" style="width: 80mm; font-family: Arial, sans-serif; font-size: 12px;">
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li style="display: grid; grid-template-columns: 20mm auto;">
+                        <span>No. Form</span><span>: FW-14-DIT-05</span>
+                    </li>
+                    <li style="display: grid; grid-template-columns: 20mm auto;">
+                        <span>No. Revisi</span><span>: 04</span>
+                    </li>
+                    <li style="display: grid; grid-template-columns: 20mm auto;">
+                        <span>Tgl. Terbit</span><span>: 16 Desember 2024</span>
+                    </li>
                 </ul>
             </td>
+
         </tr>
     </table>
     <?php
@@ -182,11 +189,17 @@ $conn1 = db2_connect($conn_string, '', '');
     $q_monitoring = db2_exec($conn1, $query_mon);
     $q_monitoring2 = db2_exec($conn1, $query_mon);
     ?>
+    <br>
     <?php $data_monitoring = db2_fetch_assoc($q_monitoring); ?>
-    <p style="font-family: Arial, Helvetica, sans-serif;">
-        Departement : <?= $data_monitoring['DEPT'] ?><br />
-        Hari, Tanggal :
-    </p>
+    <p style="font-family: Arial, Helvetica, sans-serif; display: flex; margin: 0;">
+    <span style="width: 120px;">Departement</span>
+    <span>: <?= $data_monitoring['DEPT'] ?></span>
+</p>
+<p style="font-family: Arial, Helvetica, sans-serif; display: flex; margin: 0;">
+    <span style="width: 120px;">Hari, Tanggal</span>
+    <span>: </span>
+</p>
+
     <table class="table-ttd">
         <thead>
             <tr>
