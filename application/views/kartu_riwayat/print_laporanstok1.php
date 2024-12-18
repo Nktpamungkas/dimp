@@ -295,6 +295,7 @@ $conn1 = db2_connect($conn_string, '', '');
 											p3.STARTDATE AS TGL_FOLLOWUP,
 											p3.ENDDATE AS TGL_CLOSE,
 											LISTAGG(TRIM(LEFT(I.ACTIVITYCODE,9)), ', ') AS ACTIVITYCODE,
+                                            p3.ASSIGNEDTOUSERID AS CLOSETIKET,
 											CASE
 												WHEN a1.VALUESTRING = 1 THEN 'BERAT'
 												WHEN a1.VALUESTRING = 2 THEN 'RINGAN'
@@ -337,12 +338,14 @@ $conn1 = db2_connect($conn_string, '', '');
 											a1.VALUESTRING,
 											p3.REMARKS,
 											p3.CREATIONUSER,
+                                            p3.ASSIGNEDTOUSERID,
                                             ad.OPTIONS,
 	                                        a2.VALUESTRING,
                                             ad2.OPTIONS,
 	                                        a3.VALUESTRING
 										ORDER BY
 											p.CREATIONDATETIME ASC");
+                                            
         ?>
         <tr>
             <td>
@@ -463,7 +466,7 @@ $conn1 = db2_connect($conn_string, '', '');
 												<?php endif; ?>
 											</td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
-											<td style="border:1px solid black;"><?= $row_opentiket['PEMBUAT'] ?></td>
+											<td style="border:1px solid black;"><?= $row_opentiket['CLOSETIKET'] ?></td>
 											<td style="border:1px solid black;"><?= $row_opentiket['ALASAN_KETERLAMBATAN'] ?></td>
                                         </tr>
                                     </tbody>
