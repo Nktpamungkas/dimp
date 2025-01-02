@@ -436,7 +436,9 @@ $conn1 = db2_connect($conn_string, '', '');
                                     <tbody>
                                         <tr>
                                             <td style="border:1px solid black;"><?= $no++; ?></td>
-                                            <td style="border:1px solid black; <?php if($row_opentiket['PRIORITAS_TIKET'] == 'Urgent'){ echo 'background-color: #f25a5a;'; } ?>"><?= $row_opentiket['NOMOR_TIKET'] ?></td>
+                                            <td style="border:1px solid black; <?php if ($row_opentiket['PRIORITAS_TIKET'] == 'Urgent') {
+                                                                                    echo 'background-color: #f25a5a;';
+                                                                                } ?>"><?= $row_opentiket['NOMOR_TIKET'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['SHORTDESCRIPTION'] ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_OPEN'], 0, 10) ?> <?= substr($row_opentiket['TGL_OPEN'], 11, 8) ?></td>
                                             <td style="border:1px solid black;"><?= substr($row_opentiket['TGL_FOLLOWUP'], 0, 10) ?> <?= substr($row_opentiket['TGL_FOLLOWUP'], 11, 8) ?></td>
@@ -459,21 +461,25 @@ $conn1 = db2_connect($conn_string, '', '');
                                                 <?= $row_opentiket['JENIS_KERUSAKAN'] ?>
                                             <?php else: ?>
                                                 <?php 
-                                                // Hitung jumlah kemunculan 'DITKMAYOR' di ACTIVITYCODE
-                                                $activityCodes = explode(', ', $row_opentiket['ACTIVITYCODE']);
+                                                // Pisahkan ACTIVITYCODE menjadi array dan hilangkan spasi ekstra
+                                                $activityCodes = array_map('trim', explode(', ', $row_opentiket['ACTIVITYCODE']));
+                                                
+                                                // Hitung jumlah kemunculan 'DITKMAYOR' di array
                                                 $countDITKMAYOR = count(array_filter($activityCodes, function($code) {
-                                                    return trim($code) === 'DITKMAYOR';
+                                                    return $code === 'DITKMAYOR';
                                                 }));
+
+                                                // Jika ada lebih dari satu kemunculan 'DITKMAYOR' atau ada data selain 'DITKMAYOR'
+                                                if ($countDITKMAYOR > 1 || in_array('DITKMAYOR', $activityCodes)) {
+                                                    echo 'BERAT';
+                                                } else {
+                                                    echo 'RINGAN';
+                                                }
                                                 ?>
-                                                <?php if ($countDITKMAYOR > 1): ?>
-                                                    BERAT
-                                                <?php elseif ($row_opentiket['ACTIVITYCODE'] == 'DITKMAYOR'): ?>
-                                                    BERAT
-                                                <?php else: ?>
-                                                    RINGAN
-                                                <?php endif; ?>
                                             <?php endif; ?>
+
                                             </td>
+                                            <td style="border:1px solid black;"><?= $row_opentiket['ACTIVITYCODE'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['CLOSETIKET'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['ALASAN_KETERLAMBATAN'] ?></td>
@@ -544,10 +550,10 @@ $conn1 = db2_connect($conn_string, '', '');
                 $row_jumlah_close_3_jam = db2_fetch_assoc($query_jumlah_close_3_jam);
                 $jumlah_close_3 = $row_jumlah_close_3_jam['TOTAL_CLOSE_3_JAM'];
 
-                if (strtotime($date1) < strtotime('2024-10-01')){
+                if (strtotime($date1) < strtotime('2024-10-01')) {
                     $StringMayor    = "AND a1.VALUESTRING = '1'";
                     $StringJoin     = "";
-                }else{
+                } else {
                     $StringMayor    = "AND TRIM(LEFT(I.ACTIVITYCODE,9)) = 'DITKMAYOR'";
                     $StringJoin     = "LEFT JOIN PMWORKORDERDETAIL I ON I.PMWORKORDERCODE = p3.CODE";
                 }
@@ -655,6 +661,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                 WHERE
                                                                     d.JENIS_KERUSAKAN = 'RINGAN'");
                 $row_jumlah_masalah_ringan = db2_fetch_assoc($q_jumlah_masalah_ringan);
+
 
                 $q_jumlah_masalah_berat = db2_exec($conn1, "SELECT
                                                                 COUNT (*) AS JUMLAH_MASALAH
