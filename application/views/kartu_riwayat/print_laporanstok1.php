@@ -479,7 +479,6 @@ $conn1 = db2_connect($conn_string, '', '');
                                             <?php endif; ?>
 
                                             </td>
-                                            <td style="border:1px solid black;"><?= $row_opentiket['ACTIVITYCODE'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['CLOSETIKET'] ?></td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['ALASAN_KETERLAMBATAN'] ?></td>
