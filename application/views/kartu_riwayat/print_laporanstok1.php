@@ -673,8 +673,8 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     p.CREATIONDATETIME AS TGL_OPEN,
                                                                     p3.STARTDATE AS TGL_FOLLOWUP,
                                                                     p3.ENDDATE AS TGL_CLOSE,
-                                                                    LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),
-                                                                    ', ') AS ACTIVITYCODE,
+                                                                    -- LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),
+                                                                    -- ', ') AS ACTIVITYCODE,
                                                                     CASE
                                                                         WHEN p.CREATIONDATETIME < '2024-10-01'
                                                                         AND a1.VALUESTRING = 1 THEN 'BERAT'
@@ -710,12 +710,11 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                 LEFT JOIN ADADDITIONALDATA ad2 ON
                                                                     ad2.NAME = a3.FIELDNAME
                                                                 WHERE
-                                                                    (p.BREAKDOWNTYPE = 'HD'
-                                                                        OR p.BREAKDOWNTYPE = 'NW'
-                                                                        OR p.BREAKDOWNTYPE = 'EM'
-                                                                        OR p.BREAKDOWNTYPE = 'ERP')
+                                                                    $where_kategori
                                                                     AND p.BREAKDOWNTYPE != 'ERP'
-                                                                    AND p.CREATIONDATETIME BETWEEN '$date1' AND '$date2'
+                                                                    AND SUBSTR ( p.CREATIONDATETIME,
+                                                                        1,
+                                                                        10 ) BETWEEN '$date1' AND '$date2'
                                                                     AND LEFT(p.CODE, 4) = 'BDIT'
                                                                     --AND a1.VALUESTRING = 2 
                                                                 GROUP BY
@@ -736,6 +735,8 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     p.CREATIONDATETIME ASC ) d
                                                             WHERE
                                                                 d.JENIS_KERUSAKAN = 'BERAT'");
+
+				
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
 
                 $jumlah_masalah_ringan = $row_jumlah_masalah_ringan['JUMLAH_MASALAH'];
