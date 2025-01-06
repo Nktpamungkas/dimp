@@ -183,6 +183,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                 p.FIRSTUSERGRPCODE = 'NOTEBOOK' OR
                                 p.FIRSTUSERGRPCODE = 'PRINTER' OR
                                 p.FIRSTUSERGRPCODE = 'SCANNER' OR
+                                p.FIRSTUSERGRPCODE = 'TELEPON' OR
                                 p.FIRSTUSERGRPCODE = 'BARCODE')
                                 AND TRIM(d.CODE) = '$dept'
                                 AND p.STATUS = '1'";
