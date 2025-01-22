@@ -43,7 +43,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                                 SEARCHDESCRIPTION 
                                                                             FROM
                                                                                 PRODUCT p
-                                                                            RIGHT JOIN BALANCE b ON b.ITEMTYPECODE = p.ITEMTYPECODE
+                                                                            LEFT JOIN BALANCE b ON b.ITEMTYPECODE = p.ITEMTYPECODE
                                                                                             AND b.DECOSUBCODE01 = p.SUBCODE01 
                                                                                             AND b.DECOSUBCODE02 = p.SUBCODE02 
                                                                                             AND b.DECOSUBCODE03 = p.SUBCODE03 
