@@ -117,7 +117,59 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 	</table>
 	<br>
 	<table>
+	<?php 
+		if (empty($d_stock_transaction['KODE_BARANG'])) {
+			$query_product = "
+				SELECT 
+					TRIM(SUBCODE01) || '-' || 
+					TRIM(SUBCODE02) || '-' || 
+					TRIM(SUBCODE03) || '-' || 
+					TRIM(SUBCODE04) || '-' || 
+					TRIM(SUBCODE05) || '-' || 
+					TRIM(SUBCODE06) AS KODE_BARANG,
+					LONGDESCRIPTION,
+					BASEPRIMARYUNITCODE AS SATUAN
+				FROM 
+					PRODUCT p 
+				WHERE 
+					p.ITEMTYPECODE = 'SPR' 
+					AND p.SUBCODE01 = 'DIT' 
+					AND TRIM(SUBCODE01) || '-' ||
+						TRIM(SUBCODE02) || '-' ||
+						TRIM(SUBCODE03) || '-' ||
+						TRIM(SUBCODE04) || '-' ||
+						TRIM(SUBCODE05) || '-' ||
+						TRIM(SUBCODE06) = '$kode_barang'";
+
+			$result_product = db2_exec($conn1, $query_product);
+
+			$d_product = db2_fetch_assoc($result_product);
+
+			if ($d_product) {
+				$nama_barang = isset($d_product['LONGDESCRIPTION']) ? $d_product['LONGDESCRIPTION'] : 'Nama Barang Tidak Ditemukan';
+				$satuan = isset($d_product['SATUAN']) ? $d_product['SATUAN'] : 'Satuan Tidak Ditemukan';
+			} else {
+				$nama_barang = 'Nama Barang Tidak Ditemukan';
+				$satuan = 'Satuan Tidak Ditemukan';
+			}
+		} else {
+			$nama_barang = $d_stock_transaction['NAMA_BARANG'];
+			$satuan = isset($d_stock_transaction['SATUAN']) ? $d_stock_transaction['SATUAN'] : 'Satuan Tidak Ditemukan';
+		}
+		?>
+
 		<tr>
+			<td>Nama barang</td>
+			<td>:</td>
+			<td><?= $nama_barang; ?></td>
+		</tr>
+		<tr>
+			<td>Satuan</td>
+			<td>:</td>
+			<td><?= $satuan; ?></td>
+		</tr>
+
+		<!-- <tr>
 			<td>Nama barang</td>
 			<td>:</td>
 			<td><?= $d_stock_transaction['NAMA_BARANG']; ?></td>
@@ -126,7 +178,7 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 			<td>Satuan</td>
 			<td>:</td>
 			<td><?= $d_stock_transaction['SATUAN']; ?></td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td>Stock Minimum</td>
 			<td>:</td>
@@ -297,3 +349,4 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 
 
 </html>
+
