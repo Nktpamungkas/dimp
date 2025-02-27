@@ -457,26 +457,26 @@ $conn1 = db2_connect($conn_string, '', '');
                                                 } ?>><?= $waktu_close; ?></td>
 
                                             <td style="border:1px solid black;">
-                                            <?php if (strtotime($row_opentiket['TGL_OPEN']) < strtotime('2024-10-01')) : ?>
-                                                <?= $row_opentiket['JENIS_KERUSAKAN'] ?>
-                                            <?php else: ?>
-                                                <?php 
-                                                // Pisahkan ACTIVITYCODE menjadi array dan hilangkan spasi ekstra
-                                                $activityCodes = array_map('trim', explode(', ', $row_opentiket['ACTIVITYCODE']));
-                                                
-                                                // Hitung jumlah kemunculan 'DITKMAYOR' di array
-                                                $countDITKMAYOR = count(array_filter($activityCodes, function($code) {
-                                                    return $code === 'DITKMAYOR';
-                                                }));
+                                                <?php if (strtotime($row_opentiket['TGL_OPEN']) < strtotime('2024-10-01')) : ?>
+                                                    <?= $row_opentiket['JENIS_KERUSAKAN'] ?>
+                                                <?php else: ?>
+                                                    <?php
+                                                    // Pisahkan ACTIVITYCODE menjadi array dan hilangkan spasi ekstra
+                                                    $activityCodes = array_map('trim', explode(', ', $row_opentiket['ACTIVITYCODE']));
 
-                                                // Jika ada lebih dari satu kemunculan 'DITKMAYOR' atau ada data selain 'DITKMAYOR'
-                                                if ($countDITKMAYOR > 1 || in_array('DITKMAYOR', $activityCodes)) {
-                                                    echo 'BERAT';
-                                                } else {
-                                                    echo 'RINGAN';
-                                                }
-                                                ?>
-                                            <?php endif; ?>
+                                                    // Hitung jumlah kemunculan 'DITKMAYOR' di array
+                                                $countDITKMAYOR = count(array_filter($activityCodes, function($code) {
+                                                        return $code === 'DITKMAYOR';
+                                                    }));
+
+                                                    // Jika ada lebih dari satu kemunculan 'DITKMAYOR' atau ada data selain 'DITKMAYOR'
+                                                    if ($countDITKMAYOR > 1 || in_array('DITKMAYOR', $activityCodes)) {
+                                                        echo 'BERAT';
+                                                    } else {
+                                                        echo 'RINGAN';
+                                                    }
+                                                    ?>
+                                                <?php endif; ?>
 
                                             </td>
                                             <td style="border:1px solid black;"><?= $row_opentiket['KETERANGAN'] ?></td>
@@ -736,63 +736,126 @@ $conn1 = db2_connect($conn_string, '', '');
                                                             WHERE
                                                                 d.JENIS_KERUSAKAN = 'BERAT'");
 
-				
+
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
 
-                $jumlah_masalah_ringan = $row_jumlah_masalah_ringan['JUMLAH_MASALAH'];
-                $jumlah_masalah_berat = $row_jumlah_masalah_berat['JUMLAH_MASALAH'];
+                $query_count_urgent = db2_exec($conn1, "SELECT
+                                                        COUNT(*) as SELESIH_DATA
+                                                        FROM(
+                                                        SELECT
+                                                            SUBSTRING(
+                                                                ad2.OPTIONS, 
+                                                                POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2,
+                                                                POSITION(';' IN SUBSTRING(ad2.OPTIONS, POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2)) - 1
+                                                            ) AS PRIORITAS_TIKET,
+                                                            a3.VALUESTRING,
+                                                            p.IDENTIFIEDDATE AS waktu_buat,
+                                                            p3.STARTDATE AS waktu_followup,
+                                                            P.CODE,
+                                                            P.BREAKDOWNTYPE
+                                                        FROM
+                                                            PMBREAKDOWNENTRY p
+                                                        LEFT JOIN PMWORKORDER p3 ON
+                                                            p3.PMBREAKDOWNENTRYCODE = p.CODE
+                                                        LEFT JOIN ADSTORAGE a3 ON
+                                                            a3.UNIQUEID = p.ABSUNIQUEID
+                                                            AND a3.FIELDNAME = 'PrioritasTicket'
+                                                        LEFT JOIN ADADDITIONALDATA ad2 ON
+                                                            ad2.NAME = a3.FIELDNAME
+                                                        WHERE
+                                                            (p.BREAKDOWNTYPE = 'HD'
+                                                                OR p.BREAKDOWNTYPE = 'NW'
+                                                                OR p.BREAKDOWNTYPE = 'EM'
+                                                                OR p.BREAKDOWNTYPE = 'ERP')
+                                                            AND p.BREAKDOWNTYPE != 'ERP'
+                                                            AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
+                                                            AND a3.VALUESTRING = '2'
+                                                            AND (
+                                                            EXTRACT(DAY FROM p3.STARTDATE - p.IDENTIFIEDDATE) * 24 * 60
+                                                            -- Menghitung selisih hari dalam menit
+                                                            + EXTRACT(HOUR FROM p3.STARTDATE - p.IDENTIFIEDDATE) * 60
+                                                            -- Menghitung selisih jam dalam menit
+                                                            + EXTRACT(MINUTE FROM p3.STARTDATE - p.IDENTIFIEDDATE)
+                                                            -- Menambahkan menit
+                                                        ) > 30)");
 
-                // Hitung total sasaran follow-up
-                $total_sasaran_follow = $jumlah_masalah - $jumlah_follow;
-                $total_sasaran_3_jam = $jumlah_masalah_ringan - $jumlah_close_3;
-                $total_sasaran_5_jam = $jumlah_masalah_berat - $jumlah_close_5;
+if (!$query_count_urgent) {
+    echo "Error in query execution: " . db2_stmt_errormsg();
+}
 
-                // Menghitung persentase jumlah_follow dari jumlah_masalah
-                if ($jumlah_masalah != 0) {
-                    $persentase_follow = min(($jumlah_follow / $jumlah_masalah) * 100, 100);
-                } else {
-                    $persentase_follow = 0;
-                }
+$row_count_urgent = db2_fetch_assoc($query_count_urgent);
+if (!$row_count_urgent) {
+    echo "Error in fetching data: " . db2_stmt_errormsg();
+}
 
-                $persentase_follow_sasaran = 100 - $persentase_follow;
-                if ($persentase_follow_sasaran < 0) {
-                    $persentase_follow_sasaran = 0;
-                }
+$selsidata = isset($row_count_urgent['SELESIH_DATA']) ? $row_count_urgent['SELESIH_DATA'] : 0;
 
-                $format_follow = number_format($persentase_follow, 2);
-                $format_follow_sasaran = number_format($persentase_follow_sasaran, 2);
+$jumlah_masalah_ringan = $row_jumlah_masalah_ringan['JUMLAH_MASALAH'];
+$jumlah_masalah_berat = $row_jumlah_masalah_berat['JUMLAH_MASALAH'];
 
+// Hitung total sasaran follow-up
+$total_sasaran_follow = $jumlah_masalah - $jumlah_follow;
+$total_sasaran_3_jam = $jumlah_masalah_ringan - $jumlah_close_3;
+$total_sasaran_5_jam = $jumlah_masalah_berat - $jumlah_close_5;
 
-                // Menghitung persentase jumlah_close_3_jam dari jumlah masalah
-                if ($jumlah_masalah_ringan != 0) {
-                    $persentase_close_3_jam = min(($jumlah_close_3 / $jumlah_masalah_ringan) * 100, 100);
-                } else {
-                    $persentase_close_3_jam = 0;
-                }
+// Menghitung persentase jumlah_follow dari jumlah_masalah
+if ($jumlah_masalah != 0) {
+    $persentase_follow = min(($jumlah_follow / $jumlah_masalah) * 100, 100);
+} else {
+    $persentase_follow = 0;
+}
 
-                $persentase_close_3_sasaran = 100 - $persentase_close_3_jam;
-                if ($persentase_close_3_sasaran < 0) {
-                    $persentase_close_3_sasaran = 0;
-                }
+$persentase_follow_sasaran = 100 - $persentase_follow;
+if ($persentase_follow_sasaran < 0) {
+    $persentase_follow_sasaran = 0;
+}
 
-                $format_close_3 = number_format($persentase_close_3_jam, 2);
-                $format_close_3_sasaran = number_format($persentase_close_3_sasaran, 2);
+$format_follow = number_format($persentase_follow, 2);
+$format_follow_sasaran = number_format($persentase_follow_sasaran, 2);
 
+if ($selsidata != 0) {
+    $persentase_selisihdata = min(($selsidata / $jumlah_masalah) * 100, 100);
+} else {
+    $persentase_selisihdata = 0;
+}
 
-                // Menghitung persentase jumlah_close_5_jam dari jumlah masalah
-                if ($jumlah_masalah_berat != 0) {
-                    $persentase_close_5_jam = min(($jumlah_close_5 / $jumlah_masalah_berat) * 100, 100);
-                } else {
-                    $persentase_close_5_jam = 0;
-                }
+$persentase_follow_selisihdata = 100 - $persentase_selisihdata;
+if ($persentase_follow_selisihdata < 0) {
+    $persentase_follow_selisihdata = 0;
+}
 
-                $persentase_close_5_sasaran = 100 - $persentase_close_5_jam;
-                if ($persentase_close_5_sasaran < 0) {
-                    $persentase_close_5_sasaran = 0;
-                }
+$format_selisihdata = number_format($persentase_selisihdata, 2);
+$format_follow_selisihdata = number_format($persentase_follow_selisihdata, 2);
 
-                $format_close_5 = number_format($persentase_close_5_jam, 2);
-                $format_close_5_sasaran = number_format($persentase_close_5_sasaran, 2);
+// Menghitung persentase jumlah_close_3_jam dari jumlah masalah
+if ($jumlah_masalah_ringan != 0) {
+    $persentase_close_3_jam = min(($jumlah_close_3 / $jumlah_masalah_ringan) * 100, 100);
+} else {
+    $persentase_close_3_jam = 0;
+}
+
+$persentase_close_3_sasaran = 100 - $persentase_close_3_jam;
+if ($persentase_close_3_sasaran < 0) {
+    $persentase_close_3_sasaran = 0;
+}
+
+$format_close_3 = number_format($persentase_close_3_jam, 2);
+$format_close_3_sasaran = number_format($persentase_close_3_sasaran, 2);
+
+// Menghitung persentase jumlah_close_5_jam dari jumlah masalah
+if ($jumlah_masalah_berat != 0) {
+    $persentase_close_5_jam = min(($jumlah_close_5 / $jumlah_masalah_berat) * 100, 100);
+} else {
+    $persentase_close_5_jam = 0;
+}
+
+$persentase_close_5_sasaran = 100 - $persentase_close_5_jam;
+if ($persentase_close_5_sasaran < 0) {
+    $persentase_close_5_sasaran = 0;
+}
+
+$format_close_5 = number_format($persentase_close_5_jam, 2);
+$format_close_5_sasaran = number_format($persentase_close_5_sasaran, 2);
 
 
                 ?>
@@ -803,7 +866,10 @@ $conn1 = db2_connect($conn_string, '', '');
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow ?> % )<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_follow ?> ( <?= $format_follow_sasaran ?> % )</strong><br><br>
-
+                <?php if (strtotime($date1) >= strtotime('2025-02-01')) : ?>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_follow ?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br>
+                <?php endif; ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Ringan > 3 jam = <?= $row_jumlah_close_3_jam['TOTAL_CLOSE_3_JAM']; ?> dari <?= $row_jumlah_masalah_ringan['JUMLAH_MASALAH']; ?> ( <?= $format_close_3 ?> % )<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_3_jam ?> ( <?= $format_close_3_sasaran ?> % ) </strong><br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Berat > 5 jam = <?= $row_jumlah_close_5_jam['TOTAL_CLOSE_5_JAM']; ?> dari <?= $row_jumlah_masalah_berat['JUMLAH_MASALAH']; ?> ( <?= $format_close_5 ?> % )<br>
