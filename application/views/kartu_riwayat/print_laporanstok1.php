@@ -739,6 +739,45 @@ $conn1 = db2_connect($conn_string, '', '');
 
                 $row_jumlah_masalah_berat = db2_fetch_assoc($q_jumlah_masalah_berat);
 
+                $jumlah_urgent_tiket = db2_exec($conn1,"SELECT COUNT(*) as URGENT 
+                -- SUBSTRING(
+                --     ad2.OPTIONS, 
+                --     POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2,
+                --     POSITION(';' IN SUBSTRING(ad2.OPTIONS, POSITION(';' || a3.VALUESTRING || '=' IN ad2.OPTIONS) + LENGTH(a3.VALUESTRING) + 2)) - 1
+                -- ) AS PRIORITAS_TIKET,
+                -- a3.VALUESTRING,
+                -- p.IDENTIFIEDDATE AS waktu_buat,
+                -- p3.STARTDATE AS waktu_followup,
+                -- CASE 
+                --     WHEN TIMESTAMPDIFF(4, CHAR(p3.STARTDATE - p.IDENTIFIEDDATE)) <= 30 THEN 0
+                --     ELSE 1
+                -- END AS selisih,
+                -- P.CODE,
+                -- P.BREAKDOWNTYPE
+                FROM
+                PMBREAKDOWNENTRY p
+                LEFT JOIN PMWORKORDER p3 ON
+                p3.PMBREAKDOWNENTRYCODE = p.CODE
+                LEFT JOIN ADSTORAGE a3 ON
+                a3.UNIQUEID = p.ABSUNIQUEID
+                AND a3.FIELDNAME = 'PrioritasTicket'
+                LEFT JOIN ADADDITIONALDATA ad2 ON
+                ad2.NAME = a3.FIELDNAME
+                WHERE
+                (p.BREAKDOWNTYPE = 'HD'
+                OR p.BREAKDOWNTYPE = 'NW'
+                OR p.BREAKDOWNTYPE = 'EM'
+                OR p.BREAKDOWNTYPE = 'ERP')
+                AND p.BREAKDOWNTYPE != 'ERP'
+                AND DATE(p.CREATIONDATETIME) BETWEEN DATE('$date1') AND DATE('$date2')
+                AND a3.VALUESTRING = '2'");
+                $jumlah_urgent = db2_fetch_assoc($jumlah_urgent_tiket);
+                $jumlah_urgent1 = isset($jumlah_urgent['URGENT']) ? $jumlah_urgent['URGENT'] : 0;
+
+                
+
+
+
                 $query_count_urgent = db2_exec($conn1, "SELECT
                                                         COUNT(*) as SELESIH_DATA
                                                         FROM(
@@ -787,11 +826,15 @@ $row_count_urgent = db2_fetch_assoc($query_count_urgent);
 if (!$row_count_urgent) {
     echo "Error in fetching data: " . db2_stmt_errormsg();
 }
-
 $selsidata = isset($row_count_urgent['SELESIH_DATA']) ? $row_count_urgent['SELESIH_DATA'] : 0;
+
+// menghitung julah urgent 
+$jumlah_urgent_final=$jumlah_urgent1 - $selsidata;
 
 $jumlah_masalah_ringan = $row_jumlah_masalah_ringan['JUMLAH_MASALAH'];
 $jumlah_masalah_berat = $row_jumlah_masalah_berat['JUMLAH_MASALAH'];
+
+
 
 // Hitung total sasaran follow-up
 $total_sasaran_follow = $jumlah_masalah - $jumlah_follow;
@@ -810,11 +853,12 @@ if ($persentase_follow_sasaran < 0) {
     $persentase_follow_sasaran = 0;
 }
 
+
 $format_follow = number_format($persentase_follow, 2);
 $format_follow_sasaran = number_format($persentase_follow_sasaran, 2);
 
 if ($selsidata != 0) {
-    $persentase_selisihdata = min(($selsidata / $jumlah_masalah) * 100, 100);
+    $persentase_selisihdata = min(($selsidata / $jumlah_urgent1) * 100, 100);
 } else {
     $persentase_selisihdata = 0;
 }
@@ -857,6 +901,26 @@ if ($persentase_close_5_sasaran < 0) {
 $format_close_5 = number_format($persentase_close_5_jam, 2);
 $format_close_5_sasaran = number_format($persentase_close_5_sasaran, 2);
 
+//jumlah masalah normal -
+$jumlahmasalah_normal=$row_jumlah_masalah['JUMLAH_MASALAH'] - $jumlah_urgent1;
+
+$sasaranmutu_normal=$jumlahmasalah_normal-$row_jumlah_follow['TOTAL_FOLLOW'];
+
+// Menghitung persentase jumlah_followup normal dari $jumlahmasalah_normal
+if ($jumlahmasalah_normal != 0) {
+    $persentase_followup = min(($jumlah_follow / $jumlahmasalah_normal) * 100, 100);
+} else {
+    $persentase_followup = 0;
+}
+$format_followup_normal = number_format($persentase_followup, 2);
+
+// Menghitung persentase jumlah persentasi dari sasaran mutu normal
+$persentase_follow_sasaranmutu = 100 - $persentase_followup;
+if ($persentase_follow_sasaranmutu < 0) {
+    $persentase_follow_sasaranmutu = 0;
+}
+$persentase_follow_sasaranmutu1 = number_format($persentase_follow_sasaranmutu, 2);
+
 
                 ?>
 
@@ -864,11 +928,20 @@ $format_close_5_sasaran = number_format($persentase_close_5_sasaran, 2);
 
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow ?> % )<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_follow ?> ( <?= $format_follow_sasaran ?> % )</strong><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah Normal =  <?= $jumlahmasalah_normal?></strong><br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah Urgent =  <?= $jumlah_urgent1?></strong><br><br>
+
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam (Normal) = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_followup_normal ?> % )<br>
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam (Normal) = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow ?> % )<br> -->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $sasaranmutu_normal?> ( <?= $persentase_follow_sasaranmutu1 ?> % )</strong><br><br>
+
+
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit (Urgent) = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?=  $jumlah_urgent_final?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br> -->
                 <?php if (strtotime($date1) >= strtotime('2025-02-01')) : ?>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_follow ?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br>
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit (Urgent) = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?=  $jumlah_urgent_final?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br>
                 <?php endif; ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Close Kerusakan Ringan > 3 jam = <?= $row_jumlah_close_3_jam['TOTAL_CLOSE_3_JAM']; ?> dari <?= $row_jumlah_masalah_ringan['JUMLAH_MASALAH']; ?> ( <?= $format_close_3 ?> % )<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_3_jam ?> ( <?= $format_close_3_sasaran ?> % ) </strong><br><br>
