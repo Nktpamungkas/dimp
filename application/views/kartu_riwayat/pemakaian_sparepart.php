@@ -52,6 +52,7 @@
                                             LEFT JOIN UNITOFMEASURE u ON u.CODE = p4.QUANTITYUOMCODE
                                             WHERE
                                                 NOT p4.IDINTDOCUMENTPROVISIONALCODE IS NULL
+												AND LEFT(p.CODE,4) ='BDIT'
                                             GROUP BY
                                                 p3.CODE,
                                                 d.LONGDESCRIPTION,
