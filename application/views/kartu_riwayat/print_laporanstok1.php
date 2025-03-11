@@ -928,17 +928,22 @@ $persentase_follow_sasaranmutu1 = number_format($persentase_follow_sasaranmutu, 
 
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah = <?= $row_jumlah_masalah['JUMLAH_MASALAH']; ?></strong><br><br>
+                <?php if (strtotime($date1) >= strtotime('2025-02-01')) : ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah Normal =  <?= $jumlahmasalah_normal?></strong><br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Jumlah Masalah Urgent =  <?= $jumlah_urgent1?></strong><br><br>
+                <?php endif; ?>
 
-
+                <?php if (strtotime($date1) >= strtotime('2025-02-01')) : ?>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam (Normal) = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_followup_normal ?> % )<br>
-                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam (Normal) = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow ?> % )<br> -->
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $sasaranmutu_normal?> ( <?= $persentase_follow_sasaranmutu1 ?> % )</strong><br><br>
-
+                <?php else: ?>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 1 Jam (Normal) = <?= $row_jumlah_follow['TOTAL_FOLLOW']; ?> ( <?= $format_follow ?> % )<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?= $total_sasaran_follow ?> ( <?= $format_follow_sasaran ?> % )</strong><br><br>
+                <?php endif; ?>
 
                 <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit (Urgent) = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?=  $jumlah_urgent_final?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br> -->
+                <!-- jikas -->
                 <?php if (strtotime($date1) >= strtotime('2025-02-01')) : ?>
                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Follow Up Lebih dari 30 Menit (Urgent) = <?= $selsidata ?> ( <?= $format_selisihdata ?> % )<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Capaian Sasaran Mutu = <?=  $jumlah_urgent_final?> ( <?= $format_follow_selisihdata ?> % )</strong><br><br>
