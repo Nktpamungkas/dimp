@@ -589,15 +589,15 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                         p.CREATIONDATETIME AS TGL_OPEN,
                                                                         p3.STARTDATE AS TGL_FOLLOWUP,
                                                                         p3.ENDDATE AS TGL_CLOSE,
-                                                                        LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),
-                                                                        ', ') AS ACTIVITYCODE,
+                                                                        -- LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),
+                                                                        -- ', ') AS ACTIVITYCODE,   --menghindari duplikat activity
                                                                         CASE
                                                                             WHEN p.CREATIONDATETIME < '2024-10-01'
                                                                             AND a1.VALUESTRING = 1 THEN 'BERAT'
                                                                             WHEN p.CREATIONDATETIME < '2024-10-01'
                                                                             AND a1.VALUESTRING = 2 THEN 'RINGAN'
                                                                             WHEN p.CREATIONDATETIME >= '2024-10-01'
-                                                                            AND TRIM(LEFT(I.ACTIVITYCODE, 9))= 'DITKMAYOR' THEN 'BERAT'
+                                                                            AND LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),', ') = 'DITKMAYOR' THEN 'BERAT' --menghindari duplikat activity LISTAGG
                                                                             --	WHEN p.CREATIONDATETIME >= '2024-10-01' a1.VALUESTRING = 2 THEN 'RINGAN'
                                                                             ELSE 'RINGAN'
                                                                         END AS JENIS_KERUSAKAN,
@@ -648,7 +648,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                         p3.STARTDATE,
                                                                         p3.ENDDATE,
                                                                         a1.VALUESTRING,
-                                                                        I.ACTIVITYCODE,
+                                                                        -- I.ACTIVITYCODE, //menghindari duplikat activity
                                                                         p3.REMARKS,
                                                                         p3.CREATIONUSER,
                                                                         ad.OPTIONS,
@@ -660,7 +660,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                 WHERE
                                                                     d.JENIS_KERUSAKAN = 'RINGAN'");
                 $row_jumlah_masalah_ringan = db2_fetch_assoc($q_jumlah_masalah_ringan);
-
+                
 
                 $q_jumlah_masalah_berat = db2_exec($conn1, "SELECT
                                                                 COUNT (*) AS JUMLAH_MASALAH
