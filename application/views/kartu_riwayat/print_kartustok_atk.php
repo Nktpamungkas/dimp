@@ -126,7 +126,6 @@
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
         AND t.CREATIONDATETIME > '2025-03-11 23:59:59'
-        AND a.FIELDNAME ='Keterangan'
         ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
