@@ -1,7 +1,7 @@
 <h2 style="font-weight: normal;">Welcome to Departments Inventory Online</h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php echo anchor('dashboard', "Dashboard"); ?></li>
     </ol>
 </div>
 
@@ -60,7 +60,7 @@ if ($level == 1) {?>
                 <th>Daftar Kartu Riwayat Mesin MTC <br> &nbsp;</th>
             </tr>
             <tr>
-                <th><a href="<?php echo base_url('kartu_riwayat/index_NOW'); ?>" class="btn btn-primary">MASUK</a></th>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_riwayat_mtc'); ?>" class="btn btn-primary">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -73,7 +73,7 @@ if ($level == 1) {?>
                 <th>Kartu Stock MTC <br> &nbsp; </th>
             </tr>
             <tr>
-                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock'); ?>" class="btn btn-success">MASUK</a></th>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_mtc'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>

@@ -46,6 +46,13 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_NOW', $data);
     }
 
+    public function print_kartu_riwayat_mtc($kode_mesin)
+    {
+        $data['kode_mesin'] = $kode_mesin;
+
+        $this->load->view('kartu_riwayat/print_kartu_riwayat_mtc', $data);
+    }
+
     public function pemakaian_spare_parts()
     {
         $data['title'] = "Form Pemakaian Spare Part DIT";
@@ -74,6 +81,20 @@ class Kartu_riwayat extends CI_Controller
         $data['title'] = "Form Kartu Stock Supplie & ATK";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk', $data);
+    }
+
+    public function kartu_riwayat_mtc()
+    {
+        $data['title'] = "Kartu Riwayat Mesin MTC";
+
+        $this->template->load('template', $this->folder . '/kartu_riwayat_mtc', $data);
+    }
+
+    public function kartu_stock_mtc()
+    {
+        $data['title'] = "Kartu Stock MTC";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_mtc', $data);
     }
 
     public function kartu_stock_bydate()
@@ -126,6 +147,15 @@ class Kartu_riwayat extends CI_Controller
         $data['date2']       = $this->input->post('date2');
 
         $this->load->view('kartu_riwayat/print_kartustok_atk', $data);
+    }
+
+    public function print_kartustok_mtc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_mtc', $data);
     }
 
     public function print_kartustok_bydate()
