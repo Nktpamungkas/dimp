@@ -7,12 +7,18 @@
 
     // Koneksi MYSQL
     date_default_timezone_set('Asia/Jakarta');
-    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "mtc");
+    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "ppc");
 
     // Koneksi DB2
+
+    // Server Test
+    // $hostname = "10.0.0.25";
+    // $database = "NOWTEST";
+
+    // Server Live
     $hostname = "10.0.0.21";
-                             // $database = "NOWTEST"; // SERVER NOW 20
-    $database    = "NOWPRD"; // SERVER NOW 22
+    $database = "NOWPRD";
+
     $user        = "db2admin";
     $passworddb2 = "Sunkam@24809";
     $port        = "25000";
@@ -27,7 +33,7 @@
     $id_barang = $kode_barang;
 
     // Ambil data barang stock awal
-    $query_barang  = "SELECT * FROM tbl_master_barang where id='$id_barang' LIMIT 1";
+    $query_barang  = "SELECT * FROM tbl_master_barang_transport where id='$id_barang' LIMIT 1";
     $result_barang = mysqli_query($con, $query_barang);
     $data_barang   = mysqli_fetch_assoc($result_barang);
     // print_r($data_barang);
@@ -62,8 +68,8 @@
     // Total Masuk
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE ='OPN')
-    AND LOGICALWAREHOUSECODE ='M201'
+    WHERE (TEMPLATECODE ='101' OR TEMPLATECODE ='OPN')
+    AND LOGICALWAREHOUSECODE ='P221'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -72,7 +78,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-03-12 08:55:00'";
+    AND TRANSACTIONDATE >= '2025-04-01 00:00:01'"; // KALAU UDA PPO
 
     if ($EXTRA_ITEM) {
         $query_masuk .= "AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
@@ -89,7 +95,7 @@
     $query_keluar = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
     WHERE (TEMPLATECODE ='201')
-    AND LOGICALWAREHOUSECODE ='M201'
+    AND LOGICALWAREHOUSECODE ='P221'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -98,7 +104,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-03-12 08:55:00'";
+    AND TRANSACTIONDATE >= '2025-04-01 00:00:01'";
 
     if ($EXTRA_ITEM) {
         $query_keluar .= "AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
@@ -126,9 +132,9 @@
         FROM STOCKTRANSACTION t
         WHERE
         (t.TEMPLATECODE ='OPN'
-        OR t.TEMPLATECODE ='QC1'
+        OR t.TEMPLATECODE ='101'
         OR t.TEMPLATECODE ='201')
-        AND t.LOGICALWAREHOUSECODE ='M201'
+        AND t.LOGICALWAREHOUSECODE ='P221'
         AND t.ITEMTYPECODE ='$ITEMTYPECODE'
         AND t.DECOSUBCODE01 ='$DECOSUBCODE01'
         AND t.DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -137,7 +143,7 @@
         AND t.DECOSUBCODE05 ='$DECOSUBCODE05'
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
-        AND t.TRANSACTIONDATE > '2025-03-12 08:55:00'
+        AND t.TRANSACTIONDATE >= '2025-04-01 00:00:01'
         ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
@@ -161,75 +167,18 @@
         $keterangan    = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1') {
-            $keterangan   = $row['TRANSACTIONNUMBER'];
+        if ($row['TEMPLATECODE'] === '101' || $row['TEMPLATECODE'] === 'OPN') {
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
         } else if ($row['TEMPLATECODE'] === '201') {
-            $TRANSACTIONNUMBER = $row['TRANSACTIONNUMBER'];
-
-            $query_machine = "SELECT p.SHORTDESCRIPTION  FROM STOCKTRANSACTION s
-            INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
-            AND s.DECOSUBCODE01 = i.SUBCODE01
-            AND s.DECOSUBCODE02 = i.SUBCODE02
-            AND s.DECOSUBCODE03 = i.SUBCODE03
-            AND s.DECOSUBCODE04 = i.SUBCODE04
-            AND s.DECOSUBCODE05 = i.SUBCODE05
-            AND s.DECOSUBCODE06 = i.SUBCODE06
-            AND s.DECOSUBCODE07 = i.SUBCODE07
-            AND s.DECOSUBCODE08 = i.SUBCODE08
-            AND s.DECOSUBCODE09 = i.SUBCODE09
-            AND s.DECOSUBCODE10 = i.SUBCODE10
-            AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
-            AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
-            INNER  JOIN PMBOM p ON i.PMMACHINECODE = p.CODE
-            WHERE s.ORDERCODE IS NOT NULL
-            AND s.ORDERCOUNTERCODE IS NOT NULL
-            AND s.LOGICALWAREHOUSECODE ='M201'
-            AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
-            ORDER BY s.TRANSACTIONDATE DESC ";
-
-            $exec_query_machine  = db2_exec($conn1, $query_machine);
-            $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
-
-            if ($fetch_query_machine) {
-                $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
-            } else {
-                $query_machine = "SELECT i.ITEMDESCRIPTION AS SHORTDESCRIPTION  FROM STOCKTRANSACTION s
-                INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
-                AND s.DECOSUBCODE01 = i.SUBCODE01
-                AND s.DECOSUBCODE02 = i.SUBCODE02
-                AND s.DECOSUBCODE03 = i.SUBCODE03
-                AND s.DECOSUBCODE04 = i.SUBCODE04
-                AND s.DECOSUBCODE05 = i.SUBCODE05
-                AND s.DECOSUBCODE06 = i.SUBCODE06
-                AND s.DECOSUBCODE07 = i.SUBCODE07
-                AND s.DECOSUBCODE08 = i.SUBCODE08
-                AND s.DECOSUBCODE09 = i.SUBCODE09
-                AND s.DECOSUBCODE10 = i.SUBCODE10
-                AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
-                AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
-                WHERE s.ORDERCODE IS NOT NULL
-                AND s.ORDERCOUNTERCODE IS NOT NULL
-                AND s.LOGICALWAREHOUSECODE ='M201'
-                AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
-                ORDER BY s.TRANSACTIONDATE DESC ";
-
-                $exec_query_machine  = db2_exec($conn1, $query_machine);
-                $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
-
-                if ($fetch_query_machine) {
-                    $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
-                }
-            }
-
             $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
 
         $tanggal     = $row['TRANSACTIONDATE'];
         $surat_jalan = $row['ORDERCODE'];
+        $keterangan  = $row['TRANSACTIONNUMBER'];
 
         // Array Data
         $data[] = [
@@ -249,7 +198,7 @@
 
     if (empty($data)) {
         $data[] = [
-            'tanggal'              => '2025-03-12',
+            'tanggal'              => '2025-04-01',
             'stock_awal'           => $stock_awal,
             'quantity_penerimaan'  => '',
             'quantity_pengeluaran' => '',
@@ -257,7 +206,7 @@
             'surat_jalan'          => '',
             'nama'                 => '',
             'paraf'                => '',
-            'keterangan'           => 'Balance per 12 Maret 2025',
+            'keterangan'           => 'Balance per 01 April 2025',
         ];
     }
 
@@ -267,7 +216,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartu Stok | MTC</title>
+    <title>Kartu Stok Transport | PPC </title>
     <style>
         body {
             font-family: Arial, sans-serif;
