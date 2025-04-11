@@ -195,6 +195,33 @@
 
             if ($fetch_query_machine) {
                 $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
+            } else {
+                $query_machine = "SELECT i.ITEMDESCRIPTION AS SHORTDESCRIPTION  FROM STOCKTRANSACTION s
+                INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
+                AND s.DECOSUBCODE01 = i.SUBCODE01
+                AND s.DECOSUBCODE02 = i.SUBCODE02
+                AND s.DECOSUBCODE03 = i.SUBCODE03
+                AND s.DECOSUBCODE04 = i.SUBCODE04
+                AND s.DECOSUBCODE05 = i.SUBCODE05
+                AND s.DECOSUBCODE06 = i.SUBCODE06
+                AND s.DECOSUBCODE07 = i.SUBCODE07
+                AND s.DECOSUBCODE08 = i.SUBCODE08
+                AND s.DECOSUBCODE09 = i.SUBCODE09
+                AND s.DECOSUBCODE10 = i.SUBCODE10
+                AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
+                AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
+                WHERE s.ORDERCODE IS NOT NULL
+                AND s.ORDERCOUNTERCODE IS NOT NULL
+                AND s.LOGICALWAREHOUSECODE ='M201'
+                AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
+                ORDER BY s.TRANSACTIONDATE DESC ";
+
+                $exec_query_machine  = db2_exec($conn1, $query_machine);
+                $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
+
+                if ($fetch_query_machine) {
+                    $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
+                }
             }
 
             $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
