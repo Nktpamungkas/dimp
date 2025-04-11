@@ -1,7 +1,7 @@
 <h2 style="font-weight: normal;">Welcome to Departments Inventory Online</h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <?php echo anchor('dashboard', "Dashboard"); ?></li>
     </ol>
 </div>
 
@@ -74,6 +74,33 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
+<?php } elseif ($dept == 'PPC') {?>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Departments Device</th>
+            </tr>
+            <tr>
+                <th>Daftar Kartu Riwayat PPC Transport<br> &nbsp;</th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_riwayat_transport'); ?>" class="btn btn-primary">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Kartu Stock PPC Transport <br> &nbsp; </th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_transport'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>

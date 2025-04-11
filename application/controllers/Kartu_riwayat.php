@@ -97,6 +97,20 @@ class Kartu_riwayat extends CI_Controller
         $this->template->load('template', $this->folder . '/kartu_stock_mtc', $data);
     }
 
+    public function kartu_riwayat_transport()
+    {
+        $data['title'] = "Kartu Riwayat PPC Transport";
+
+        $this->template->load('template', $this->folder . '/kartu_riwayat_transport', $data);
+    }
+
+    public function kartu_stock_transport()
+    {
+        $data['title'] = "Kartu Stock PPC Transport";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_transport', $data);
+    }
+
     public function kartu_stock_bydate()
     {
         $data['title'] = "Form Kartu Stok DIT By Date";
@@ -169,5 +183,21 @@ class Kartu_riwayat extends CI_Controller
         } else {
             $this->load->view('kartu_riwayat/print_kartustok_bydate', $data);
         }
+    }
+
+    public function print_kartu_riwayat_transport($kode_mesin)
+    {
+        $data['kode_mesin'] = $kode_mesin;
+
+        $this->load->view('kartu_riwayat/print_kartu_riwayat_transport', $data);
+    }
+
+    public function print_kartustok_transport()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_transport', $data);
     }
 }
