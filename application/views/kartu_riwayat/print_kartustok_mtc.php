@@ -162,17 +162,47 @@
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
         if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1') {
+            $keterangan   = $row['TRANSACTIONNUMBER'];
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
         } else if ($row['TEMPLATECODE'] === '201') {
+            $TRANSACTIONNUMBER = $row['TRANSACTIONNUMBER'];
+
+            $query_machine = "SELECT p.SHORTDESCRIPTION  FROM STOCKTRANSACTION s
+            INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
+            AND s.DECOSUBCODE01 = i.SUBCODE01
+            AND s.DECOSUBCODE02 = i.SUBCODE02
+            AND s.DECOSUBCODE03 = i.SUBCODE03
+            AND s.DECOSUBCODE04 = i.SUBCODE04
+            AND s.DECOSUBCODE05 = i.SUBCODE05
+            AND s.DECOSUBCODE06 = i.SUBCODE06
+            AND s.DECOSUBCODE07 = i.SUBCODE07
+            AND s.DECOSUBCODE08 = i.SUBCODE08
+            AND s.DECOSUBCODE09 = i.SUBCODE09
+            AND s.DECOSUBCODE10 = i.SUBCODE10
+            AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
+            AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
+            INNER  JOIN PMBOM p ON i.PMMACHINECODE = p.CODE
+            WHERE s.ORDERCODE IS NOT NULL
+            AND s.ORDERCOUNTERCODE IS NOT NULL
+            AND s.LOGICALWAREHOUSECODE ='M201'
+            AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
+            ORDER BY s.TRANSACTIONDATE DESC ";
+
+            $exec_query_machine  = db2_exec($conn1, $query_machine);
+            $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
+
+            if ($fetch_query_machine) {
+                $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
+            }
+
             $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
 
         $tanggal     = $row['TRANSACTIONDATE'];
         $surat_jalan = $row['ORDERCODE'];
-        $keterangan  = $row['TRANSACTIONNUMBER'];
 
         // Array Data
         $data[] = [
@@ -210,7 +240,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartu Stok ATK | DIT</title>
+    <title>Kartu Stok | MTC</title>
     <style>
         body {
             font-family: Arial, sans-serif;
