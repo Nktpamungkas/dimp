@@ -89,9 +89,10 @@ $conn1 = db2_connect($conn_string, '', '');
                                 i.EXTERNALREFERENCE AS CATATAN
                             FROM 
                                 INTERNALDOCUMENT i 
-                            LEFT JOIN INTERNALDOCUMENTLINE i2 ON i2.INTDOCUMENTPROVISIONALCODE = i.PROVISIONALCODE 
+                            LEFT JOIN INTERNALDOCUMENTLINE i2 ON i2.INTDOCUMENTPROVISIONALCODE = i.PROVISIONALCODE AND i2.WAREHOUSECODE = 'M231'
                             WHERE
-                                i.PROVISIONALCODE = '$kode_work_order'";
+                                i.PROVISIONALCODE = '$kode_work_order'
+								AND i.ORDPRNCUSTOMERSUPPLIERCODE = 'M231'";
 		$q_header = db2_exec($conn1, $query_int);
 		$row_header = db2_fetch_assoc($q_header);
 		?>
