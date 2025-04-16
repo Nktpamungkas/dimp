@@ -578,7 +578,7 @@ $conn1 = db2_connect($conn_string, '', '');
                 $row_jumlah_close_5_jam = db2_fetch_assoc($query_jumlah_close_5_jam);
                 $jumlah_close_5 = $row_jumlah_close_5_jam['TOTAL_CLOSE_5_JAM'];
 
-                $q_jumlah_masalah_ringan = db2_exec($conn1, "SELECT
+                $q_jumlah_masalah_ringan = db2_exec($conn1, "SELECT DISTINCT
                                                                     COUNT (*) AS JUMLAH_MASALAH
                                                                 FROM
                                                                     (
@@ -597,7 +597,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                             WHEN p.CREATIONDATETIME < '2024-10-01'
                                                                             AND a1.VALUESTRING = 2 THEN 'RINGAN'
                                                                             WHEN p.CREATIONDATETIME >= '2024-10-01'
-                                                                            AND LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)),', ') = 'DITKMAYOR' THEN 'BERAT' --menghindari duplikat activity LISTAGG
+                                                                            AND INSTR(LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)), ', '), 'DITKMAYOR') > 0 THEN 'BERAT' --menghindari duplikat activity LISTAGG
                                                                             --	WHEN p.CREATIONDATETIME >= '2024-10-01' a1.VALUESTRING = 2 THEN 'RINGAN'
                                                                             ELSE 'RINGAN'
                                                                         END AS JENIS_KERUSAKAN,
@@ -666,7 +666,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                 COUNT (*) AS JUMLAH_MASALAH
                                                             FROM
                                                                 (
-                                                                SELECT DISTINCT 
+                                                                SELECT  
                                                                     p3.CREATIONUSER AS PEMBUAT,
                                                                     p.CODE AS NOMOR_TIKET,
                                                                     d.SHORTDESCRIPTION,
@@ -681,7 +681,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                         WHEN p.CREATIONDATETIME < '2024-10-01'
                                                                         AND a1.VALUESTRING = 2 THEN 'RINGAN'
                                                                         WHEN p.CREATIONDATETIME >= '2024-10-01'
-                                                                        AND TRIM(LEFT(I.ACTIVITYCODE, 9))= 'DITKMAYOR' THEN 'BERAT'
+                                                                        AND INSTR(LISTAGG(TRIM(LEFT(I.ACTIVITYCODE, 9)), ', '), 'DITKMAYOR') > 0 THEN 'BERAT'
                                                                         -- WHEN p.CREATIONDATETIME >= '2024-10-01' a1.VALUESTRING = 2 THEN 'RINGAN' 
                                                                         ELSE 'RINGAN'
                                                                     END AS JENIS_KERUSAKAN,
@@ -724,7 +724,7 @@ $conn1 = db2_connect($conn_string, '', '');
                                                                     p3.STARTDATE,
                                                                     p3.ENDDATE,
                                                                     a1.VALUESTRING,
-                                                                    I.ACTIVITYCODE,
+                                                                    -- I.ACTIVITYCODE,
                                                                     p3.REMARKS,
                                                                     p3.CREATIONUSER,
                                                                     ad.OPTIONS,
