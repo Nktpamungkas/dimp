@@ -86,10 +86,16 @@ $conn1 = db2_connect($conn_string, '', '');
                                 TRIM(i2.SUBCODE01) || '-' || TRIM(i2.SUBCODE02) || '-' || TRIM(i2.SUBCODE03) || '-' || TRIM(i2.SUBCODE04) || '-' || TRIM(i2.SUBCODE05) || '-' || TRIM(i2.SUBCODE06) AS KODE_BARANG,
                                 i2.ITEMDESCRIPTION  AS NAMA_SPAREPART,
                                 floor(i2.USERPRIMARYQUANTITY) AS JUMLAH,
-                                i.EXTERNALREFERENCE AS CATATAN
+                                i.EXTERNALREFERENCE AS CATATAN,
+								CASE
+									WHEN a.VALUESTRING = '1' THEN 'Pinjam'
+									WHEN a.VALUESTRING = '2' THEN 'Pakai'
+									ELSE ''
+								END AS STATUS  
                             FROM 
                                 INTERNALDOCUMENT i 
                             LEFT JOIN INTERNALDOCUMENTLINE i2 ON i2.INTDOCUMENTPROVISIONALCODE = i.PROVISIONALCODE AND i2.WAREHOUSECODE = 'M231'
+							LEFT JOIN ADSTORAGE a ON a.UNIQUEID = i.ABSUNIQUEID AND a.FIELDNAME = 'Status'
                             WHERE
                                 i.PROVISIONALCODE = '$kode_work_order'
 								AND i.ORDPRNCUSTOMERSUPPLIERCODE = 'M231'";
@@ -139,10 +145,25 @@ $conn1 = db2_connect($conn_string, '', '');
 			<thead>
 				<tr>
 					<td align="left" colspan="3">
-						Status &nbsp; <span style='font-size:20px;'>&#9745;</span> Pakai<br>
+						<?php
+							if($row_header['STATUS'] == 'Pakai'){
+								$checklist_status_pakai = '&#9745;';
+							}else{
+								$checklist_status_pakai = '&#9634;';
+							}	
+							
+							if($row_header['STATUS'] == 'Pinjam'){
+								$checklist_status_pinjam = '&#9745;';
+							}else{
+								$checklist_status_pinjam = '&#9634;';
+							}	
+						?>
+						Status &nbsp; <span style='font-size:20px;'><?= $checklist_status_pakai; ?></span> Pakai<br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style='font-size:20px;'>&#9634;</span> Pinjam
+							style='font-size:20px;'><?= $checklist_status_pinjam; ?></span> Pinjam
 					</td>
+					<!-- centang &#9745; -->
+					<!-- tidak centang &#9634; -->
 				</tr>
 				<tr>
 					<td align="center" colspan="3">
