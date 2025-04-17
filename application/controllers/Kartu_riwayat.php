@@ -78,7 +78,7 @@ class Kartu_riwayat extends CI_Controller
 
     public function kartu_stock_atk()
     {
-        $data['title'] = "Form Kartu Stock Supplie & ATK";
+        $data['title'] = "Form Kartu Stock ATK DIT";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk', $data);
     }
@@ -199,5 +199,90 @@ class Kartu_riwayat extends CI_Controller
         $data['date2']       = $this->input->post('date2');
 
         $this->load->view('kartu_riwayat/print_kartustok_transport', $data);
+    }
+
+    // Kartu Stock Finishing
+    public function kartu_stock_fin()
+    {
+        $data['title'] = "Kartu Stock Finishing";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_fin', $data);
+    }
+
+    public function print_kartustok_fin()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_fin', $data);
+    }
+
+    // Kartu Stock ATK FIN
+    public function kartu_stock_atk_fin()
+    {
+        $data['title'] = "Form Kartu Stock ATK Finishing";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_fin', $data);
+    }
+
+    public function print_kartustok_atk_fin()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_fin', $data);
+    }
+
+    // Kartu Stock ATK LAB
+    public function kartu_stock_atk_lab()
+    {
+        $data['title'] = "Form Kartu Stock ATK Laborat";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_lab', $data);
+    }
+
+    public function print_kartustok_atk_lab()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_lab', $data);
+    }
+
+    // Kartu Stock ATK BRS
+    public function kartu_stock_atk_brs()
+    {
+        $data['title'] = "Form Kartu Stock ATK Brushing";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_brs', $data);
+    }
+
+    public function print_kartustok_atk_brs()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_brs', $data);
+    }
+
+    // Kartu Stock ATK CQA
+    public function kartu_stock_atk_cqa()
+    {
+        $data['title'] = "Form Kartu Stock ATK CQA";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_cqa', $data);
+    }
+
+    public function print_kartustok_atk_cqa()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_cqa', $data);
     }
 }

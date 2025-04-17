@@ -1,6 +1,6 @@
 <?php
     // Koneksi ke database MySQL
-    $conn = new mysqli("10.0.0.10", "dit", "4dm1n", "inventorydit");
+    $conn = new mysqli("10.0.0.10", "dit", "4dm1n", "dimp");
 
     // Periksa koneksi
     if ($conn->connect_error) {
@@ -11,12 +11,12 @@
 <h2 style="font-weight: normal;"><?php echo $title; ?></h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <?php echo anchor('dashboard', "Dashboard"); ?></li>
-        <li><?php echo anchor('kartu_riwayat/kartu_stock', "Kartu Stok ATK DIT"); ?> </li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><?php echo anchor('kartu_riwayat/kartu_stock_atk_brs', "Kartu Stok ATK BRS"); ?> </li>
         <li class="active">Data</li>
     </ol>
 </div>
-<form method="post" enctype="multipart/form-data" target="_blank" action="<?php echo base_url('kartu_riwayat/print_kartustok_atk'); ?>" class="form-horizontal">
+<form method="post" enctype="multipart/form-data" target="_blank" action="<?php echo base_url('kartu_riwayat/print_kartustok_atk_brs'); ?>" class="form-horizontal">
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -39,7 +39,7 @@
                                                 TRIM(DECOSUBCODE06)) AS KODE_BARANG,
                                             DESCRIPTION,
                                             id
-                                        FROM tbl_master_barang_atk ";
+                                        FROM tbl_master_barang_atk_brs ";
 
                                 $result = $conn->query($query);
 
