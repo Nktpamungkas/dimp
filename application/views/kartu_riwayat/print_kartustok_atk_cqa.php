@@ -146,11 +146,11 @@
         $keterangan    = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN' || ['TEMPLATECODE'] === '304' || ['TEMPLATECODE'] === '101') {
+        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === '304' || $row['TEMPLATECODE'] === '101') {
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
-        } else if ($row['TEMPLATECODE'] === '098' || ['TEMPLATECODE'] === '303') {
+        } else if ($row['TEMPLATECODE'] === '098' || $row['TEMPLATECODE'] === '303') {
             $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
