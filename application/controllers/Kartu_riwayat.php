@@ -285,4 +285,72 @@ class Kartu_riwayat extends CI_Controller
 
         $this->load->view('kartu_riwayat/print_kartustok_atk_cqa', $data);
     }
+
+    // Kartu Stock ATK QCF
+    public function kartu_stock_atk_qcf()
+    {
+        $data['title'] = "Form Kartu Stock ATK QCF";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_qcf', $data);
+    }
+
+    public function print_kartustok_atk_qcf()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_qcf', $data);
+    }
+
+    // Kartu Stock ATK TQ
+    public function kartu_stock_atk_tq()
+    {
+        $data['title'] = "Form Kartu Stock ATK TQ";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_tq', $data);
+    }
+
+    public function print_kartustok_atk_tq()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_tq', $data);
+    }
+
+    // Kartu Stock ATK KNT
+    public function kartu_stock_atk_knt()
+    {
+        $data['title'] = "Form Kartu Stock ATK KNT";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_knt', $data);
+    }
+
+    public function print_kartustok_atk_knt()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_knt', $data);
+    }
+
+    // Kartu Stock ATK DYE
+    public function kartu_stock_atk_dye()
+    {
+        $data['title'] = "Form Kartu Stock ATK DYE";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_dye', $data);
+    }
+
+    public function print_kartustok_atk_dye()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_dye', $data);
+    }
 }
