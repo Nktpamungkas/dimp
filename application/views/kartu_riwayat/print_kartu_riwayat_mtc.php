@@ -1079,7 +1079,7 @@
         <col class="col6">
         <col class="col7">
             <?php
-                $no_mesin = $kode_mesin;
+                $no_mesin = str_replace('---', '/', $kode_mesin);
                 ini_set("error_reporting", 0);
                 $query_breakdown = "SELECT
                     p.PMBOMCODE AS NO_MESIN,
@@ -1105,6 +1105,9 @@
                     p.COUNTERCODE
                 ORDER BY
                     MAX(p.CREATIONDATETIME) ASC";
+
+                // echo $query_breakdown;
+
                 $q_breakdown_header   = db2_exec($conn1, $query_breakdown);
                 $row_breakdown_header = db2_fetch_assoc($q_breakdown_header);
             ?>

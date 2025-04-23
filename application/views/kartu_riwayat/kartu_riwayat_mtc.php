@@ -1,7 +1,7 @@
 <h2 style="font-weight: normal;"><?php echo $title; ?></h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo anchor('dashboard', "Dashboard"); ?></li>
         <li><?php echo anchor('kartu_riwayat/kartu_riwayat_mtc', "Daftar Kartu Riwayat Mesin MTC"); ?> </li>
         <li class="active">Data</li>
     </ol>
@@ -48,7 +48,10 @@
             <td><?php echo $row_mesin['KODE_MESIN'] ?></td>
             <td><?php echo $row_mesin['NAMA_MESIN'] ?></td>
             <td>
-                <a href="<?php echo base_url('kartu_riwayat/print_kartu_riwayat_mtc') . '/' . $row_mesin['KODE_MESIN']; ?>" data-toggle="tooltip" title="Print" class="gi gi-notes_2" target="_blank"></a>
+                <?php
+                    $ROW_MESIN_DATA = str_replace('/', '---', $row_mesin['KODE_MESIN']);
+                    ?>
+                <a href="<?php echo base_url('kartu_riwayat/print_kartu_riwayat_mtc') . '/' . $ROW_MESIN_DATA; ?>" data-toggle="tooltip" title="Print" class="gi gi-notes_2" target="_blank"></a>
             </td>
         </tr>
         <?php }?>
