@@ -88,8 +88,8 @@ $conn1 = db2_connect($conn_string, '', '');
                                 floor(i2.USERPRIMARYQUANTITY) AS JUMLAH,
                                 i.EXTERNALREFERENCE AS CATATAN,
 								CASE
-									WHEN a.VALUESTRING = '1' THEN 'Pinjam'
-									WHEN a.VALUESTRING = '2' THEN 'Pakai'
+									WHEN a.VALUESTRING = '2' THEN 'Pinjam'
+									WHEN a.VALUESTRING = '1' THEN 'Pakai'
 									ELSE ''
 								END AS STATUS  
                             FROM 
