@@ -27,7 +27,7 @@
     $id_barang = $kode_barang;
 
     // Ambil data barang stock awal
-    $query_barang  = "SELECT * FROM tbl_master_barang_atk_tq where id='$id_barang' LIMIT 1";
+    $query_barang  = "SELECT * FROM tbl_master_barang_atk_hrd where id='$id_barang' LIMIT 1";
     $result_barang = mysqli_query($con, $query_barang);
     $data_barang   = mysqli_fetch_assoc($result_barang);
     // print_r($data_barang);
@@ -59,8 +59,7 @@
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
     WHERE (TEMPLATECODE ='OPN' OR TEMPLATECODE ='304' OR TEMPLATECODE ='101')
-    AND LOGICALWAREHOUSECODE ='M407'
-    AND WAREHOUSELOCATIONCODE ='002'
+    AND LOGICALWAREHOUSECODE ='M411'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -69,7 +68,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-04-16'";
+    AND TRANSACTIONDATE > '2025-04-22'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
     $fetch_query_masuk = db2_fetch_assoc($exec_query_masuk);
@@ -82,8 +81,7 @@
     $query_keluar = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
     WHERE (TEMPLATECODE ='098' OR TEMPLATECODE ='303')
-    AND LOGICALWAREHOUSECODE ='M407'
-    AND WAREHOUSELOCATIONCODE ='002'
+    AND LOGICALWAREHOUSECODE ='M411'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -92,7 +90,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-04-16'";
+    AND TRANSACTIONDATE > '2025-04-22'";
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);
     $fetch_query_keluar = db2_fetch_assoc($exec_query_keluar);
@@ -121,8 +119,7 @@
         OR t.TEMPLATECODE ='101'
         OR t.TEMPLATECODE ='098'
         OR t.TEMPLATECODE ='303')
-        AND t.LOGICALWAREHOUSECODE ='M407'
-        AND t.WAREHOUSELOCATIONCODE ='002'
+        AND t.LOGICALWAREHOUSECODE ='M411'
         AND t.ITEMTYPECODE ='$ITEMTYPECODE'
         AND t.DECOSUBCODE01 ='$DECOSUBCODE01'
         AND t.DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -131,8 +128,8 @@
         AND t.DECOSUBCODE05 ='$DECOSUBCODE05'
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
-        AND t.TRANSACTIONDATE > '2025-04-16'
-        ORDER BY t.TRANSACTIONDATE ASC,t.TRANSACTIONTIME ASC";
+        AND t.TRANSACTIONDATE > '2025-04-22'
+        ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
 
@@ -180,7 +177,7 @@
 
     if (empty($data)) {
         $data[] = [
-            'tanggal'              => '2025-04-16',
+            'tanggal'              => '2025-04-22',
             'stock_awal'           => $stock_awal,
             'quantity_penerimaan'  => '',
             'quantity_pengeluaran' => '',
@@ -188,7 +185,7 @@
             'surat_jalan'          => '',
             'nama'                 => '',
             'paraf'                => '',
-            'keterangan'           => 'Balance per 16 April 2025',
+            'keterangan'           => 'Balance per 22 April 2025',
         ];
     }
 
@@ -198,7 +195,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartu Stok ATK | TQ</title>
+    <title>Kartu Stok ATK | HRD</title>
     <style>
         body {
             font-family: Arial, sans-serif;

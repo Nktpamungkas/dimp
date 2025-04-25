@@ -10,7 +10,9 @@
         <div class="col-sm-2 d-flex justify-content-end align-items-center">
             <label for="deptMenu" class="mb-0 mr-2">Pilih Departemen:</label>
             <select id="deptMenu" class="form-control" style="width: auto;">
-                <option value="dit" selected>DIT</option>
+                <option value="pcs" selected>PCS</option>
+
+                <option value="dit">DIT</option>
                 <option value="fin">FIN</option>
                 <option value="lab">LAB</option>
                 <option value="mtc">MTC</option>
@@ -20,6 +22,9 @@
                 <option value="qcf">QCF</option>
                 <option value="knt">KNT</option>
                 <option value="dye">DYE</option>
+
+                <option value="hrd">HRD</option>
+                <option value="qai">QAI</option>
             </select>
         </div>
     <?php }?>
@@ -27,7 +32,7 @@
 
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php echo anchor('dashboard', "Dashboard"); ?></li>
     </ol>
 </div>
 
@@ -75,32 +80,59 @@ if ($level == 1) {?>
         </table>
     </div>
 <?php } elseif ($dept == 'MTC') {?>
-    <div class="col-sm-4">
-        <table class="table table-bordered">
-            <tr class="success">
-                <th>Departments Device</th>
-            </tr>
-            <tr>
-                <th>Daftar Kartu Riwayat Mesin MTC <br> &nbsp;</th>
-            </tr>
-            <tr>
-                <th><a href="<?php echo base_url('kartu_riwayat/kartu_riwayat_mtc'); ?>" class="btn btn-primary">MASUK</a></th>
-            </tr>
-        </table>
-    </div>
-    <div class="col-sm-4">
-        <table class="table table-bordered">
-            <tr class="success">
-                <th>Forms</th>
-            </tr>
-            <tr>
-                <th>Kartu Stock MTC <br> &nbsp; </th>
-            </tr>
-            <tr>
-                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_mtc'); ?>" class="btn btn-success">MASUK</a></th>
-            </tr>
-        </table>
-    </div>
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Departments Device</th>
+                </tr>
+                <tr>
+                    <th>Daftar Kartu Riwayat Mesin MTC <br> &nbsp;</th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_riwayat_mtc'); ?>" class="btn btn-primary">MASUK</a></th>
+                </tr>
+            </table>
+
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Supplies MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_supplies_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock MTC <br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Stationary MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
 <?php } elseif ($dept == 'PPC') {?>
     <div class="col-sm-4">
         <table class="table table-bordered">
@@ -399,6 +431,18 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_riwayat_mtc'); ?>" class="btn btn-primary">MASUK</a></th>
                 </tr>
             </table>
+
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Supplies MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_supplies_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -411,6 +455,20 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Stationary MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -509,6 +567,54 @@ if ($level == 1) {?>
             </table>
         </div>
     </div>
+
+    <div class="menu-block pcs" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK PCS<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_pcs'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="menu-block hrd" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK HRD<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_hrd'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="menu-block qai" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK QAI<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qai'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
 <?php } elseif ($dept == 'QCF') {?>
         <div class="col-sm-4">
             <table class="table table-bordered">
@@ -564,6 +670,34 @@ if ($level == 1) {?>
                 </tr>
             </table>
         </div>
+<?php } elseif ($dept == 'QAI') {?>
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK QAI<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qai'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+<?php } elseif ($dept == 'HRD') {?>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Kartu Stock ATK HRD<br> &nbsp; </th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_hrd'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
 <?php } else {?>
     <div class="col-sm-4">
         <table class="table table-bordered">
