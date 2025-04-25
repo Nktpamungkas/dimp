@@ -154,7 +154,7 @@ $conn1 = db2_connect($conn_string, '', '');
                         <span>No. Revisi</span><span>: 05</span>
                     </li>
                     <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>Tgl. Terbit</span><span>: 25 April 2025</span>
+                        <span>Tgl. Terbit</span><span>: 28 April 2025</span>
                     </li>
                 </ul>
             </td>
