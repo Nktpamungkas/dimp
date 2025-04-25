@@ -151,10 +151,10 @@ $conn1 = db2_connect($conn_string, '', '');
                         <span>No. Form</span><span>: FW-14-DIT-05</span>
                     </li>
                     <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>No. Revisi</span><span>: 04</span>
+                        <span>No. Revisi</span><span>: 05</span>
                     </li>
                     <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>Tgl. Terbit</span><span>: 16 Desember 2024</span>
+                        <span>Tgl. Terbit</span><span>: 25 April 2025</span>
                     </li>
                 </ul>
             </td>
@@ -328,6 +328,7 @@ $conn1 = db2_connect($conn_string, '', '');
                 <td style="text-align: center;">&nbsp</td>
                 <td style="text-align: center;">Dibuat Oleh :</td>
                 <td style="text-align: center;">Diketahui Oleh :</td>
+                <td style="text-align: center;">Mengetahui Oleh :</td>
                 <td style="text-align: center;">Diperiksa Oleh :</td>
             </tr>
             <tr>
