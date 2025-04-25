@@ -328,8 +328,8 @@ $conn1 = db2_connect($conn_string, '', '');
                 <td style="text-align: center;">&nbsp</td>
                 <td style="text-align: center;">Dibuat Oleh :</td>
                 <td style="text-align: center;">Diketahui Oleh :</td>
-                <td style="text-align: center;">Mengetahui Oleh :</td>
                 <td style="text-align: center;">Diperiksa Oleh :</td>
+                <td style="text-align: center;">Mengetahui :</td>
             </tr>
             <tr>
                 <td>Nama</td>
