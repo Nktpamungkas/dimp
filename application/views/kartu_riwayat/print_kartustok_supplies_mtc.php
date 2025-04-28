@@ -69,7 +69,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-04-22'";
+    AND TRANSACTIONDATE > '2025-04-24'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
     $fetch_query_masuk = db2_fetch_assoc($exec_query_masuk);
@@ -92,7 +92,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-04-22'";
+    AND TRANSACTIONDATE > '2025-04-24'";
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);
     $fetch_query_keluar = db2_fetch_assoc($exec_query_keluar);
@@ -131,7 +131,7 @@
         AND t.DECOSUBCODE05 ='$DECOSUBCODE05'
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
-        AND t.TRANSACTIONDATE > '2025-04-22'
+        AND t.TRANSACTIONDATE > '2025-04-24'
         ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
@@ -180,7 +180,7 @@
 
     if (empty($data)) {
         $data[] = [
-            'tanggal'              => '2025-04-22',
+            'tanggal'              => '2025-04-24',
             'stock_awal'           => $stock_awal,
             'quantity_penerimaan'  => '',
             'quantity_pengeluaran' => '',
@@ -188,7 +188,7 @@
             'surat_jalan'          => '',
             'nama'                 => '',
             'paraf'                => '',
-            'keterangan'           => 'Balance per 22 April 2025',
+            'keterangan'           => 'Balance per 24 April 2025',
         ];
     }
 
