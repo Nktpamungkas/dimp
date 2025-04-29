@@ -443,4 +443,20 @@ class Kartu_riwayat extends CI_Controller
 
         $this->load->view('kartu_riwayat/print_kartustok_supplies_mtc', $data);
     }
+
+    // Laporan Stock Sparepart MTC
+    public function laporan_stock_sparepart_mtc()
+    {
+        $data['title'] = "Form Laporan Stock Sparepart MTC";
+
+        $this->template->load('template', $this->folder . '/laporan_stock_sparepart_mtc', $data);
+    }
+
+    public function print_laporan_stock_sparepart_mtc()
+    {
+        $data['date1'] = $this->input->post('date1');
+        $data['date2'] = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_laporan_stock_sparepart_mtc', $data);
+    }
 }
