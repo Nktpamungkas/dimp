@@ -106,15 +106,22 @@
     $q_zone_location = db2_exec($conn1, "
     SELECT
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||'-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||'-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
-    WAREHOUSEZONE.LONGDESCRIPTION || '-' || STOCKTRANSACTION.WAREHOUSELOCATIONCODE  AS ZONE_LOCATION
+        WAREHOUSEZONE.LONGDESCRIPTION || '-' || STOCKTRANSACTION.WAREHOUSELOCATIONCODE  AS ZONE_LOCATION
     FROM STOCKTRANSACTION
     LEFT JOIN WAREHOUSEZONE ON WAREHOUSEZONE.PHYSICALWAREHOUSECODE = STOCKTRANSACTION.PHYSICALWAREHOUSECODE
     AND WAREHOUSEZONE.CODE = STOCKTRANSACTION.WHSLOCATIONWAREHOUSEZONECODE
-      WHERE STOCKTRANSACTION.LOGICALWAREHOUSECODE = 'M201'
-");
+    WHERE STOCKTRANSACTION.LOGICALWAREHOUSECODE = 'M201'
+    ");
 
     while ($row = db2_fetch_assoc($q_zone_location)) {
-        $zone_location_data[$row['KODE_BARANG']] = $row['ZONE_LOCATION'];
+        $kode     = $row['KODE_BARANG'];
+        $location = $row['ZONE_LOCATION'];
+        if (! isset($zone_location_data[$kode])) {
+            $zone_location_data[$kode] = [];
+        }
+        if (! in_array($location, $zone_location_data[$kode])) {
+            $zone_location_data[$kode][] = $location;
+        }
     }
 
 ?>
@@ -135,7 +142,7 @@
 
 <label style="font-weight: bold;">LAPORAN STOCK</label><br>
 <label><u>DEPARTEMEN MTC</u></label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
 <br><br>
 <table width="100%" border="1" id="t01">
     <tr>
@@ -166,7 +173,9 @@
         $masuk      = $stok_masuk_data[$kode_barang] ?? 0;
         $keluar     = $stok_keluar_data[$kode_barang] ?? 0;
         $stok_akhir = $stok_awal + $masuk - $keluar;
-        $zone       = $zone_location_data[$kode_barang] ?? '';
+
+        $zone_arr = $zone_location_data[$kode_barang] ?? [];
+        $zone     = implode('<br>', $zone_arr);
 
     ?>
 <tr>
@@ -180,7 +189,7 @@
     <td><?php echo $keluar; ?></td>
     <td><?php echo $row['UNIT']; ?></td>
     <td><?php echo $stok_akhir; ?></td>
-    <td><?php echo $zone; ?></td>
+    <td style="text-align: left;"><?php echo $zone; ?></td>
     <td></td>
 </tr>
 <?php }?>
