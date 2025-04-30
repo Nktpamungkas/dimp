@@ -34,7 +34,8 @@ $query = "SELECT
                 CASE
                     WHEN s.ORDERCODE IS NULL THEN s.TEMPLATECODE
                     ELSE s.TEMPLATECODE || ' - ' || s.ORDERCODE
-                END	AS ORDERCODE_TEMPLATE
+                END	AS ORDERCODE_TEMPLATE,
+				a.VALUESTRING AS KETERANGAN_SPR
             FROM
                 STOCKTRANSACTION s
             LEFT JOIN PRODUCT p ON p.ITEMTYPECODE = s.ITEMTYPECODE 
@@ -43,7 +44,9 @@ $query = "SELECT
                                 AND p.SUBCODE03 = s.DECOSUBCODE03 
                                 AND p.SUBCODE04 = s.DECOSUBCODE04 
                                 AND p.SUBCODE05 = s.DECOSUBCODE05 
-                                AND p.SUBCODE06 = s.DECOSUBCODE06 
+                                AND p.SUBCODE06 = s.DECOSUBCODE06
+			LEFT JOIN ADSTORAGE a ON a.UNIQUEID = s.ABSUNIQUEID 
+								AND a.FIELDNAME = 'KeteranganSPR'
             WHERE
                 s.ITEMTYPECODE ='SPR'
                 AND s.DECOSUBCODE01 = 'DIT' 
@@ -64,7 +67,8 @@ $query = "SELECT
                 s.BASEPRIMARYQUANTITY,
                 s.BASEPRIMARYUOMCODE,
                 s.TEMPLATECODE,
-                s.ORDERCODE 
+                s.ORDERCODE,
+				a.VALUESTRING
             ORDER BY
                 -- s.TRANSACTIONNUMBER
                 s.TRANSACTIONDATE
@@ -117,7 +121,7 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 	</table>
 	<br>
 	<table>
-	<?php 
+		<?php
 		if (empty($d_stock_transaction['KODE_BARANG'])) {
 			$query_product = "
 				SELECT 
@@ -335,8 +339,16 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 						?>
 					</td> <!-- Stock Akhir -->
 
-					<td align="center"><?= $row_stock_transaction['ORDERCODE_TEMPLATE']; ?></td>
-					<!-- Surat Jalan/Bon Pengambilan barang -->
+					<td align="center">
+						<!-- Menampilkan nilai dari ORDERCODE_TEMPLATE -->
+						<?= $row_stock_transaction['ORDERCODE_TEMPLATE']; ?>
+
+						<!-- Mengecek apakah KETERANGAN_SPR tidak kosong -->
+						<?php if (!empty($row_stock_transaction['KETERANGAN_SPR'])): ?>
+							<!-- Jika KETERANGAN_SPR tidak kosong, tampilkan tanda "-" diikuti dengan nilai KETERANGAN_SPR -->
+							- <?= $row_stock_transaction['KETERANGAN_SPR']; ?>
+						<?php endif; ?>
+					</td> <!-- Surat Jalan/Bon Pengambilan barang -->
 					<td align="center">&nbsp;</td> <!-- Nama -->
 					<td align="center">&nbsp;</td> <!-- Paraf-->
 					<td align="center"><?= $row_stock_transaction['TRANSACTIONNUMBER']; ?></td> <!-- Keterangan -->
@@ -349,4 +361,3 @@ $d_stock_transaction = db2_fetch_assoc($q_stock_transaction);
 
 
 </html>
-
