@@ -143,7 +143,7 @@
 
 <label style="font-weight: bold;">LAPORAN STOCK</label><br>
 <label><u>DEPARTEMEN MTC</u></label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
 <br><br>
 <table width="100%" border="1" id="t01">
     <tr>
@@ -171,8 +171,14 @@
         $keluar_awal = $stok_awal_keluar[$kode_barang] ?? 0;
         $stok_awal   = ($stok_awal + $masuk_awal) - $keluar_awal;
 
-        $masuk      = $stok_masuk_data[$kode_barang] ?? 0;
-        $keluar     = $stok_keluar_data[$kode_barang] ?? 0;
+        $masuk  = $stok_masuk_data[$kode_barang] ?? 0;
+        $keluar = $stok_keluar_data[$kode_barang] ?? 0;
+
+        // Kondisi item yang stock awal, masuk , keluar sama
+        if ($stok_awal === $masuk && $masuk === $keluar) {
+            $stok_awal = 0;
+        }
+
         $stok_akhir = $stok_awal + $masuk - $keluar;
 
         $zone_arr = $zone_location_data[$kode_barang] ?? [];
