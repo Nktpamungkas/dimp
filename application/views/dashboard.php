@@ -32,7 +32,7 @@
 
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <?php echo anchor('dashboard', "Dashboard"); ?></li>
     </ol>
 </div>
 
@@ -104,6 +104,19 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_supplies_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+
+            <!-- Kartu Stock Intake MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Intake MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_intake_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -130,6 +143,19 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/laporan_stock_sparepart_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+
+            <!-- Laporan Stock Limbah Dan Intake MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Stock Limbah Dan Intake MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_stock_limbah_intake_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -142,6 +168,19 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+
+            <!-- Kartu Stock Limbah MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Limbah MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_limbah_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -455,6 +494,19 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_supplies_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+
+            <!-- Kartu Stock Intake MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Intake MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_intake_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -481,6 +533,19 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/laporan_stock_sparepart_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+
+            <!-- Laporan Stock Limbah Dan Intake MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Stock Limbah Dan Intake MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_stock_limbah_intake_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -493,6 +558,19 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+
+            <!-- Kartu Stock Limbah MTC -->
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock Limbah MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_limbah_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>

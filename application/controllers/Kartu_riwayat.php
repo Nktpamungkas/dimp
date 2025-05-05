@@ -459,4 +459,54 @@ class Kartu_riwayat extends CI_Controller
 
         $this->load->view('kartu_riwayat/print_laporan_stock_sparepart_mtc', $data);
     }
+
+    // Kartu Stock Limbah MTC
+    public function kartu_stock_limbah_mtc()
+    {
+        $data['title'] = "Form Kartu Stock Limbah MTC";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_limbah_mtc', $data);
+    }
+
+    public function print_kartu_stock_limbah_mtc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_limbah_mtc', $data);
+    }
+
+    // Kartu Stock Intake MTC
+    public function kartu_stock_intake_mtc()
+    {
+        $data['title'] = "Form Kartu Stock Intake MTC";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_intake_mtc', $data);
+    }
+
+    public function print_kartu_stock_intake_mtc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_intake_mtc', $data);
+    }
+
+    // Laporan Stock Limbah Dan Intake MTC
+    public function laporan_stock_limbah_intake_mtc()
+    {
+        $data['title'] = "Form Laporan Stock Limbah & Intake MTC";
+
+        $this->template->load('template', $this->folder . '/laporan_stock_limbah_intake_mtc', $data);
+    }
+
+    public function print_laporan_stock_limbah_intake_mtc()
+    {
+        $data['date1'] = $this->input->post('date1');
+        $data['date2'] = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_laporan_stock_limbah_intake_mtc', $data);
+    }
 }
