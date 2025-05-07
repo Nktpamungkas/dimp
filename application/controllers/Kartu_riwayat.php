@@ -125,10 +125,10 @@ class Kartu_riwayat extends CI_Controller
         }
     }
 
-    // Kartu Stock ATK DIT
+    // Kartu Stock ATK & SUPPLIES DIT
     public function kartu_stock_atk()
     {
-        $data['title'] = "Form Kartu Stock ATK DIT";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES DIT";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk', $data);
     }
@@ -223,10 +223,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_fin', $data);
     }
 
-    // Kartu Stock ATK FIN
+    // Kartu Stock ATK & SUPPLIES FIN
     public function kartu_stock_atk_fin()
     {
-        $data['title'] = "Form Kartu Stock ATK Finishing";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES Finishing";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_fin', $data);
     }
@@ -240,10 +240,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_fin', $data);
     }
 
-    // Kartu Stock ATK LAB
+    // Kartu Stock ATK & SUPPLIES LAB
     public function kartu_stock_atk_lab()
     {
-        $data['title'] = "Form Kartu Stock ATK Laborat";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES Laborat";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_lab', $data);
     }
@@ -257,10 +257,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_lab', $data);
     }
 
-    // Kartu Stock ATK BRS
+    // Kartu Stock ATK & SUPPLIES BRS
     public function kartu_stock_atk_brs()
     {
-        $data['title'] = "Form Kartu Stock ATK Brushing";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES Brushing";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_brs', $data);
     }
@@ -274,10 +274,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_brs', $data);
     }
 
-    // Kartu Stock ATK CQA
+    // Kartu Stock ATK & SUPPLIES CQA
     public function kartu_stock_atk_cqa()
     {
-        $data['title'] = "Form Kartu Stock ATK CQA";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES CQA";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_cqa', $data);
     }
@@ -291,10 +291,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_cqa', $data);
     }
 
-    // Kartu Stock ATK QCF
+    // Kartu Stock ATK & SUPPLIES QCF
     public function kartu_stock_atk_qcf()
     {
-        $data['title'] = "Form Kartu Stock ATK QCF";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES QCF";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_qcf', $data);
     }
@@ -308,10 +308,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_qcf', $data);
     }
 
-    // Kartu Stock ATK TQ
+    // Kartu Stock ATK & SUPPLIES TQ
     public function kartu_stock_atk_tq()
     {
-        $data['title'] = "Form Kartu Stock ATK TQ";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES TQ";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_tq', $data);
     }
@@ -325,10 +325,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_tq', $data);
     }
 
-    // Kartu Stock ATK KNT
+    // Kartu Stock ATK & SUPPLIES KNT
     public function kartu_stock_atk_knt()
     {
-        $data['title'] = "Form Kartu Stock ATK KNT";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES KNT";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_knt', $data);
     }
@@ -342,10 +342,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_knt', $data);
     }
 
-    // Kartu Stock ATK DYE
+    // Kartu Stock ATK & SUPPLIES DYE
     public function kartu_stock_atk_dye()
     {
-        $data['title'] = "Form Kartu Stock ATK DYE";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES DYE";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_dye', $data);
     }
@@ -359,10 +359,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_dye', $data);
     }
 
-    // Kartu Stock ATK HRD
+    // Kartu Stock ATK & SUPPLIES HRD
     public function kartu_stock_atk_hrd()
     {
-        $data['title'] = "Form Kartu Stock ATK HRD";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES HRD";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_hrd', $data);
     }
@@ -376,10 +376,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_hrd', $data);
     }
 
-    // Kartu Stock ATK QAI
+    // Kartu Stock ATK & SUPPLIES QAI
     public function kartu_stock_atk_qai()
     {
-        $data['title'] = "Form Kartu Stock ATK QAI";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES QAI";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_qai', $data);
     }
@@ -393,10 +393,10 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_qai', $data);
     }
 
-    // Kartu Stock ATK PCS
+    // Kartu Stock ATK & SUPPLIES PCS
     public function kartu_stock_atk_pcs()
     {
-        $data['title'] = "Form Kartu Stock ATK PCS";
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES PCS";
 
         $this->template->load('template', $this->folder . '/kartu_stock_atk_pcs', $data);
     }

@@ -64,7 +64,7 @@
     // Total Masuk
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='QCT' OR TEMPLATECODE='OPN')
+    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE='OPN')
     AND LOGICALWAREHOUSECODE ='M121'
     AND WAREHOUSELOCATIONCODE ='A'
     AND WHSLOCATIONWAREHOUSEZONECODE='2'
@@ -117,7 +117,7 @@
     LEFT JOIN ADSTORAGE a ON a.UNIQUEID = t.ABSUNIQUEID
     WHERE
         (t.TEMPLATECODE ='OPN'
-        OR t.TEMPLATECODE ='QCT'
+        OR t.TEMPLATECODE ='QC1'
         OR t.TEMPLATECODE='098')
         AND t.LOGICALWAREHOUSECODE ='M121'
         AND t.WAREHOUSELOCATIONCODE ='A'
@@ -134,6 +134,7 @@
     $exec_query_data = db2_exec($conn1, $query_data);
 
     while ($row = db2_fetch_assoc($exec_query_data)) {
+
         // $nama_supplier = $row['CREATIONDATETIME'];
         $nama_supplier        = '';
         $tanggal_masuk        = '';
@@ -144,7 +145,7 @@
         $tanda_tangan_pemakai = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QCT' || $row['TEMPLATECODE'] === '101') {
+        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1' || $row['TEMPLATECODE'] === '101') {
             $tanggal_masuk = $row['TRANSACTIONDATE'];
             $jumlah_masuk  = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir   = $stock_awal + $jumlah_masuk;

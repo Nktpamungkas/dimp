@@ -74,7 +74,7 @@
     AND TRANSACTIONDATE > '2025-04-22'";
 
     if ($EXTRA_ITEM) {
-        $query_masuk .= "AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
+        $query_masuk .= " AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
     }
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
@@ -100,7 +100,7 @@
     AND TRANSACTIONDATE > '2025-04-22'";
 
     if ($EXTRA_ITEM) {
-        $query_keluar .= "AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
+        $query_keluar .= " AND TRANSACTIONNUMBER <> '$TRANSACTIONNUMBER'";
     }
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);

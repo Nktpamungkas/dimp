@@ -34,47 +34,48 @@
         'November'  => 'NOVEMBER',
         'December'  => 'DESEMBER',
     ];
+
     $nama_bulan = $bulan_indonesia[date('F', strtotime($date1))];
 
     $query_barang = mysqli_query($con, "
-    SELECT s.*,
-        CONCAT_WS('-', TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
-        TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05),
-        TRIM(DECOSUBCODE06)) AS KODE_BARANG,
-        s.DESCRIPTION AS NAMA_BARANG,
-        s.UNITOFMEASURE AS UNIT
-    FROM tbl_master_barang_limbah_intake_mtc s
-    ORDER BY NAMA_BARANG ASC
-");
+        SELECT s.*,
+            CONCAT_WS('-', TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
+            TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05),
+            TRIM(DECOSUBCODE06), TRIM(ZONE)) AS KODE_BARANG,
+            s.DESCRIPTION AS NAMA_BARANG,
+            s.UNITOFMEASURE AS UNIT
+        FROM tbl_master_barang_limbah_intake_mtc s
+        ORDER BY NAMA_BARANG ASC
+    ");
 
     $stok_awal_masuk  = [];
     $stok_awal_keluar = [];
 
     $q_awal_masuk = db2_exec($conn1, "
-    SELECT
-        TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
-        '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
-        SUM(USERPRIMARYQUANTITY) AS MASUK
-    FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE IN ('QCT', 'OPN')
-    AND LOGICALWAREHOUSECODE = 'M121'
-    AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
-    AND TRANSACTIONDATE < '$date1'
-    GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
-    TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
-    TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06)
-");
+        SELECT
+            TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
+            '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
+            '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
+            SUM(USERPRIMARYQUANTITY) AS MASUK
+        FROM STOCKTRANSACTION
+        WHERE TEMPLATECODE IN ('QC1', 'OPN')
+        AND LOGICALWAREHOUSECODE = 'M121'
+        AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
+        AND TRANSACTIONDATE < '$date1'
+        GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
+        TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
+        TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
+    ");
 
     while ($row = db2_fetch_assoc($q_awal_masuk)) {
-        $stok_awal_masuk[$row['KODE_BARANG']] = (int) $row['MASUK'];
+        $stok_awal_masuk[$row['KODE_BARANG']] = (float) $row['MASUK'];
     }
 
     $q_awal_keluar = db2_exec($conn1, "
     SELECT
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
         '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
+        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS KELUAR
     FROM STOCKTRANSACTION
     WHERE TEMPLATECODE = '098'
@@ -83,11 +84,11 @@
     AND TRANSACTIONDATE < '$date1'
     GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
     TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
-    TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06)
+    TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
 ");
 
     while ($row = db2_fetch_assoc($q_awal_keluar)) {
-        $stok_awal_keluar[$row['KODE_BARANG']] = (int) $row['KELUAR'];
+        $stok_awal_keluar[$row['KODE_BARANG']] = (float) $row['KELUAR'];
     }
 
     $stok_masuk_data    = [];
@@ -98,26 +99,26 @@
     SELECT
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
         '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
+        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS MASUK
     FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE IN ('QCT', 'OPN')
+    WHERE TEMPLATECODE IN ('QC1', 'OPN')
     AND LOGICALWAREHOUSECODE = 'M121'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
     GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02), TRIM(DECOSUBCODE03),
-    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06)
+    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
 ");
 
     while ($row = db2_fetch_assoc($q_masuk)) {
-        $stok_masuk_data[$row['KODE_BARANG']] = (int) $row['MASUK'];
+        $stok_masuk_data[$row['KODE_BARANG']] = (float) $row['MASUK'];
     }
 
     $q_keluar = db2_exec($conn1, "
     SELECT
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
         '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
+        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS KELUAR
     FROM STOCKTRANSACTION
     WHERE TEMPLATECODE = '098'
@@ -125,11 +126,11 @@
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
     GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02), TRIM(DECOSUBCODE03),
-    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06)
+    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
 ");
 
     while ($row = db2_fetch_assoc($q_keluar)) {
-        $stok_keluar_data[$row['KODE_BARANG']] = (int) $row['KELUAR'];
+        $stok_keluar_data[$row['KODE_BARANG']] = (float) $row['KELUAR'];
     }
 ?>
 
@@ -147,7 +148,7 @@
 <body>
 
 <label style="font-weight: bold;">LAPORAN OBAT INTAKE DAN LIMBAH</label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php echo $date1 . " s/d " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <?php echo $date1 . " s/d " . $date2; ?></label>
 <br><br>
 
 <table width="100%" border="1" id="t01">
@@ -169,14 +170,14 @@
     $no = 1;
     while ($row = mysqli_fetch_assoc($query_barang)) {
         $kode_barang = $row['KODE_BARANG'];
-        $stok_awal   = (int) ($row['STOCK'] ?? 0);
+        $stok_awal   = (float) ($row['STOCK'] ?? 0);
 
-        $masuk_awal  = $stok_awal_masuk[$kode_barang] ?? 0;
-        $keluar_awal = $stok_awal_keluar[$kode_barang] ?? 0;
+        $masuk_awal  = (float) ($stok_awal_masuk[$kode_barang] ?? 0);
+        $keluar_awal = (float) ($stok_awal_keluar[$kode_barang] ?? 0);
         $stok_awal   = ($stok_awal + $masuk_awal) - $keluar_awal;
 
-        $masuk      = $stok_masuk_data[$kode_barang] ?? 0;
-        $keluar     = $stok_keluar_data[$kode_barang] ?? 0;
+        $masuk      = (float) ($stok_masuk_data[$kode_barang] ?? 0);
+        $keluar     = (float) ($stok_keluar_data[$kode_barang] ?? 0);
         $stok_akhir = $stok_awal + $masuk - $keluar;
         $zone       = $zone_location_data[$kode_barang] ?? '';
     ?>
