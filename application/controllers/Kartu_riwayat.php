@@ -509,4 +509,91 @@ class Kartu_riwayat extends CI_Controller
 
         $this->load->view('kartu_riwayat/print_laporan_stock_limbah_intake_mtc', $data);
     }
+
+    // Kartu Stock ATK & SUPPLIES TAS
+    public function kartu_stock_atk_tas()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES TAS";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_tas', $data);
+    }
+
+    public function print_kartustok_atk_tas()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_tas', $data);
+    }
+
+    // Kartu Stock ATK & SUPPLIES MNF
+    public function kartu_stock_atk_mnf()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES MNF";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_mnf', $data);
+    }
+
+    public function print_kartustok_atk_mnf()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_mnf', $data);
+    }
+
+    // Kartu Stock ATK & SUPPLIES PPC
+    public function kartu_stock_atk_ppc()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES PPC";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_ppc', $data);
+    }
+
+    public function print_kartustok_atk_ppc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_ppc', $data);
+    }
+
+    // Kartu Stock ATK & SUPPLIES MKT
+    public function kartu_stock_atk_mkt()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES MKT";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_mkt', $data);
+    }
+
+    public function print_kartustok_atk_mkt()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_mkt', $data);
+
+    }
+
+    // Kartu Stock ATK & SUPPLIES RMP
+    public function kartu_stock_atk_rmp()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES RMP";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_rmp', $data);
+    }
+
+    public function print_kartustok_atk_rmp()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_rmp', $data);
+
+    }
 }
