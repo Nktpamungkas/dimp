@@ -24,11 +24,13 @@
                 <option value="dye">DYE</option>
                 <option value="hrd">HRD</option>
                 <option value="qai">QAI</option>
-
                 <option value="tas">TAS</option>
                 <option value="mnf">MNF</option>
                 <option value="mkt">MKT</option>
                 <option value="rmp">RMP</option>
+                <option value="gkg">GKG</option>
+                <option value="gdb">GDB</option>
+                <option value="gkj">GKJ</option>
             </select>
         </div>
     <?php }?>
@@ -36,7 +38,7 @@
 
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo anchor('dashboard', "Dashboard"); ?></li>
     </ol>
 </div>
 
@@ -799,7 +801,67 @@ if ($level == 1) {?>
     </div>
 
     <div class="menu-block rmp" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK & SUPPLIES RMP<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_rmp'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
 
+    <div class="menu-block gkg" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK & SUPPLIES GKG<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkg'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="menu-block gkj" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK & SUPPLIES GKJ<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkj'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="menu-block gdb" style="display: none;">
+        <div class="col-sm-4">
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Kartu Stock ATK & SUPPLIES GDB<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gdb'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+        </div>
     </div>
 <?php } elseif ($dept == 'QCF') {?>
         <div class="col-sm-4">
@@ -937,6 +999,48 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_rmp'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
+<?php } elseif ($dept == 'GKG') {?>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Kartu Stock ATK & SUPPLIES GKG<br> &nbsp; </th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkg'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
+<?php } elseif ($dept == 'GDB') {?>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Kartu Stock ATK & SUPPLIES GDB<br> &nbsp; </th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gdb'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+    </div>
+<?php } elseif ($dept == 'GKJ') {?>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Kartu Stock ATK & SUPPLIES GKJ<br> &nbsp; </th>
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkj'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>

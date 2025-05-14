@@ -7,7 +7,7 @@
 
     // Koneksi MYSQL
     date_default_timezone_set('Asia/Jakarta');
-    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "mtc");
+    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "dimp");
 
     // Koneksi DB2
     $hostname = "10.0.0.21";
@@ -27,7 +27,7 @@
     $id_barang = $kode_barang;
 
     // Ambil data barang stock awal
-    $query_barang  = "SELECT * FROM tbl_master_barang where id='$id_barang' LIMIT 1";
+    $query_barang  = "SELECT * FROM tbl_master_barang_atk_gkg where id='$id_barang' LIMIT 1";
     $result_barang = mysqli_query($con, $query_barang);
     $data_barang   = mysqli_fetch_assoc($result_barang);
     // print_r($data_barang);
@@ -41,7 +41,6 @@
     $DECOSUBCODE05 = $data_barang['DECOSUBCODE05'];
     $DECOSUBCODE06 = $data_barang['DECOSUBCODE06'];
     $UNIOFMEASURE  = $data_barang['UNITOFMEASURE'];
-    $STOCK_MINIMUM = $data_barang['STOCK_MINIMUM'];
 
     // Deklarasi Awal
     $stock_awal    = 0;
@@ -59,8 +58,8 @@
     // Total Masuk
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE ='OPN')
-    AND LOGICALWAREHOUSECODE ='M201'
+    WHERE (TEMPLATECODE ='OPN' OR TEMPLATECODE ='304' OR TEMPLATECODE ='101')
+    AND LOGICALWAREHOUSECODE ='M418'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -69,7 +68,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-03-12 08:55:00'";
+    AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-05-08 15:00:00'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
     $fetch_query_masuk = db2_fetch_assoc($exec_query_masuk);
@@ -81,8 +80,8 @@
     // Total Keluar
     $query_keluar = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='201')
-    AND LOGICALWAREHOUSECODE ='M201'
+    WHERE (TEMPLATECODE ='098' OR TEMPLATECODE ='303')
+    AND LOGICALWAREHOUSECODE ='M418'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -91,7 +90,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-03-12 08:55:00'";
+    AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-05-08 15:00:00'";
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);
     $fetch_query_keluar = db2_fetch_assoc($exec_query_keluar);
@@ -111,13 +110,16 @@
     // echo $informasi;
 
     // List data
-    $query_data = "SELECT t.*
+    $query_data = "SELECT t.*,a.VALUESTRING as KETERANGAN
         FROM STOCKTRANSACTION t
+        LEFT JOIN ADSTORAGE a ON a.UNIQUEID = t.ABSUNIQUEID
         WHERE
         (t.TEMPLATECODE ='OPN'
-        OR t.TEMPLATECODE ='QC1'
-        OR t.TEMPLATECODE ='201')
-        AND t.LOGICALWAREHOUSECODE ='M201'
+        OR t.TEMPLATECODE ='304'
+        OR t.TEMPLATECODE ='101'
+        OR t.TEMPLATECODE ='098'
+        OR t.TEMPLATECODE ='303')
+        AND t.LOGICALWAREHOUSECODE ='M418'
         AND t.ITEMTYPECODE ='$ITEMTYPECODE'
         AND t.DECOSUBCODE01 ='$DECOSUBCODE01'
         AND t.DECOSUBCODE02 ='$DECOSUBCODE02'
@@ -126,7 +128,7 @@
         AND t.DECOSUBCODE05 ='$DECOSUBCODE05'
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
-        AND t.TRANSACTIONDATE > '2025-03-12 08:55:00'
+        AND TIMESTAMP(t.TRANSACTIONDATE, t.TRANSACTIONTIME) > '2025-05-08 15:00:00'
         ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
@@ -144,75 +146,18 @@
         $keterangan    = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1') {
-            $keterangan   = $row['TRANSACTIONNUMBER'];
+        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === '304' || $row['TEMPLATECODE'] === '101') {
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
-        } else if ($row['TEMPLATECODE'] === '201') {
-            $TRANSACTIONNUMBER = $row['TRANSACTIONNUMBER'];
-
-            $query_machine = "SELECT p.SHORTDESCRIPTION  FROM STOCKTRANSACTION s
-            INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
-            AND s.DECOSUBCODE01 = i.SUBCODE01
-            AND s.DECOSUBCODE02 = i.SUBCODE02
-            AND s.DECOSUBCODE03 = i.SUBCODE03
-            AND s.DECOSUBCODE04 = i.SUBCODE04
-            AND s.DECOSUBCODE05 = i.SUBCODE05
-            AND s.DECOSUBCODE06 = i.SUBCODE06
-            AND s.DECOSUBCODE07 = i.SUBCODE07
-            AND s.DECOSUBCODE08 = i.SUBCODE08
-            AND s.DECOSUBCODE09 = i.SUBCODE09
-            AND s.DECOSUBCODE10 = i.SUBCODE10
-            AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
-            AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
-            INNER  JOIN PMBOM p ON i.PMMACHINECODE = p.CODE
-            WHERE s.ORDERCODE IS NOT NULL
-            AND s.ORDERCOUNTERCODE IS NOT NULL
-            AND s.LOGICALWAREHOUSECODE ='M201'
-            AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
-            ORDER BY s.TRANSACTIONDATE DESC ";
-
-            $exec_query_machine  = db2_exec($conn1, $query_machine);
-            $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
-
-            if ($fetch_query_machine) {
-                $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
-            } else {
-                $query_machine = "SELECT i.ITEMDESCRIPTION AS SHORTDESCRIPTION  FROM STOCKTRANSACTION s
-                INNER JOIN INTERNALDOCUMENTLINE i ON s.ITEMTYPECODE =i.ITEMTYPEAFICODE
-                AND s.DECOSUBCODE01 = i.SUBCODE01
-                AND s.DECOSUBCODE02 = i.SUBCODE02
-                AND s.DECOSUBCODE03 = i.SUBCODE03
-                AND s.DECOSUBCODE04 = i.SUBCODE04
-                AND s.DECOSUBCODE05 = i.SUBCODE05
-                AND s.DECOSUBCODE06 = i.SUBCODE06
-                AND s.DECOSUBCODE07 = i.SUBCODE07
-                AND s.DECOSUBCODE08 = i.SUBCODE08
-                AND s.DECOSUBCODE09 = i.SUBCODE09
-                AND s.DECOSUBCODE10 = i.SUBCODE10
-                AND s.ORDERCODE = i.INTDOCUMENTPROVISIONALCODE
-                AND s.ORDERCOUNTERCODE = i.INTDOCPROVISIONALCOUNTERCODE
-                WHERE s.ORDERCODE IS NOT NULL
-                AND s.ORDERCOUNTERCODE IS NOT NULL
-                AND s.LOGICALWAREHOUSECODE ='M201'
-                AND s.TRANSACTIONNUMBER ='$TRANSACTIONNUMBER'
-                ORDER BY s.TRANSACTIONDATE DESC ";
-
-                $exec_query_machine  = db2_exec($conn1, $query_machine);
-                $fetch_query_machine = db2_fetch_assoc($exec_query_machine);
-
-                if ($fetch_query_machine) {
-                    $keterangan = $fetch_query_machine['SHORTDESCRIPTION'];
-                }
-            }
-
-            $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
+        } else if ($row['TEMPLATECODE'] === '098' || $row['TEMPLATECODE'] === '303') {
+            $jumlah_keluar = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
 
         $tanggal     = $row['TRANSACTIONDATE'];
-        $surat_jalan = $row['ORDERCODE'];
+        $surat_jalan = '';
+        $keterangan  = $row['KETERANGAN'];
 
         // Array Data
         $data[] = [
@@ -232,7 +177,7 @@
 
     if (empty($data)) {
         $data[] = [
-            'tanggal'              => '2025-03-12',
+            'tanggal'              => '2025-05-08',
             'stock_awal'           => $stock_awal,
             'quantity_penerimaan'  => '',
             'quantity_pengeluaran' => '',
@@ -240,7 +185,7 @@
             'surat_jalan'          => '',
             'nama'                 => '',
             'paraf'                => '',
-            'keterangan'           => 'Balance per 12 Maret 2025',
+            'keterangan'           => 'Balance per 08 Mei 2025',
         ];
     }
 
@@ -250,7 +195,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartu Stok | MTC</title>
+    <title>Kartu Stok ATK | DIT</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -331,8 +276,7 @@
                         <td>Stock Minimum</td>
                         <td>:</td>
                         <td>
-                            <?php echo $STOCK_MINIMUM ?>
-
+                            ...
                         </td>
                     </tr>
                     <tr>

@@ -596,4 +596,58 @@ class Kartu_riwayat extends CI_Controller
         $this->load->view('kartu_riwayat/print_kartustok_atk_rmp', $data);
 
     }
+
+    // Kartu Stock ATK & SUPPLIES GKG
+    public function kartu_stock_atk_gkg()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES GKG";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_gkg', $data);
+    }
+
+    public function print_kartustok_atk_gkg()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_gkg', $data);
+
+    }
+
+    // Kartu Stock ATK & SUPPLIES GDB
+    public function kartu_stock_atk_gdb()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES GDB";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_gdb', $data);
+    }
+
+    public function print_kartustok_atk_gdb()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_gdb', $data);
+
+    }
+
+    // Kartu Stock ATK & SUPPLIES GKJ
+    public function kartu_stock_atk_gkj()
+    {
+        $data['title'] = "Form Kartu Stock ATK & SUPPLIES GKJ";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_atk_gkj', $data);
+    }
+
+    public function print_kartustok_atk_gkj()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_atk_gkj', $data);
+
+    }
 }
