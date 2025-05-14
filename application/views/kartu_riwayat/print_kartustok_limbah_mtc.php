@@ -98,7 +98,7 @@
     $fetch_query_keluar = db2_fetch_assoc($exec_query_keluar);
 
     if ($fetch_query_keluar) {
-        $total_keluar = (float) ($fetch_query_keluar['TOTAL'] / 1000);
+        $total_keluar = (float) ($fetch_query_keluar['TOTAL']);
     }
 
     $stock_awal = ($stock_awal_db + $total_masuk) - $total_keluar;
