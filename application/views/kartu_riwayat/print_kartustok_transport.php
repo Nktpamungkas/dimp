@@ -7,7 +7,7 @@
 
     // Koneksi MYSQL
     date_default_timezone_set('Asia/Jakarta');
-    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "ppc");
+    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "dimp");
 
     // Koneksi DB2
 

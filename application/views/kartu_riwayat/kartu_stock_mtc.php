@@ -1,6 +1,6 @@
 <?php
     // Koneksi ke database MySQL
-    $conn = new mysqli("10.0.0.10", "dit", "4dm1n", "mtc");
+    $conn = new mysqli("10.0.0.10", "dit", "4dm1n", "dimp");
 
     // Periksa koneksi
     if ($conn->connect_error) {
@@ -12,7 +12,7 @@
 <h2 style="font-weight: normal;"><?php echo $title; ?></h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo anchor('dashboard', "Dashboard"); ?></li>
         <li><?php echo anchor('kartu_riwayat/kartu_stock_mtc', "kartu Stock MTC"); ?> </li>
         <li class="active">Data</li>
     </ol>
@@ -40,7 +40,7 @@
                                                 TRIM(DECOSUBCODE06)) AS KODE_BARANG,
                                             DESCRIPTION,
                                             id
-                                        FROM tbl_master_barang ";
+                                        FROM tbl_master_barang_mtc ";
 
                                 $result = $conn->query($query);
 

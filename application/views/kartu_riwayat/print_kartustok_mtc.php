@@ -7,7 +7,7 @@
 
     // Koneksi MYSQL
     date_default_timezone_set('Asia/Jakarta');
-    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "mtc");
+    $con = mysqli_connect("10.0.0.10", "dit", "4dm1n", "dimp");
 
     // Koneksi DB2
     $hostname = "10.0.0.21";
@@ -27,7 +27,7 @@
     $id_barang = $kode_barang;
 
     // Ambil data barang stock awal
-    $query_barang  = "SELECT * FROM tbl_master_barang where id='$id_barang' LIMIT 1";
+    $query_barang  = "SELECT * FROM tbl_master_barang_mtc where id='$id_barang' LIMIT 1";
     $result_barang = mysqli_query($con, $query_barang);
     $data_barang   = mysqli_fetch_assoc($result_barang);
     // print_r($data_barang);
