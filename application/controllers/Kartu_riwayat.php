@@ -777,4 +777,22 @@ class Kartu_riwayat extends CI_Controller
 
     }
 
+    // Kartu Stock ATK & SUPPLIES YND
+    public function kartu_stock_sparepart_brs()
+    {
+        $data['title'] = "Form Kartu Stock Sparepart BRS";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_sparepart_brs', $data);
+    }
+
+    public function print_kartustok_sparepart_brs()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_sparepart_brs', $data);
+
+    }
+
 }
