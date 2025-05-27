@@ -42,7 +42,7 @@
         SELECT s.*,
             CONCAT_WS('-', TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
             TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05),
-            TRIM(DECOSUBCODE06), TRIM(ZONE)) AS KODE_BARANG,
+            TRIM(DECOSUBCODE06), TRIM(ZONE),'A') AS KODE_BARANG,
             s.DESCRIPTION AS NAMA_BARANG,
             s.UNITOFMEASURE AS UNIT
         FROM tbl_master_barang_limbah_intake_mtc s
@@ -54,19 +54,26 @@
 
     $q_awal_masuk = db2_exec($conn1, "
         SELECT
-            TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
-            '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-            '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
-            SUM(USERPRIMARYQUANTITY) AS MASUK
+        TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
+        '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
+        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||
+        '-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE)||
+        '-'||TRIM(WAREHOUSELOCATIONCODE) AS KODE_BARANG,
+        SUM(USERPRIMARYQUANTITY) AS MASUK
         FROM STOCKTRANSACTION
-        WHERE TEMPLATECODE IN ('QC1', 'OPN')
+        WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE='OPN')
         AND LOGICALWAREHOUSECODE = 'M121'
         AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
         AND TRANSACTIONDATE < '$date1'
-        AND TRANSACTIONDATE <> '$exclude_date'
-        GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
-        TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
-        TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
+        AND TRIM(CREATIONUSER) <> 'yohana.hantari'
+        GROUP BY TRIM(DECOSUBCODE01),
+        TRIM(DECOSUBCODE02),
+        TRIM(DECOSUBCODE03),
+        TRIM(DECOSUBCODE04),
+        TRIM(DECOSUBCODE05),
+        TRIM(DECOSUBCODE06),
+        TRIM(WHSLOCATIONWAREHOUSEZONECODE),
+        TRIM(WAREHOUSELOCATIONCODE)
     ");
 
     while ($row = db2_fetch_assoc($q_awal_masuk)) {
@@ -74,20 +81,28 @@
     }
 
     $q_awal_keluar = db2_exec($conn1, "
-    SELECT
+        SELECT
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
         '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
+        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||
+        '-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE)||
+        '-'||TRIM(WAREHOUSELOCATIONCODE) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS KELUAR
-    FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE = '098'
-    AND LOGICALWAREHOUSECODE = 'M121'
-    AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
-    AND TRANSACTIONDATE < '$date1'
-    GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
-    TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
-    TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
-");
+        FROM STOCKTRANSACTION
+        WHERE (TEMPLATECODE ='098')
+        AND LOGICALWAREHOUSECODE = 'M121'
+        AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
+        AND TRANSACTIONDATE < '$date1'
+        AND TRIM(CREATIONUSER) <> 'yohana.hantari'
+        GROUP BY TRIM(DECOSUBCODE01),
+        TRIM(DECOSUBCODE02),
+        TRIM(DECOSUBCODE03),
+        TRIM(DECOSUBCODE04),
+        TRIM(DECOSUBCODE05),
+        TRIM(DECOSUBCODE06),
+        TRIM(WHSLOCATIONWAREHOUSEZONECODE),
+        TRIM(WAREHOUSELOCATIONCODE)
+    ");
 
     while ($row = db2_fetch_assoc($q_awal_keluar)) {
         $stok_awal_keluar[$row['KODE_BARANG']] = (float) $row['KELUAR'];
@@ -99,18 +114,29 @@
 
     $q_masuk = db2_exec($conn1, "
     SELECT
-        TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
-        '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
-        SUM(USERPRIMARYQUANTITY) AS MASUK
+    TRIM(DECOSUBCODE01)||
+    '-'||TRIM(DECOSUBCODE02)||
+    '-'||TRIM(DECOSUBCODE03)||
+    '-'||TRIM(DECOSUBCODE04)||
+    '-'||TRIM(DECOSUBCODE05)||
+    '-'||TRIM(DECOSUBCODE06)||
+    '-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE)||
+    '-'||TRIM(WAREHOUSELOCATIONCODE) AS KODE_BARANG,
+    SUM(USERPRIMARYQUANTITY) AS MASUK
     FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE IN ('QC1', 'OPN')
+    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE='OPN')
     AND LOGICALWAREHOUSECODE = 'M121'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
-    AND TRANSACTIONDATE <> '$exclude_date'
-    GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02), TRIM(DECOSUBCODE03),
-    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
+    AND TRIM(CREATIONUSER) <> 'yohana.hantari'
+    GROUP BY TRIM(DECOSUBCODE01),
+    TRIM(DECOSUBCODE02),
+    TRIM(DECOSUBCODE03),
+    TRIM(DECOSUBCODE04),
+    TRIM(DECOSUBCODE05),
+    TRIM(DECOSUBCODE06),
+    TRIM(WHSLOCATIONWAREHOUSEZONECODE),
+    TRIM(WAREHOUSELOCATIONCODE)
 ");
 
     while ($row = db2_fetch_assoc($q_masuk)) {
@@ -119,17 +145,29 @@
 
     $q_keluar = db2_exec($conn1, "
     SELECT
-        TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||
-        '-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||
-        '-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06)||'-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE) AS KODE_BARANG,
-        SUM(USERPRIMARYQUANTITY) AS KELUAR
+    TRIM(DECOSUBCODE01)||
+    '-'||TRIM(DECOSUBCODE02)||
+    '-'||TRIM(DECOSUBCODE03)||
+    '-'||TRIM(DECOSUBCODE04)||
+    '-'||TRIM(DECOSUBCODE05)||
+    '-'||TRIM(DECOSUBCODE06)||
+    '-'||TRIM(WHSLOCATIONWAREHOUSEZONECODE)||
+    '-'||TRIM(WAREHOUSELOCATIONCODE) AS KODE_BARANG,
+    SUM(USERPRIMARYQUANTITY) AS KELUAR
     FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE = '098'
+    WHERE (TEMPLATECODE ='098')
     AND LOGICALWAREHOUSECODE = 'M121'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
-    GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02), TRIM(DECOSUBCODE03),
-    TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
+    AND TRIM(CREATIONUSER) <> 'yohana.hantari'
+    GROUP BY TRIM(DECOSUBCODE01),
+    TRIM(DECOSUBCODE02),
+    TRIM(DECOSUBCODE03),
+    TRIM(DECOSUBCODE04),
+    TRIM(DECOSUBCODE05),
+    TRIM(DECOSUBCODE06),
+    TRIM(WHSLOCATIONWAREHOUSEZONECODE),
+    TRIM(WAREHOUSELOCATIONCODE)
 ");
 
     while ($row = db2_fetch_assoc($q_keluar)) {
@@ -151,7 +189,7 @@
 <body>
 
 <label style="font-weight: bold;">LAPORAN OBAT INTAKE DAN LIMBAH</label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <?php echo $date1 . " s/d " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <?php echo $date1 . " s/d " . $date2; ?></label>
 <br><br>
 
 <table width="100%" border="1" id="t01">
