@@ -74,7 +74,7 @@
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
     AND DECOSUBCODE03 ='$DECOSUBCODE03'
     AND TRANSACTIONDATE BETWEEN '2025-04-25' AND '$tglawal'
-    AND (TRANSACTIONDATE <> '$exclude_date' AND TRIM(CREATIONUSER) <> 'yohana.hantari')
+    AND TRIM(CREATIONUSER) <> 'yohana.hantari'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
@@ -95,7 +95,7 @@
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
     AND DECOSUBCODE03 ='$DECOSUBCODE03'
     AND TRANSACTIONDATE BETWEEN '2025-04-25' AND '$tglawal'
-    AND (TRANSACTIONDATE <> '$exclude_date' AND TRIM(CREATIONUSER) <> 'yohana.hantari')
+    AND TRIM(CREATIONUSER) <> 'yohana.hantari'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'";
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);
@@ -151,7 +151,7 @@
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
         if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1' || $row['TEMPLATECODE'] === '101') {
             $tanggal_masuk = $row['TRANSACTIONDATE'];
-            $creation_user = $row['CREATIONUSER'];
+            $creation_user = trim($row['CREATIONUSER']);
 
             if ($tanggal_masuk == '2025-05-02' && $creation_user == 'yohana.hantari') {
                 continue;
