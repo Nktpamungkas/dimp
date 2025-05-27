@@ -15,9 +15,10 @@
     $conn_string = "DRIVER={IBM ODBC DB2 DRIVER}; HOSTNAME=$hostname; PORT=$port; PROTOCOL=TCPIP; UID=$user; PWD=$passworddb2; DATABASE=$database;";
     $conn1       = db2_connect($conn_string, '', '');
 
-    $id_barang = $kode_barang ?? '';
-    $date1     = $date1 ?? date('Y-m-01');
-    $date2     = $date2 ?? date('Y-m-d');
+    $id_barang    = $kode_barang ?? '';
+    $date1        = $date1 ?? date('Y-m-01');
+    $date2        = $date2 ?? date('Y-m-d');
+    $exclude_date = '2025-05-02'; // Date yang tidak di masukan ke transaksi
 
     // Nama bulan versi Indonesia
     $bulan_indonesia = [
@@ -62,6 +63,7 @@
         AND LOGICALWAREHOUSECODE = 'M121'
         AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
         AND TRANSACTIONDATE < '$date1'
+        AND TRANSACTIONDATE <> '$exclude_date'
         GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02),
         TRIM(DECOSUBCODE03), TRIM(DECOSUBCODE04),
         TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
@@ -106,6 +108,7 @@
     AND LOGICALWAREHOUSECODE = 'M121'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
+    AND TRANSACTIONDATE <> '$exclude_date'
     GROUP BY TRIM(DECOSUBCODE01), TRIM(DECOSUBCODE02), TRIM(DECOSUBCODE03),
     TRIM(DECOSUBCODE04), TRIM(DECOSUBCODE05), TRIM(DECOSUBCODE06), TRIM(WHSLOCATIONWAREHOUSEZONECODE)
 ");
@@ -148,7 +151,7 @@
 <body>
 
 <label style="font-weight: bold;">LAPORAN OBAT INTAKE DAN LIMBAH</label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <?php echo $date1 . " s/d " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   <?php echo $date1 . " s/d " . $date2; ?></label>
 <br><br>
 
 <table width="100%" border="1" id="t01">

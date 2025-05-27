@@ -36,6 +36,8 @@
     $header_nama_barang = null;
     $header_ukuran      = "0 Kg";
 
+    $exclude_date = '2025-05-02'; // Date yang tidak di masukan ke transaksi
+
     // Ambil data barang stock awal
     $query_barang = "SELECT * FROM tbl_master_barang_limbah_intake_mtc
     where id='$id_barang' LIMIT 1";
@@ -72,6 +74,7 @@
     AND DECOSUBCODE02 ='$DECOSUBCODE02'
     AND DECOSUBCODE03 ='$DECOSUBCODE03'
     AND TRANSACTIONDATE BETWEEN '2025-04-25' AND '$tglawal'
+    AND TRANSACTIONDATE <> '$exclude_date'
     AND TIMESTAMP(TRANSACTIONDATE, TRANSACTIONTIME) > '2025-04-25 09:00:00'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
@@ -147,8 +150,12 @@
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
         if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1' || $row['TEMPLATECODE'] === '101') {
             $tanggal_masuk = $row['TRANSACTIONDATE'];
-            $jumlah_masuk  = (float) $row['USERPRIMARYQUANTITY'];
-            $stock_akhir   = $stock_awal + $jumlah_masuk;
+            if ($tanggal_masuk == '2025-05-02') {
+                continue;
+            }
+
+            $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
+            $stock_akhir  = $stock_awal + $jumlah_masuk;
 
         } else if ($row['TEMPLATECODE'] === '098') {
             $tanggal_keluar = $row['TRANSACTIONDATE'];
