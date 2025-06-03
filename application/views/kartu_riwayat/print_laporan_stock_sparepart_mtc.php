@@ -37,7 +37,7 @@
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||'-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||'-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS MASUK
     FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE IN ('OPN', 'QC1')
+    WHERE TEMPLATECODE IN ('OPN', 'QC1','101)
     AND LOGICALWAREHOUSECODE = 'M201'
     AND TRANSACTIONDATE > '2025-03-12'
     AND TRANSACTIONDATE < '$date1'
@@ -74,7 +74,7 @@
         TRIM(DECOSUBCODE01)||'-'||TRIM(DECOSUBCODE02)||'-'||TRIM(DECOSUBCODE03)||'-'||TRIM(DECOSUBCODE04)||'-'||TRIM(DECOSUBCODE05)||'-'||TRIM(DECOSUBCODE06) AS KODE_BARANG,
         SUM(USERPRIMARYQUANTITY) AS MASUK
     FROM STOCKTRANSACTION
-    WHERE TEMPLATECODE IN ('OPN', 'QC1')
+    WHERE TEMPLATECODE IN ('OPN', 'QC1','101')
     AND LOGICALWAREHOUSECODE = 'M201'
     AND TRANSACTIONDATE > '2025-03-12'
     AND TRANSACTIONDATE BETWEEN '$date1' AND '$date2'
@@ -143,7 +143,7 @@
 
 <label style="font-weight: bold;">LAPORAN STOCK</label><br>
 <label><u>DEPARTEMEN MTC</u></label><br>
-<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
+<label style="font-weight: bold;">Periode :                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <?php echo $date1 . " "; ?> s/d<?php echo " " . $date2; ?></label>
 <br><br>
 <table width="100%" border="1" id="t01">
     <tr>

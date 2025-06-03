@@ -59,7 +59,7 @@
     // Total Masuk
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE ='OPN')
+    WHERE (TEMPLATECODE ='QC1' OR TEMPLATECODE ='OPN' OR TEMPLATECODE ='101')
     AND LOGICALWAREHOUSECODE ='M201'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
@@ -116,6 +116,7 @@
         WHERE
         (t.TEMPLATECODE ='OPN'
         OR t.TEMPLATECODE ='QC1'
+        OR t.TEMPLATECODE ='101'
         OR t.TEMPLATECODE ='201')
         AND t.LOGICALWAREHOUSECODE ='M201'
         AND t.ITEMTYPECODE ='$ITEMTYPECODE'
@@ -144,7 +145,7 @@
         $keterangan    = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1') {
+        if ($row['TEMPLATECODE'] === 'OPN' || $row['TEMPLATECODE'] === 'QC1' || $row['TEMPLATECODE'] === '101') {
             $keterangan   = $row['TRANSACTIONNUMBER'];
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
