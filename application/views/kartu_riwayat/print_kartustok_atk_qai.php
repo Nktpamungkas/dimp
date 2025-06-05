@@ -159,6 +159,30 @@
         $surat_jalan = '';
         $keterangan  = $row['KETERANGAN'];
 
+        // Check Ada Transfer dari PCS
+        $TRANSACTIONNUMBER = $row['TRANSACTIONNUMBER'];
+        $sqlCheckTransfer  = "
+        SELECT COUNT(*) AS CHECKTRANSFER
+        FROM STOCKTRANSACTION
+        WHERE ITEMTYPECODE = '$ITEMTYPECODE'
+          AND DECOSUBCODE01 = '$DECOSUBCODE01'
+          AND DECOSUBCODE02 = '$DECOSUBCODE02'
+          AND DECOSUBCODE03 = '$DECOSUBCODE03'
+          AND DECOSUBCODE04 = '$DECOSUBCODE04'
+          AND DECOSUBCODE05 = '$DECOSUBCODE05'
+          AND DECOSUBCODE06 = '$DECOSUBCODE06'
+          AND TRANSACTIONNUMBER = '$TRANSACTIONNUMBER'
+          AND LOGICALWAREHOUSECODE = 'M409'
+          AND TEMPLATECODE = '303'
+        ";
+
+        $stmtCheckTransfer = db2_exec($conn1, $sqlCheckTransfer);
+        $rowCheckTransfer  = db2_fetch_assoc($stmtCheckTransfer);
+
+        if ($rowCheckTransfer['CHECKTRANSFER'] > 0) {
+            $keterangan = 'Stock Baru Dari PCS';
+        }
+
         // Array Data
         $data[] = [
             'tanggal'              => $tanggal,
