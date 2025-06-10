@@ -777,10 +777,10 @@ class Kartu_riwayat extends CI_Controller
 
     }
 
-    // Kartu Stock ATK & SUPPLIES YND
+    // Kartu Stock Sparepart BRS - MTC (Fast Move)
     public function kartu_stock_sparepart_brs()
     {
-        $data['title'] = "Form Kartu Stock Sparepart BRS";
+        $data['title'] = "Form Kartu Stock Sparepart BRS (Fast Move)";
 
         $this->template->load('template', $this->folder . '/kartu_stock_sparepart_brs', $data);
     }
@@ -792,6 +792,24 @@ class Kartu_riwayat extends CI_Controller
         $data['date2']       = $this->input->post('date2');
 
         $this->load->view('kartu_riwayat/print_kartustok_sparepart_brs', $data);
+
+    }
+
+    // Kartu Stock Sparepart BRS - MTC (Slow Move)
+    public function kartu_stock_sparepart_brs_slow()
+    {
+        $data['title'] = "Form Kartu Stock Sparepart BRS (Slow Move)";
+
+        $this->template->load('template', $this->folder . '/kartu_stock_sparepart_brs_slow', $data);
+    }
+
+    public function print_kartustok_sparepart_brs_slow()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+
+        $this->load->view('kartu_riwayat/print_kartustok_sparepart_brs_slow', $data);
 
     }
 

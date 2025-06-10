@@ -27,7 +27,7 @@
     $id_barang = $kode_barang;
 
     // Ambil data barang stock awal
-    $query_barang  = "SELECT * FROM tbl_master_barang_brs_mtc_fast where id='$id_barang' LIMIT 1";
+    $query_barang  = "SELECT * FROM tbl_master_barang_brs_mtc_slow where id='$id_barang' LIMIT 1";
     $result_barang = mysqli_query($con, $query_barang);
     $data_barang   = mysqli_fetch_assoc($result_barang);
     // print_r($data_barang);
@@ -68,9 +68,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-05-20'
-    AND WHSLOCATIONWAREHOUSEZONECODE='006'
-    AND WAREHOUSELOCATIONCODE='BR01'";
+    AND TRANSACTIONDATE > '2025-05-27'";
 
     $exec_query_masuk  = db2_exec($conn1, $query_masuk);
     $fetch_query_masuk = db2_fetch_assoc($exec_query_masuk);
@@ -92,9 +90,7 @@
     AND DECOSUBCODE05 ='$DECOSUBCODE05'
     AND DECOSUBCODE06 ='$DECOSUBCODE06'
     AND TRANSACTIONDATE < '$tglawal'
-    AND TRANSACTIONDATE > '2025-05-20'
-    AND WHSLOCATIONWAREHOUSEZONECODE='006'
-    AND WAREHOUSELOCATIONCODE='BR01'";
+    AND TRANSACTIONDATE > '2025-05-27'";
 
     $exec_query_keluar  = db2_exec($conn1, $query_keluar);
     $fetch_query_keluar = db2_fetch_assoc($exec_query_keluar);
@@ -132,9 +128,7 @@
         AND t.DECOSUBCODE05 ='$DECOSUBCODE05'
         AND t.DECOSUBCODE06 ='$DECOSUBCODE06'
         AND t.TRANSACTIONDATE BETWEEN '$tglawal' AND '$tglakhir'
-        AND t.TRANSACTIONDATE > '2025-05-20'
-        AND t.WHSLOCATIONWAREHOUSEZONECODE='006'
-        AND t.WAREHOUSELOCATIONCODE='BR01'
+        AND t.TRANSACTIONDATE > '2025-05-27'
         ORDER BY t.TRANSACTIONDATE ASC";
 
     // echo $query_data;
@@ -184,7 +178,7 @@
 
     if (empty($data)) {
         $data[] = [
-            'tanggal'              => '2025-05-20',
+            'tanggal'              => '2025-05-27',
             'stock_awal'           => $stock_awal,
             'quantity_penerimaan'  => '',
             'quantity_pengeluaran' => '',
@@ -192,7 +186,7 @@
             'surat_jalan'          => '',
             'nama'                 => '',
             'paraf'                => '',
-            'keterangan'           => 'Balance per 20 Mei 2025',
+            'keterangan'           => 'Balance per 27 Mei 2025',
         ];
     }
 

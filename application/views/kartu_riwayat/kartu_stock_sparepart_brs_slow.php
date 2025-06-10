@@ -11,12 +11,12 @@
 <h2 style="font-weight: normal;"><?php echo $title; ?></h2>
 <div class="push">
     <ol class="breadcrumb">
-        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo anchor('dashboard', "Dashboard"); ?></li>
-        <li><?php echo anchor('kartu_riwayat/kartu_stock_sparepart_brs', "Kartu Stok Sparepart BRS (Fast Move)"); ?> </li>
+        <li><i class='fa fa-home'></i>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <?php echo anchor('dashboard', "Dashboard"); ?></li>
+        <li><?php echo anchor('kartu_riwayat/kartu_stock_sparepart_brs_slow', "Kartu Stok Sparepart BRS (Slow Move)"); ?> </li>
         <li class="active">Data</li>
     </ol>
 </div>
-<form method="post" enctype="multipart/form-data" target="_blank" action="<?php echo base_url('kartu_riwayat/print_kartustok_sparepart_brs'); ?>" class="form-horizontal">
+<form method="post" enctype="multipart/form-data" target="_blank" action="<?php echo base_url('kartu_riwayat/print_kartustok_sparepart_brs_slow'); ?>" class="form-horizontal">
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -39,7 +39,7 @@
                                                 TRIM(DECOSUBCODE06)) AS KODE_BARANG,
                                             DESCRIPTION,
                                             id
-                                        FROM tbl_master_barang_brs_mtc_fast";
+                                        FROM tbl_master_barang_brs_mtc_slow";
 
                                 $result = $conn->query($query);
 
