@@ -172,7 +172,7 @@
                   AND DECOSUBCODE05 = '$DECOSUBCODE05'
                   AND DECOSUBCODE06 = '$DECOSUBCODE06'
                   AND TRANSACTIONNUMBER = '$TRANSACTIONNUMBER'
-                  AND LOGICALWAREHOUSECODE = 'M409'
+                  AND LOGICALWAREHOUSECODE = 'M408'
                   AND TEMPLATECODE = '303'
                 ";
 
