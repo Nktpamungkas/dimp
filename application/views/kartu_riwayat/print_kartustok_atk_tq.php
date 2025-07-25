@@ -56,7 +56,7 @@
     }
 
     // Total Masuk
-    $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
+    $query_masuk = "SELECT SUM(BASEPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
     WHERE (TEMPLATECODE ='OPN' OR TEMPLATECODE ='304' OR TEMPLATECODE ='101'
     OR TEMPLATECODE='QC1')
@@ -80,7 +80,7 @@
     }
 
     // Total Keluar
-    $query_keluar = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
+    $query_keluar = "SELECT SUM(BASEPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
     WHERE (TEMPLATECODE ='098' OR TEMPLATECODE ='303')
     AND LOGICALWAREHOUSECODE ='M407'
@@ -155,11 +155,11 @@
         || $row['TEMPLATECODE'] === '304' 
         || $row['TEMPLATECODE'] === '101'
         || $row['TEMPLATECODE'] === 'QC1') {
-            $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
+            $jumlah_masuk = (float) $row['BASEPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
         } else if ($row['TEMPLATECODE'] === '098' || $row['TEMPLATECODE'] === '303') {
-            $jumlah_keluar = (float) $row['USERPRIMARYQUANTITY'];
+            $jumlah_keluar = (float) $row['BASEPRIMARYQUANTITY'];
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
 
