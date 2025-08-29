@@ -58,7 +58,7 @@
     // Total Masuk
     $query_masuk = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='OPN')
+    WHERE (TEMPLATECODE ='OPN' OR TEMPLATECODE = '304' OR TEMPLATECODE = '101')
     AND LOGICALWAREHOUSECODE ='M401'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
@@ -80,7 +80,7 @@
     // Total Keluar
     $query_keluar = "SELECT SUM(USERPRIMARYQUANTITY) AS TOTAL
     FROM STOCKTRANSACTION
-    WHERE (TEMPLATECODE ='098')
+    WHERE (TEMPLATECODE ='098' OR TEMPLATECODE = '303')
     AND LOGICALWAREHOUSECODE ='M401'
     AND ITEMTYPECODE ='$ITEMTYPECODE'
     AND DECOSUBCODE01 ='$DECOSUBCODE01'
@@ -115,6 +115,9 @@
         LEFT JOIN ADSTORAGE a ON a.UNIQUEID = t.ABSUNIQUEID
         WHERE
         (t.TEMPLATECODE ='OPN'
+        OR t.TEMPLATECODE = '101'
+        OR t.TEMPLATECODE = '304'
+        OR t.TEMPLATECODE = '303'
         OR t.TEMPLATECODE ='098')
         AND t.LOGICALWAREHOUSECODE ='M401'
         AND t.ITEMTYPECODE ='$ITEMTYPECODE'
@@ -143,11 +146,17 @@
         $keterangan    = '';
 
         // Tanggal Masuk , Tanggal Keluar, Jumlah Masuk, Jumlah Keluar
-        if ($row['TEMPLATECODE'] === 'OPN') {
+        if ($row['TEMPLATECODE'] === 'OPN'
+            || $row['TEMPLATECODE'] === '304'
+            ||$row['TEMPLATECODE'] === '101') 
+        {
             $jumlah_masuk = (float) $row['USERPRIMARYQUANTITY'];
             $stock_akhir  = $stock_awal + $jumlah_masuk;
 
-        } else if ($row['TEMPLATECODE'] === '098') {
+        } 
+        else if ($row['TEMPLATECODE'] === '098'
+                || $row['TEMPLATECODE'] === '303') 
+        {
             $jumlah_keluar = (float) ($row['USERPRIMARYQUANTITY']);
             $stock_akhir   = $stock_awal - $jumlah_keluar;
         }
