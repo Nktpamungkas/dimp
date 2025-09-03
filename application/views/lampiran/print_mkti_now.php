@@ -243,7 +243,7 @@ $conn1 = db2_connect($conn_string, '', '');
                 <td width="109" rowspan="2" style="font-weight: bold; text-align: center; width: 35mm;">Tindak Lanjut</td>
             </tr>
             <tr>
-              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;">8 Karakter</td>
+              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;">Min 12 Karakter</td>
               <td width="107" style="font-weight: bold; text-align: center; width: 25mm;">Kombinasi (Huruf<br>/Angka<br>/Special Character)</td>
               <td width="84" style="font-weight: bold; text-align: center; width: 20mm;"><em>Terinstall</em></td>
               <td width="84" style="font-weight: bold; text-align: center; width: 20mm;"><em>Terupdate</em></td>
