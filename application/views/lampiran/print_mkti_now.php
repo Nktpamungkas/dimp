@@ -19,11 +19,15 @@ $conn1 = db2_connect($conn_string, '', '');
     <title>MK-TI | <?php echo $dept ?></title>
 </head>
 <style>
-    @page {
+    /* @page {
         size: landscape;
         margin: 20px 20px 20px 20px;
         font-size: 11pt !important;
         font-family: Arial, Helvetica, sans-serif !important;
+    } */
+    @page {
+     	size: A4 landscape;
+  	 	margin: 10mm;
     }
 
 
@@ -44,11 +48,10 @@ $conn1 = db2_connect($conn_string, '', '');
             outline: none !important;
         }
 
-        html,
-        body {
+        html, body {
             font-family: Arial, Helvetica, sans-serif;
-            width: 330mm;
-            height: 210mm;
+            width: auto;
+            height: auto;
             background: #FFF;
             overflow: visible;
         }
@@ -56,6 +59,7 @@ $conn1 = db2_connect($conn_string, '', '');
         .table-ttd {
             border-collapse: collapse;
             width: 100%;
+            /* width: auto; */
             font-size: 8pt !important;
             font-family: Arial, Helvetica, sans-serif;
         }
@@ -102,13 +106,20 @@ $conn1 = db2_connect($conn_string, '', '');
         }
     }
 
-    .table-ttd {
+    /* .table-ttd {
         border-collapse: collapse;
         width: 100%;
         font-size: 11pt !important;
         font-family: Arial, Helvetica, sans-serif;
-        /* width: 265mm; */
-    }
+        width: 265mm; --ini nanti gapake
+    } */
+
+	.table-ttd {
+		width: 100% !important;            /* <— was 138%/131%/121% */
+		border-collapse: collapse !important;
+		table-layout: fixed !important;    
+		font-size: 10pt !important;
+	}
 
     .table-ttd tr,
     .table-ttd tr td {
@@ -139,26 +150,30 @@ $conn1 = db2_connect($conn_string, '', '');
 </style>
 
 <body>
-    <table class="table-ttd">
+    <table width="138%" height="190" class="table-ttd">
         <tr>
-            <td align="center"><img src="<?php echo base_url() ?>/assets/images/logoitti.png" alt="" style="width: 15mm;"></td>
-            <td align="center">
-                <h2 style="font-weight: bold;">MONITORING KEBIJAKAN TI </h2>
+            <td width="102" rowspan="5" align="center"><img src="<?php echo base_url() ?>/assets/images/logoitti.png" alt="" style="width: 25mm;"></td>
+            <td width="953" rowspan="5" align="center">
+                <h2 style="font-weight: bold; width: 300mm;">Formulir <br> Checklist PC Audit & Monitoring Kebijakan TI </h2>
             </td>
-            <td align="left" valign="middle" style="width: 80mm; font-family: Arial, sans-serif; font-size: 12px;">
-                <ul style="list-style-type: none; padding: 0; margin: 0;">
-                    <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>No. Form</span><span>: FW-14-DIT-05</span>
-                    </li>
-                    <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>No. Revisi</span><span>: 05</span>
-                    </li>
-                    <li style="display: grid; grid-template-columns: 20mm auto;">
-                        <span>Tgl. Terbit</span><span>: 28 April 2025</span>
-                    </li>
-                </ul>
-            </td>
+            <td colspan="2" align="center" valign="middle" style="width: 90mm; font-family: Arial, sans-serif; font-size: 12px;"><strong>PT INDO TAICHEN TEXTILE INDUSTRY</strong></td>
 
+        </tr>
+        <tr>
+          <td width="386" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">No. Dokumen</td>
+          <td width="629" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">: FRM-21.01</td>
+        </tr>
+        <tr>
+          <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">Tanggal</td>
+          <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">: 02 September 2025</td>
+        </tr>
+        <tr>
+          <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">Versi</td>
+          <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">: 2.0</td>
+        </tr>
+        <tr>
+          <td height="53" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">Klasifikasi</td>
+          <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">Internal</td>
         </tr>
     </table>
     <?php
@@ -202,29 +217,42 @@ $conn1 = db2_connect($conn_string, '', '');
     <span>: </span>
 </p>
 
-    <table class="table-ttd">
+    <table width="120px" class="table-ttd">
         <thead>
             <tr>
-                <td style="font-weight: bold; text-align: center; width: 10mm;" rowspan="2">NO.</td>
-                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">Kode Prasarana</td>
-                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">User</td>
-                <td style="font-weight: bold; text-align: center; width: 20mm;" rowspan="2">Jenis Prasarana</td>
-                <td style="font-weight: bold; text-align: center;" colspan="13">CHECK POINT</td>
+                <td width="46" rowspan="2" style="font-weight: bold; text-align: center; width: 10mm;">NO.</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 30mm;">Kode Prasarana</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 30mm;">User</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 20mm;">Jenis Prasarana</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 13mm;">RAM</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 20mm;">HD</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 10mm;">OS</td>
+                <td width="130" rowspan="2" style="font-weight: bold; text-align: center; width: 30mm;">Hak Akses<br>(administrator<br>/user)</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 20mm;">VPN<br>(Laptop)</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 17mm;">Disable<br>USB</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 20mm;">Screen Saver 5-10 Menit<br>
+                (Aktif / Tidak)</td>
+                <td colspan="2" style="font-weight: bold; text-align: center; width: 45mm;">Password</td>
+                <td colspan="3" style="font-weight: bold; text-align: center; width: 60mm;">Antivirus</td>
+                <td width="89" rowspan="2" style="font-weight: bold; text-align: center; width: 22mm;">File yang Tidak berkaitan dengan Pekerjaan telah dihilangkan</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 20mm;">Windows <br> Actived</td>
+                <td width="89" rowspan="2" style="font-weight: bold; text-align: center; width: 23mm;">Software yang tidak sesuai<br>dengan daftar software<br>telah dihilangkan</td>
+                <td width="100" rowspan="2" style="font-weight: bold; text-align: center; width: 23mm;">Penggunaan Aset Pribadi</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 18mm;">Clear<br>desk</td>
+                <td width="84" rowspan="2" style="font-weight: bold; text-align: center; width: 25mm;">Status</td>
+                <td width="109" rowspan="2" style="font-weight: bold; text-align: center; width: 35mm;">Tindak Lanjut</td>
             </tr>
             <tr>
+              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;">8 Karakter</td>
+              <td width="107" style="font-weight: bold; text-align: center; width: 25mm;">Kombinasi (Huruf<br>/Angka<br>/Special Character)</td>
+              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;"><em>Terinstall</em></td>
+              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;"><em>Terupdate</em></td>
+              <td width="84" style="font-weight: bold; text-align: center; width: 20mm;"><em>Autoscan Schedule</em></td>
                 <!-- <td style="font-weight: bold; width: 20mm; text-align: center;">Join Domain</td>
                 <td style="font-weight: bold; width: 20mm; text-align: center;">Password</td> -->
-                <td style="font-weight: bold; width: 10mm; text-align: center;">Vpn (Laptop)</td>
-                <td style="font-weight: bold; width: 17mm; text-align: center;">Disable USB</td>
-                <td style="font-weight: bold; width: 17mm; text-align: center;">Data File</td>
                 <!-- <td style="font-weight: bold; width: 20mm; text-align: center;">Screen Time</td> -->
-                <td style="font-weight: bold; width: 17mm; text-align: center;">AV</td>
-                <td style="font-weight: bold; width: 10mm; text-align: center;">RAM</td>
-                <td style="font-weight: bold; width: 10mm; text-align: center;">HD</td>
-                <td style="font-weight: bold; width: 10mm; text-align: center;">OS</td>
                 <!-- <td style="font-weight: bold; width: 45mm; text-align: center;">USER</td> -->
                 <!-- <td style="font-weight: bold; width: 50mm; text-align: center;">IP ADDRESS</td> -->
-                <td style="font-weight: bold; text-align: center; width: 90mm;">NOTES</td>
             </tr>
         </thead>
         <tbody>
@@ -235,18 +263,29 @@ $conn1 = db2_connect($conn_string, '', '');
                     <td align="center"><?= $r_monitoring['NO_PC_LAPTOP']; ?></td>
                     <td align="center"><?= $r_monitoring['USER']; ?></td>
                     <td align="center"><?= $r_monitoring['JENIS_PRASARANA']; ?></td>
-                    <!-- <td align="center"></td> -->
-                    <!-- <td align="center"></td> -->
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <td align="center"></td>
-                    <!-- <td align="center"></td> -->
-                    <td align="center"></td>
                     <td align="center"><?= $r_monitoring['RAM']; ?></td>
                     <td align="center"><?= $r_monitoring['HD']; ?></td>
                     <td align="center"><?= $r_monitoring['OS']; ?></td>
-                    <!-- <td align="center"><?= $r_monitoring['IPADDRESS']; ?></td> -->
                     <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <td align="center">&nbsp;</td>
+                    <!-- <td align="center"></td> -->
+                    <!-- <td align="center"></td> -->
+                    <!-- <td align="center"></td> -->
+                    <!-- <td align="center"><?= $r_monitoring['IPADDRESS']; ?></td> -->
                 </tr>
             <?php endwhile; ?>
         </tbody>
@@ -282,7 +321,7 @@ $conn1 = db2_connect($conn_string, '', '');
 
     <table>
         <tr>
-            <td style=" width: 20mm;"> &nbsp;</td>
+            <td style=" width: 20mm;">&nbsp; </td>
         </tr>
     </table>
 
@@ -317,20 +356,20 @@ $conn1 = db2_connect($conn_string, '', '');
 
 
     <!-- Jarak ke bawah setelah garis kedua -->
-    <table style="width: 100%; border-collapse: collapse;">
+<table width="100%" style="width: 100%; border-collapse: collapse;">
         <tr>
             <td>&nbsp;</td> <!-- Menambahkan elemen kosong untuk jarak -->
         </tr>
     </table>
 
-    <table class="table-ttd ">
+    <table width="131%" height="142" class="table-ttd ">
         <thead>
             <tr>
                 <td style="text-align: center;">&nbsp</td>
-                <td style="text-align: center;">Dibuat Oleh :</td>
-                <td style="text-align: center;">Diketahui Oleh :</td>
-                <td style="text-align: center;">Diperiksa Oleh :</td>
-                <td style="text-align: center;">Mengetahui :</td>
+                <td style="text-align: center;">Dibuat Oleh </td>
+                <td style="text-align: center;">Diketahui Oleh </td>
+                <td style="text-align: center;">Diperiksa Oleh </td>
+                <td style="text-align: center;">Disetujui Oleh </td>
             </tr>
             <tr>
                 <td>Nama</td>
