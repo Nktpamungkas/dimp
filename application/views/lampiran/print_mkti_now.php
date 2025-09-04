@@ -161,7 +161,7 @@ $conn1 = db2_connect($conn_string, '', '');
         </tr>
         <tr>
           <td width="386" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">No. Dokumen</td>
-          <td width="629" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">: FRM-21.01</td>
+          <td width="629" align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">: FRM.21.01</td>
         </tr>
         <tr>
           <td align="left" valign="middle" style="width: 45mm; font-family: Arial, sans-serif; font-size: 12px;">Tanggal</td>
