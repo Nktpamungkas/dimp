@@ -71,8 +71,8 @@ $query = "SELECT
 				a.VALUESTRING
             ORDER BY
                 -- s.TRANSACTIONNUMBER
-                s.TRANSACTIONDATE
-                -- s.TRANSACTIONTIME 
+                s.TRANSACTIONDATE,
+                s.TRANSACTIONTIME
             ASC";
 $q_stock_transaction = db2_exec($conn1, $query);
 $q_stock_transaction_history = db2_exec($conn1, $query);
