@@ -813,4 +813,625 @@ class Kartu_riwayat extends CI_Controller
 
     }
 
+    //laporan sta DIT
+    public function laporan_rekap_sta()
+    {
+        $data['title']      = "Laporan Rekap STA DIT";
+        $data['dept']       = "DIT";
+        $data['laporan']    = "laporan_rekap_sta";
+        $data['print']      = "print_laporan_rekap_sta";
+        $data['tabel_data'] = "tbl_master_barang_atk_dit";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');
+        $data['tabel_data'] = "tbl_master_barang_atk_dit";
+        $data['wh']          = "M401";
+        $data['dept']        = "DIT";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_acc()
+    {
+        $data['title']      = "Laporan Rekap STA ACC";
+        $data['dept']       = "ACC";
+        $data['laporan']    = "laporan_rekap_sta_acc";
+        $data['print']      = "print_laporan_rekap_sta_acc";
+        $data['tabel_data'] = "tbl_master_barang_atk_acc";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_acc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_acc";
+        $data['wh']          = "M421";
+        $data['dept']        = "ACC";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_brs()
+    {
+        $data['title']      = "Laporan Rekap STA BRS";
+        $data['dept']       = "BRS";
+        $data['laporan']    = "laporan_rekap_sta_brs";
+        $data['print']      = "print_laporan_rekap_sta_brs";
+        $data['tabel_data'] = "tbl_master_barang_atk_brs";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_brs()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_brs";
+        $data['wh']          = "M403";
+        $data['dept']        = "BRS";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_cpl()
+    {
+        $data['title']      = "Laporan Rekap STA CPL";
+        $data['dept']       = "CPL";
+        $data['laporan']    = "laporan_rekap_sta_cpl";
+        $data['print']      = "print_laporan_rekap_sta_cpl";
+        $data['tabel_data'] = "tbl_master_barang_atk_cpl";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_cpl()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_cpl";
+        $data['wh']          = "M425";
+        $data['dept']        = "CPL";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_cqa()
+    {
+        $data['title']      = "Laporan Rekap STA CQA";
+        $data['dept']       = "CQA";
+        $data['laporan']    = "laporan_rekap_sta_cqa";
+        $data['print']      = "print_laporan_rekap_sta_cqa";
+        $data['tabel_data'] = "tbl_master_barang_atk_cqa";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_cqa()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_cqa";
+        $data['wh']          = "M405";
+        $data['dept']        = "CQA";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_csr()
+    {
+        $data['title']      = "Laporan Rekap STA CSR";
+        $data['dept']       = "CSR";
+        $data['laporan']    = "laporan_rekap_sta_csr";
+        $data['print']      = "print_laporan_rekap_sta_csr";
+        $data['tabel_data'] = "tbl_master_barang_atk_csr";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_csr()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_csr";
+        $data['wh']          = "M422";
+        $data['dept']        = "CSR";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_dye()
+    {
+        $data['title']      = "Laporan Rekap STA DYE";
+        $data['dept']       = "DYE";
+        $data['laporan']    = "laporan_rekap_sta_dye";
+        $data['print']      = "print_laporan_rekap_sta_dye";
+        $data['tabel_data'] = "tbl_master_barang_atk_dye";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+//di sini check
+    public function print_laporan_rekap_sta_dye()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_dye";
+        $data['wh']          = "M406";
+        $data['dept']        = "DYE";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_fin()
+    {
+        $data['title']      = "Laporan Rekap STA FIN";
+        $data['dept']       = "FIN";
+        $data['laporan']    = "laporan_rekap_sta_fin";
+        $data['print']      = "print_laporan_rekap_sta_fin";
+        $data['tabel_data'] = "tbl_master_barang_atk_fin";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_fin()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_fin";
+        $data['wh']          = "M404";
+        $data['dept']        = "FIN";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_fnc()
+    {
+        $data['title']      = "Laporan Rekap STA FNC";
+        $data['dept']       = "FNC";
+        $data['laporan']    = "laporan_rekap_sta_fnc";
+        $data['print']      = "print_laporan_rekap_sta_fnc";
+        $data['tabel_data'] = "tbl_master_barang_atk_fnc";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_fnc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_fnc";
+        $data['wh']          = "M423";
+        $data['dept']        = "FNC";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_gas()
+    {
+        $data['title']      = "Laporan Rekap STA GAS";
+        $data['dept']       = "GAS";
+        $data['laporan']    = "laporan_rekap_sta_gas";
+        $data['print']      = "print_laporan_rekap_sta_gas";
+        $data['tabel_data'] = "tbl_master_barang_atk_gas";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_gas()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_gas";
+        $data['wh']          = "M424";
+        $data['dept']        = "GAS";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_gdb()
+    {
+        $data['title']      = "Laporan Rekap STA GDB";
+        $data['dept']       = "GDB";
+        $data['laporan']    = "laporan_rekap_sta_gdb";
+        $data['print']      = "print_laporan_rekap_sta_gdb";
+        $data['tabel_data'] = "tbl_master_barang_atk_gdb";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_gdb()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_gdb";
+        $data['wh']          = "M419";
+        $data['dept']        = "GDB";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_ghs()
+    {
+        $data['title']      = "Laporan Rekap STA GHS";
+        $data['dept']       = "GHS";
+        $data['laporan']    = "laporan_rekap_sta_ghs";
+        $data['print']      = "print_laporan_rekap_sta_ghs";
+        $data['tabel_data'] = "tbl_master_barang_atk_ghs";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_ghs()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_ghs";
+        $data['wh']          = "M427";
+        $data['dept']        = "GHS";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_gkg()
+    {
+        $data['title']      = "Laporan Rekap STA GKG";
+        $data['dept']       = "GKG";
+        $data['laporan']    = "laporan_rekap_sta_gkg";
+        $data['print']      = "print_laporan_rekap_sta_gkg";
+        $data['tabel_data'] = "tbl_master_barang_atk_gkg";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_gkg()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_gkg";
+        $data['wh']          = "M418";
+        $data['dept']        = "GKG";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_hrd()
+    {
+        $data['title']      = "Laporan Rekap STA HRD";
+        $data['dept']       = "HRD";
+        $data['laporan']    = "laporan_rekap_sta_hrd";
+        $data['print']      = "print_laporan_rekap_sta_hrd";
+        $data['tabel_data'] = "tbl_master_barang_atk_hrd";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_hrd()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_hrd";
+        $data['wh']          = "M411";
+        $data['dept']        = "HRD";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_knt()
+    {
+        $data['title']      = "Laporan Rekap STA KNT";
+        $data['dept']       = "KNT";
+        $data['laporan']    = "laporan_rekap_sta_knt";
+        $data['print']      = "print_laporan_rekap_sta_knt";
+        $data['tabel_data'] = "tbl_master_barang_atk_knt";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_knt()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_knt";
+        $data['wh']          = "M408";
+        $data['dept']        = "KNT";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_lab()
+    {
+        $data['title']      = "Laporan Rekap STA LAB";
+        $data['dept']       = "LAB";
+        $data['laporan']    = "laporan_rekap_sta_lab";
+        $data['print']      = "print_laporan_rekap_sta_lab";
+        $data['tabel_data'] = "tbl_master_barang_atk_lab";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_lab()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_lab";
+        $data['wh']          = "M402";
+        $data['dept']        = "LAB";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_mkt()
+    {
+        $data['title']      = "Laporan Rekap STA MKT";
+        $data['dept']       = "MKT";
+        $data['laporan']    = "laporan_rekap_sta_mkt";
+        $data['print']      = "print_laporan_rekap_sta_mkt";
+        $data['tabel_data'] = "tbl_master_barang_atk_mkt";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_mkt()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_mkt";
+        $data['wh']          = "M416";
+        $data['dept']        = "MKT";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_mnf()
+    {
+        $data['title']      = "Laporan Rekap STA MNF";
+        $data['dept']       = "MNF";
+        $data['laporan']    = "laporan_rekap_sta_mnf";
+        $data['print']      = "print_laporan_rekap_sta_mnf";
+        $data['tabel_data'] = "tbl_master_barang_atk_mnf";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_mnf()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_mnf";
+        $data['wh']          = "M414";
+        $data['dept']        = "MNF";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_pcs()
+    {
+        $data['title']      = "Laporan Rekap STA PCS";
+        $data['dept']       = "PCS";
+        $data['laporan']    = "laporan_rekap_sta_pcs";
+        $data['print']      = "print_laporan_rekap_sta_pcs";
+        $data['tabel_data'] = "tbl_master_barang_atk_pcs";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_pcs()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_pcs";
+        $data['wh']          = "M409";
+        $data['dept']        = "PCS";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_ppc()
+    {
+        $data['title']      = "Laporan Rekap STA PPC";
+        $data['dept']       = "PPC";
+        $data['laporan']    = "laporan_rekap_sta_ppc";
+        $data['print']      = "print_laporan_rekap_sta_ppc";
+        $data['tabel_data'] = "tbl_master_barang_atk_ppc";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_ppc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_ppc";
+        $data['wh']          = "M415";
+        $data['dept']        = "PPC";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_qai()
+    {
+        $data['title']      = "Laporan Rekap STA QAI";
+        $data['dept']       = "QAI";
+        $data['laporan']    = "laporan_rekap_sta_qai";
+        $data['print']      = "print_laporan_rekap_sta_qai";
+        $data['tabel_data'] = "tbl_master_barang_atk_qai";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_qai()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_qai";
+        $data['wh']          = "M410";
+        $data['dept']        = "QAI";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_qcf()
+    {
+        $data['title']      = "Laporan Rekap STA QCF";
+        $data['dept']       = "QCF";
+        $data['laporan']    = "laporan_rekap_sta_qcf";
+        $data['print']      = "print_laporan_rekap_sta_qcf";
+        $data['tabel_data'] = "tbl_master_barang_atk_qcf";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_qcf()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_qcf";
+        $data['wh']          = "M407";
+        $data['dept']        = "QCF";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_rmp()
+    {
+        $data['title']      = "Laporan Rekap STA RMP";
+        $data['dept']       = "RMP";
+        $data['laporan']    = "laporan_rekap_sta_rmp";
+        $data['print']      = "print_laporan_rekap_sta_rmp";
+        $data['tabel_data'] = "tbl_master_barang_atk_rmp";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_rmp()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_rmp";
+        $data['wh']          = "M417";
+        $data['dept']        = "RMP";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_tas()
+    {
+        $data['title']      = "Laporan Rekap STA TAS";
+        $data['dept']       = "TAS";
+        $data['laporan']    = "laporan_rekap_sta_tas";
+        $data['print']      = "print_laporan_rekap_sta_tas";
+        $data['tabel_data'] = "tbl_master_barang_atk_tas";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_tas()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_tas";
+        $data['wh']          = "M413";
+        $data['dept']        = "TAS";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_tq()
+    {
+        $data['title']      = "Laporan Rekap STA TQ";
+        $data['dept']       = "TQ";
+        $data['laporan']    = "laporan_rekap_sta_tq";
+        $data['print']      = "print_laporan_rekap_sta_tq";
+        $data['tabel_data'] = "tbl_master_barang_atk_tq";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_tq()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_tq";
+        $data['wh']          = "M407";
+        $data['dept']        = "TQ";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+    
+    public function laporan_rekap_sta_ynd()
+    {
+        $data['title']      = "Laporan Rekap STA YND";
+        $data['dept']       = "YND";
+        $data['laporan']    = "laporan_rekap_sta_ynd";
+        $data['print']      = "print_laporan_rekap_sta_ynd";
+        $data['tabel_data'] = "tbl_master_barang_atk_ynd";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_ynd()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_atk_ynd";
+        $data['wh']          = "M426";
+        $data['dept']        = "YND";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
+
+    public function laporan_rekap_sta_mtc()
+    {
+        $data['title']      = "Laporan Rekap STA MTC";
+        $data['dept']       = "MTC";
+        $data['laporan']    = "laporan_rekap_sta_mtc";
+        $data['print']      = "print_laporan_rekap_sta_mtc";
+        $data['tabel_data'] = "tbl_master_barang_stationary_mtc";
+
+        $this->template->load('template', $this->folder . '/laporan_rekap_sta', $data);
+    }
+
+    public function print_laporan_rekap_sta_mtc()
+    {
+        $data['kode_barang'] = $this->input->post('kode_barang');
+        $data['date1']       = $this->input->post('date1');
+        $data['date2']       = $this->input->post('date2');   
+        $data['tabel_data'] = "tbl_master_barang_stationary_mtc";
+        $data['wh']          = "M412";
+        $data['dept']        = "MTC";
+
+        $this->load->view('kartu_riwayat/print_laporan_rekap_sta', $data);
+    }
 }

@@ -4,7 +4,7 @@
 ?>
 <div class="row align-items-center" style="margin-bottom: 20px;">
     <div class="col-sm-10">
-        <h2 style="font-weight: normal;">Welcome to Departments Inventory Online</h2>
+        <h2 style="font-weight: normal;">Welcome to Departments Inventory Online <?=$dept?></h2>
     </div>
     <?php if ($dept == 'PCS') {?>
         <div class="col-sm-2 d-flex justify-content-end align-items-center">
@@ -197,6 +197,18 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
 
             <!-- Kartu Stock Limbah MTC -->
             <table class="table table-bordered">
@@ -265,6 +277,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ppc'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ppc'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'FIN') {?>
         <div class="col-sm-4">
@@ -292,6 +315,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_fin'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_fin'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 <?php } elseif ($dept == 'LAB') {?>
         <div class="col-sm-4">
@@ -304,6 +338,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_lab'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_lab'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -320,6 +365,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_brs'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_brs'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 <?php } elseif ($dept == 'CQA') {?>
         <div class="col-sm-4">
@@ -332,6 +388,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_cqa'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_cqa'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -417,6 +484,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
@@ -475,6 +553,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_fin'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_fin'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -489,6 +578,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_lab'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_lab'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -507,6 +607,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qcf'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_qcf'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
         <div class="col-sm-4">
             <table class="table table-bordered">
@@ -518,6 +629,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_tq'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_tq'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -627,7 +749,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_stationary_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
-
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
             <!-- Kartu Stock Limbah MTC -->
             <table class="table table-bordered">
                 <tr class="success">
@@ -698,6 +830,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ppc'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ppc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -712,6 +855,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_brs'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_brs'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -730,6 +884,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_cqa'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_cqa'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -744,6 +909,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_knt'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_knt'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -762,6 +938,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_dye'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_dye'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -776,6 +963,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_pcs'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_pcs'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -794,6 +992,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_hrd'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_hrd'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -808,6 +1017,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qai'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_qai'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -826,6 +1046,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_tas'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_tas'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -840,6 +1071,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_mnf'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mnf'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -858,6 +1100,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_mkt'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mkt'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -872,6 +1125,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_rmp'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>    
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_rmp'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -888,6 +1152,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkg'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>    
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gkg'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -906,6 +1181,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkj'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gkj'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -920,6 +1206,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gdb'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gdb'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -938,6 +1235,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_acc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_acc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -952,6 +1260,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_fnc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>    
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_fnc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -970,6 +1289,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_csr'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_csr'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -986,6 +1316,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gas'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gas'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -1000,6 +1341,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_cpl'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>    
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_cpl'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -1018,6 +1370,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ghs'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ghs'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -1032,6 +1395,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ynd'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ynd'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -1051,6 +1425,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qcf'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_qcf'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
         <div class="col-sm-4">
             <table class="table table-bordered">
@@ -1062,6 +1447,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_tq'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+                <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_tq'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -1078,6 +1474,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_knt'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_knt'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 <?php } elseif ($dept == 'DYE') {?>
         <div class="col-sm-4">
@@ -1090,6 +1497,17 @@ if ($level == 1) {?>
                 </tr>
                 <tr>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_dye'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_dye'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
         </div>
@@ -1106,6 +1524,17 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_qai'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Laporan Pemakaian dan Stock ATK
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_qai'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 <?php } elseif ($dept == 'HRD') {?>
     <div class="col-sm-4">
@@ -1118,6 +1547,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_hrd'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_hrd'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1134,6 +1574,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_tas'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_tas'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'MNF') {?>
     <div class="col-sm-4">
@@ -1146,6 +1597,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_mnf'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mnf'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1162,6 +1624,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_mkt'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_mkt'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'RMP') {?>
     <div class="col-sm-4">
@@ -1174,6 +1647,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_rmp'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_rmp'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1190,6 +1674,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkg'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gkg'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'GDB') {?>
     <div class="col-sm-4">
@@ -1202,6 +1697,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gdb'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gdb'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1218,6 +1724,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gkj'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gkj'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'ACC') {?>
     <div class="col-sm-4">
@@ -1230,6 +1747,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_acc'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_acc'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1246,6 +1774,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_fnc'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_fnc'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'CSR') {?>
     <div class="col-sm-4">
@@ -1258,6 +1797,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_csr'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_csr'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1274,6 +1824,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_gas'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_gas'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'CPL') {?>
     <div class="col-sm-4">
@@ -1286,6 +1847,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_cpl'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_cpl'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1302,6 +1874,17 @@ if ($level == 1) {?>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ghs'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ghs'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
     </div>
 <?php } elseif ($dept == 'YND') {?>
     <div class="col-sm-4">
@@ -1314,6 +1897,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk_ynd'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta_ynd'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
@@ -1392,6 +1986,17 @@ if ($level == 1) {?>
             </tr>
             <tr>
                 <th><a href="<?php echo base_url('kartu_riwayat/kartu_stock_atk'); ?>" class="btn btn-success">MASUK</a></th>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr class="success">
+                <th>Forms</th>
+            </tr>
+            <tr>
+                <th>Laporan Pemakaian dan Stock ATK
+            </tr>
+            <tr>
+                <th><a href="<?php echo base_url('kartu_riwayat/laporan_rekap_sta'); ?>" class="btn btn-success">MASUK</a></th>
             </tr>
         </table>
     </div>
