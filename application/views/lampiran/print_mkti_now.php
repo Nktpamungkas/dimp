@@ -214,7 +214,7 @@ $conn1 = db2_connect($conn_string, '', '');
     <?php $data_monitoring = db2_fetch_assoc($q_monitoring); ?>
     <p style="font-family: Arial, Helvetica, sans-serif; display: flex; margin: 0;">
     <span style="width: 120px;">Departement</span>
-    <span>: <?= $data_monitoring['DEPT'] ?></span>
+    <span>: <?= $data_monitoring['DEPT']?? "" ?></span>
 </p>
 <p style="font-family: Arial, Helvetica, sans-serif; display: flex; margin: 0;">
     <span style="width: 120px;">Hari, Tanggal</span>
