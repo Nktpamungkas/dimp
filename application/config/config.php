@@ -17,7 +17,7 @@
 |
 */
 //$config['base_url']	= 'http://10.0.0.10/dimp/';
-$config['base_url'] = $_SERVER['REQUEST_SCHEME'] . '://'. $_SERVER['HTTP_HOST'] . '/dimp/';
+$config['base_url'] = 'https://online.indotaichen.com/dimp/';
 // $config['base_url'] = 'http://10.0.5.22/dimp/';
 
 /*
