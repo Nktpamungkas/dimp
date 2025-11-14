@@ -162,3 +162,20 @@ $db['inventorydit'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['now'] = array(
+	'dsn'	=> '',
+	'hostname' => '10.0.0.21',
+	'username' => 'db2admin',
+	'password' => 'Sunkam@24809',
+	'database' => 'NOWPRD',
+    'port'     => '25000',
+	'dbdriver' => 'ibm_db2',
+	'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+);

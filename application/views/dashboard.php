@@ -183,6 +183,18 @@ if ($level == 1) {?>
                     <th><a href="<?php echo base_url('kartu_riwayat/laporan_stock_limbah_intake_mtc'); ?>" class="btn btn-success">MASUK</a></th>
                 </tr>
             </table>
+
+            <table class="table table-bordered">
+                <tr class="success">
+                    <th>Forms</th>
+                </tr>
+                <tr>
+                    <th>Stock Opname MTC<br> &nbsp; </th>
+                </tr>
+                <tr>
+                    <th><a href="<?php echo base_url('maintenance/stock_opname_mtc'); ?>" class="btn btn-success">MASUK</a></th>
+                </tr>
+            </table>
         </div>
 
         <div class="col-sm-4">
