@@ -45,6 +45,8 @@ class Maintenance extends CI_Controller
                 'SUBCODE06'=> $row['SUBCODE06'],
                 'KODE_BARANG'=> $row['KODE_BARANG'],
                 'LONGDESCRIPTION'=> $row['LONGDESCRIPTION'],
+                'ZONE'=> $row['ZONE'],
+                'LOCATION'=> $row['LOCATION'],
                 'SAFETYSTOCK' => $row['SAFETYSTOCK'],
                 'BASEPRIMARYQUANTITYUNIT'=> $row['BASEPRIMARYQUANTITYUNIT'],
                 'B_BASEPRIMARYUNITCODE'=> $row['B_BASEPRIMARYUNITCODE'],
@@ -84,15 +86,27 @@ class Maintenance extends CI_Controller
         $this->load->view( 'Maintenance/stock_opname_mtc_edit', $data);
     }
 
+    public function stock_opname_mtc_excel(){
+        $random=$this->input->get("random");
+        $data['title'] = "STOCK OPNAME MTC";
+        $data['date1'] = $this->input->get('date');
+        $get_tmp=$this->MTC->get_tmp($random);
+        $data['tmp']=$get_tmp->result_array();
+        $this->load->view( 'Maintenance/stock_opname_mtc_excel', $data);
+    }
+
     public function simpan_total_stock_sto()
     {
         $id=$this->input->post("id_dt");
         $val=$this->input->post("val");
-        $update=$this->MTC->simpan_total_stock_sto($id,$val);
+        date_default_timezone_set('Asia/Jakarta');
+        $now = new DateTime(); 
+        $update=$this->MTC->simpan_total_stock_sto($id,$val,$now->format('Y-m-d H:i:s'));
         if($update){
             $this->response->setSuccess(true);
             $this->response->addMessage("Berhasil Mengubah Total Stock");
             $this->response->addMessage($update);
+            $this->response->addMessage(timestamp_ke_custom($now->format('Y-m-d H:i:s')));
         }else{
             $this->response->setSuccess(false);
             $this->response->addMessage("Gagal Mengubah Total Stock");

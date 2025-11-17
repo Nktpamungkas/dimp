@@ -70,6 +70,20 @@ if(! function_exists('tanggal_ke_hari'))//
   }
 }
 
+if(! function_exists('timestamp_ke_custom'))//
+{
+  function timestamp_ke_custom($timestamp,$format="d/m/Y H:i:s") //custome format dengan default
+  {
+    if($timestamp=="" || $timestamp==null){
+      $time="";
+    }
+    else {
+      $time= date($format, strtotime($timestamp));
+    }
+    return $time;
+  }
+}
+
 if(! function_exists('select_c'))//fungsi untuk select_compile
 {
   function select_c($objek, $table=null,$exit=false)//fungsi untuk select_compile

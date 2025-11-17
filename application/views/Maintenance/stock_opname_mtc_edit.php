@@ -28,19 +28,22 @@
                     <li class="active">Data</li>
                 </ol>
             </div>
-            <label style="font-weight: bold;margin: 10px 15px 10px 15px;">Periode :<?= $date1  ?></label>
+            <label style="font-weight: bold;margin: 10px 15px 10px 15px;">Periode :<?= timestamp_ke_custom($date1,'d-m-Y') ?></label>
             <a href="<?= base_url('maintenance/stock_opname_mtc'); ?>" class="btn btn-primary btn-social btn-linkedin btn-sm" id="kembali_button" name="kembali" style="width: 100px;float: right;margin: 10px;"><i class="fa fa-list-ol"></i> Kembali</a>
             <table width="100%"  id="tbl_opname" class="table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Kode Sparepart</th>
                         <th>Nama Sparepart</th>
+                        <th>Zone</th>
+                        <th>Location</th>
                         <th>Stock Minimum</br>(Safety Stock)</th>
                         <th>Satuan</th> 
                         <th>Stock Balance</th> 
                         <th>Total Stock</th> 
                         <th style="min-width:75px !important">Action Button</th> 
                         <th>Keterangan Selisih</th> 
+                        <th>Last Update</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -57,12 +60,15 @@
                     <tr data-id="<?= $row['id']; ?>" data-ts='<?= $row['QTY_AKTUAL']; ?>' data-blc='<?= floatval($row['BASEPRIMARYQUANTITYUNIT']); ?>'>
                         <td><?= $row['KODE_BARANG']; ?></td>
                         <td><?= $row['LONGDESCRIPTION']; ?></td>
+                        <td><?= $row['ZONE']; ?></td>
+                        <td><?= $row['LOCATION']; ?></td>
                         <td class='text-right'><?= nilaiKeRibuan($row['SAFETYSTOCK']); ?></td>
                         <td class='text-right'><?= $row['BASEPRIMARYUNITCODE']; ?></td>
                         <td class='text-right'><?= nilaiKeRibuan($row['BASEPRIMARYQUANTITYUNIT']); ?></td>
                         <td class='text-right' id="ts_<?= $row['id']; ?>"><?= $qty_aktual ?></td>
                         <td id="confirm_<?= $row['id']; ?>" ><?=$btn;?></td>
                         <td class='text-right' id="blc_<?= $row['id']; ?>"><?= nilaiKeRibuan($row['BASEPRIMARYQUANTITYUNIT']-$row['QTY_AKTUAL']); ?></td>
+                        <td id="last_<?= $row['id']; ?>" ><?= timestamp_ke_custom($row['edit_date']); ?></td>
                     </tr>
                     <?php 
                     }
@@ -104,7 +110,7 @@
             let id = parent.data('id');
             let blc = parent.data('blc');
             
-            let total_stock=blc-val;
+            let total_stock=val-blc;
             total_stock=total_stock.toFixed(2);
 
             $("#blc_"+id).html(nilaiKeRibuan(total_stock, ".",","));
@@ -153,17 +159,9 @@
                 type: 'POST',
                 data: dataPost,
                 dataType: "JSON",
-                success: function(response) {
+                success: function(response) {                    
                     if(response.success){ 
-                        Swal.fire({
-                            title: 'Saved',
-                            text: 'Berhasil Menyimpan data.',
-                            icon: 'success',
-                            timer: 1000,
-                            topLayer: false,
-                            position : 'top-end',
-                            showConfirmButton: false
-                        })
+                        $("#last_"+id).html(response.messages[2]);
                     }else{
                         alert("Terjadi Error Update, mohon hubungi DIT");
                     }

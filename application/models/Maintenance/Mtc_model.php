@@ -35,6 +35,8 @@ class Mtc_model extends CI_Model
                 i.SAFETYSTOCK,
                 b.BASEPRIMARYQUANTITYUNIT,
                 b.BASEPRIMARYUNITCODE B_BASEPRIMARYUNITCODE,
+                b.WHSLOCATIONWAREHOUSEZONECODE AS ZONE,
+                b.WAREHOUSELOCATIONCODE AS LOCATION,
                 u.LONGDESCRIPTION BASEPRIMARYUNITCODE
             FROM
                 PRODUCT p
@@ -57,7 +59,8 @@ class Mtc_model extends CI_Model
             WHERE
                 p.ITEMTYPECODE = 'SPR'
                 AND p.SUBCODE01 = 'MTC'
-                AND b.LOGICALWAREHOUSECODE = 'M201' ");
+                AND b.LOGICALWAREHOUSECODE = 'M201'
+                AND b.STOCKTYPECODE= '001' ");
         return $query;
     }
 
@@ -68,6 +71,7 @@ class Mtc_model extends CI_Model
     public function get_tmp($tmp_id){
         return $this->db
             ->where('TMP_ID', $tmp_id)
+            ->order_by('LONGDESCRIPTION', 'ASC')
             ->get('tmp_stock_opname');
     }
     public function check_tmp($date){
@@ -77,9 +81,10 @@ class Mtc_model extends CI_Model
             ->get('tmp_stock_opname');
     }
     
-    public function simpan_total_stock_sto($id,$val){
+    public function simpan_total_stock_sto($id,$val,$now){
         return $this->db
             ->set('QTY_AKTUAL', $val)
+            ->set('edit_date', $now)
             ->where('id', $id)
             ->update('tmp_stock_opname');
     }
@@ -100,7 +105,7 @@ class Mtc_model extends CI_Model
                 TMP_ID,
                 user, 
                 SUM(CASE WHEN konfirmasi=1 THEN 1 ELSE 0 END) as konfirm, 
-                SUM(CASE WHEN QTY_AKTUAL =0.00 THEN 1 ELSE 0 END) nilai_nol 
+                SUM(CASE WHEN COALESCE(edit_date,'') ='' THEN 1 ELSE 0 END) nilai_nol 
             FROM tmp_stock_opname
             GROUP BY date,TMP_ID,user 
             ORDER BY date ASC");

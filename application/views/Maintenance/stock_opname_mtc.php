@@ -422,6 +422,7 @@
                                             Sisa Item belum diinput stock  : `+value.nilai_nol+` </br>
                                             </p>
                                             <a href="<?= base_url('maintenance/stock_opname_mtc_edit'); ?>?random=`+value.TMP_ID+`&date=`+value.date+`" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit</a>
+                                            <a href="<?= base_url('maintenance/stock_opname_mtc_excel'); ?>?random=`+value.TMP_ID+`&date=`+value.date+`" class="btn btn-success"><i class="fa fa-table"></i> Excel</a>
                                         </div>
                                     </div>`;
                                 $( "#demandGrid" ).prepend(tmp);
